@@ -1,84 +1,132 @@
 ---
 title: "霁风的小圈"
-description: "用 Astro 搭建的个人博客，记录想法与项目"
+description: "基于 Astro 框架和 astro-whono 主题搭建的个人博客"
 date: 2026-02-28
 status: "shipped"
-stack: ["Astro", "TypeScript", "Markdown"]
+stack: ["Astro", "TypeScript", "Markdown", "CSS"]
 links:
   github: "https://github.com/jialep38-png/my-world-blog"
-tags: ["博客", "个人项目"]
+tags: ["博客", "个人项目", "Astro"]
 draft: false
 featured: true
 slug: "my-blog"
 ---
 
-## 缘起
+## 项目概述
 
-一直想有个自己的小角落，可以随便写点东西。
+一个极简风格的个人博客站点，用于记录想法、展示项目、发布短内容。
 
-社交平台太吵了，公众号又太正式。想要的很简单：一个安静的地方，想写就写，想发就发。
+**技术栈**：
+- 框架：[Astro](https://astro.build) v5.x
+- 主题：[astro-whono](https://github.com/cxro/astro-whono)（MIT 协议）
+- 语言：TypeScript + Markdown
+- 部署：GitHub Pages / Vercel / Netlify（静态托管）
 
-于是就有了这个小圈。
+## 功能模块
 
-## 选型
+### 内容栏目
 
-找了一圈博客框架，最后选了 [Astro](https://astro.build)。
+| 栏目 | 路由 | 说明 |
+|-----|------|------|
+| 随笔 | `/essay/` | 长文章，深度内容 |
+| 项目 | `/projects/` | 项目展示与记录 |
+| 絮语 | `/bits/` | 短内容，类似微博 |
+| 小记 | `/memo/` | 日常片段 |
+| 归档 | `/archive/` | 按时间归档 |
+| 关于 | `/about/` | 站点介绍 |
 
-为什么是它？
+### 主要特性
 
-- **够快**：静态生成，不需要服务器
-- **够简单**：Markdown 写作，专注内容
-- **够灵活**：想加什么功能都可以
+- **双栏布局**：侧边导航 + 内容区，移动端自适应
+- **深色模式**：支持浅色/深色主题切换
+- **阅读模式**：专注阅读，隐藏干扰元素
+- **RSS 订阅**：支持全站和分栏订阅
+- **评论系统**：集成 Giscus（基于 GitHub Discussions）
+- **SEO 优化**：自动生成 sitemap、Open Graph 标签
 
-主题用的是 [astro-whono](https://github.com/cxro/astro-whono)，一个极简双栏主题。喜欢它干净的设计，没有多余的装饰。
+## 搭建过程
 
-## 过程
+### 1. 环境准备
 
-搭建过程意外地顺利。
+```
+Node.js >= 22.12.0
+Git
+```
 
-**第一步：Fork 主题**
+### 2. 获取主题
 
-从 GitHub 克隆 astro-whono 到本地，改个仓库名，就有了自己的博客仓库。
+```bash
+git clone https://github.com/cxro/astro-whono.git my-blog
+cd my-blog
+npm install
+```
 
-**第二步：个人化**
+### 3. 个人化配置
 
-改了这些东西：
-- 站点名称和描述
-- 头像
-- 侧边栏的小引言
-- 删掉所有示例内容
+修改 `site.config.mjs`：
 
-**第三步：部署**
+```javascript
+export const site = {
+  url: 'https://your-domain.com',
+  title: '站点名称',
+  brandTitle: '品牌名',
+  author: '作者名',
+  authorAvatar: 'author/avatar.jpg',
+  description: '站点描述'
+};
+```
 
-推送到 GitHub，自动部署。没有服务器的烦恼，也不用花钱。
+### 4. 清理模板内容
 
-整个过程大概两三个小时，大部分时间在纠结该写什么。
+- 删除 `src/content/` 下的示例文章
+- 删除 `public/` 下的 demo 图片
+- 替换头像、favicon 等资源
 
-## 功能
+### 5. 本地预览
 
-目前有这些栏目：
+```bash
+npm run dev      # 开发模式
+npm run build    # 构建
+npm run preview  # 预览构建结果
+```
 
-| 栏目 | 用途 |
-|-----|------|
-| 随笔 | 长一点的文章 |
-| 项目 | 做过的东西 |
-| 絮语 | 短内容、碎碎念 |
-| 小记 | 日常片段 |
+### 6. 部署上线
 
-还加了评论系统（Giscus），基于 GitHub Discussions，不用额外注册账号。
+推送到 GitHub 后，可选择：
+- **Vercel**：导入仓库，自动部署
+- **Netlify**：导入仓库，自动部署
+- **Cloudflare Pages**：导入仓库，配置构建命令
 
-## 感想
+## 目录结构
 
-搭博客这件事，技术从来不是门槛。
+```
+├── public/              # 静态资源
+│   ├── author/          # 头像
+│   ├── fonts/           # 字体文件
+│   └── images/          # 图片
+├── src/
+│   ├── components/      # 组件
+│   ├── content/         # 内容（Markdown）
+│   │   ├── essay/       # 随笔
+│   │   ├── bits/        # 絮语
+│   │   ├── memo/        # 小记
+│   │   └── projects/    # 项目
+│   ├── layouts/         # 布局
+│   ├── pages/           # 页面路由
+│   └── styles/          # 样式
+├── site.config.mjs      # 站点配置
+└── astro.config.mjs     # Astro 配置
+```
 
-真正难的是坚持写。
+## 后续计划
 
-希望这个小圈能陪我走久一点。
+- [ ] 添加更多项目内容
+- [ ] 完善絮语功能
+- [ ] 优化移动端体验
+- [ ] 添加搜索功能
 
----
+## 参考资料
 
-**致谢**
-
-- 主题作者 [cxro](https://github.com/cxro) 的 [astro-whono](https://github.com/cxro/astro-whono)
-- [Astro](https://astro.build) 团队
-- 帮我搭建的 Claude
+- [Astro 官方文档](https://docs.astro.build)
+- [astro-whono 主题仓库](https://github.com/cxro/astro-whono)
+- [Giscus 评论系统](https://giscus.app)
