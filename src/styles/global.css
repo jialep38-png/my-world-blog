@@ -96,12 +96,12 @@
 ================================ */
 :root {
   color-scheme: light;
-  --bg: #fffefc;
-  --text: #292524;
-  --muted: #57534e;
-  --faint: #a8a29e;
-  --border: #e7e5e4;
-  --accent: #b91c1c;
+  --bg: #fdfcf9;
+  --text: #2f2b2a;
+  --muted: #66605c;
+  --faint: #a9a39d;
+  --border: #e8e4df;
+  --accent: #a77878;
   --overlay-20: rgba(0, 0, 0, 0.2);
   --overlay-35: rgba(0, 0, 0, 0.35);
   --overlay-45: rgba(0, 0, 0, 0.45);
@@ -133,18 +133,18 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1a1a1a;
-  --text: #e5e5e5;
-  --muted: #a3a3a3;
-  --faint: #737373;
-  --border: #333333;
-  --accent: #f87171;
-  --code-header-bg: #2a2a2a;
-  --code-content-bg: #222222;
-  --code-border: #333333;
-  --code-text: #e1e1e1;
+  --bg: #1d1b1a;
+  --text: #ece7e3;
+  --muted: #b2aaa4;
+  --faint: #7f7772;
+  --border: #3a3430;
+  --accent: #d1a2a2;
+  --code-header-bg: #2a2522;
+  --code-content-bg: #221f1d;
+  --code-border: #3b3531;
+  --code-text: #e7e2de;
   --code-bg: var(--code-content-bg);
-  --code-action-hover-bg: #3a3a3a;
+  --code-action-hover-bg: #36302c;
   --lightbox-text: #ffffff;
   --lightbox-border: rgba(255, 255, 255, 0.2);
   --lightbox-dot-muted: rgba(255, 255, 255, 0.35);
@@ -279,14 +279,14 @@ hr {
 }
 
 .intro {
-  margin: 28px 0 32px;
+  margin: 24px 0 28px;
   color: var(--text);
   font-size: 16px;
   letter-spacing: 0.02em;
 }
 
 .home .intro {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .intro__lead {
@@ -315,7 +315,7 @@ hr {
 
 .section-title--index {
   margin-left: 14px;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .about-page .intro + .section-title {

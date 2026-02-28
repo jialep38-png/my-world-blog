@@ -36,11 +36,11 @@
   font-family: Georgia, serif;
   font-size: 28px;
   letter-spacing: 0.5px;
-  transition: transform 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .sidebar__title:hover {
-  transform: scale(1.05);
+  color: var(--muted);
   border-bottom-color: transparent;
 }
 
@@ -71,11 +71,12 @@
   padding: 2px 0;
   font-size: 16px;
   transform-origin: right center;
-  transition: transform 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .nav a:hover {
-  transform: scale(1.05);
+  color: var(--muted);
+  opacity: 0.88;
   border-bottom-color: transparent;
 }
 
