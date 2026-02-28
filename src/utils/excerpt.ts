@@ -24,8 +24,8 @@ export function cleanMarkdownToText(md: string): string {
   text = text.replace(/^\s*\d+[\.\)]\s+/gm, '');
 
   text = text.replace(/<[^>]+>/g, ' ');
-  text = text.replace(/\r?\n+/g, ' ');
-  text = text.replace(/\s+/g, ' ').trim();
+  text = text.replace(/\r?\n+/g, '\n');
+  text = text.replace(/[^\S\r\n]+/g, ' ').trim();
   return text;
 }
 

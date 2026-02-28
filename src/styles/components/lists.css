@@ -234,6 +234,7 @@
   color: #666;
   font-size: 15px;
   line-height: 1.6;
+  white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
