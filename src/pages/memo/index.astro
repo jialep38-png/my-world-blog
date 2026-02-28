@@ -16,47 +16,24 @@ if (prod && entry.data.draft) {
 
 const { Content, headings } = await render(entry);
 
-// Build dual TOC: date groups + inferred topic groups.
-type TocItem = { text: string; slug: string; context?: string };
+// Build a grouped TOC: H2 as section titles, H3 as items.
+type TocItem = { text: string; slug: string };
 type TocGroup = { title: string; items: TocItem[] };
 
-const dateGroups: TocGroup[] = [];
+const groups: TocGroup[] = [];
 let current: TocGroup | null = null;
-const topicMap = new Map<string, TocItem[]>();
-
-const pickTopic = (title: string) => {
-  const cleaned = title
-    .replace(/[（(][^）)]*[）)]/g, '')
-    .replace(/[\s_-]*day\s*\d+$/i, '')
-    .trim();
-  return cleaned || '未分类';
-};
-
 for (const h of headings) {
   if (h.depth === 2) {
     current = { title: h.text, items: [] };
-    dateGroups.push(current);
-    continue;
+    groups.push(current);
+  } else if (h.depth === 3) {
+    if (!current) {
+      current = { title: '目录', items: [] };
+      groups.push(current);
+    }
+    current.items.push({ text: h.text, slug: h.slug });
   }
-  if (h.depth !== 3) continue;
-
-  const item: TocItem = { text: h.text, slug: h.slug, context: current?.title };
-
-  if (!current) {
-    current = { title: '未分组', items: [] };
-    dateGroups.push(current);
-  }
-  current.items.push(item);
-
-  const topic = pickTopic(h.text);
-  if (!topicMap.has(topic)) topicMap.set(topic, []);
-  topicMap.get(topic)?.push(item);
 }
-
-const topicGroups: TocGroup[] = Array.from(topicMap, ([title, items]) => ({ title, items }));
-const hasDate = dateGroups.some((g) => g.items.length > 0);
-const hasTopic = topicGroups.some((g) => g.items.length > 0);
-const tocMode = hasDate && hasTopic ? 'date-and-topic' : (hasDate ? 'date-only' : 'topic-only');
 ---
 
 <BaseLayout
@@ -87,49 +64,22 @@ const tocMode = hasDate && hasTopic ? 'date-and-topic' : (hasDate ? 'date-only' 
     <br />也许，为瞬间的感受留下一份文字备份，正是抵抗遗忘最温柔却最有效的方式。
   </div>
 
-  <nav class="memo-toc" aria-label="目录" data-mode={tocMode}>
-    {hasDate && (
-      <section class="memo-toc-section" aria-labelledby="memo-toc-by-date">
-        <h2 id="memo-toc-by-date" class="memo-toc-section-title">按日期</h2>
-        {dateGroups.map((g) => (
-          <details open>
-            <summary>{g.title}</summary>
-            <ul class="toc-items">
-              {g.items.map((it, i) => (
-                <li>
-                  <a href={`#${it.slug}`}>
-                    <span class="toc-num">{i + 1}</span>
-                    <span>{it.text}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        ))}
-      </section>
-    )}
-
-    {hasTopic && (
-      <section class="memo-toc-section" aria-labelledby="memo-toc-by-topic">
-        <h2 id="memo-toc-by-topic" class="memo-toc-section-title">按主题</h2>
-        {topicGroups.map((g) => (
-          <details open>
-            <summary>{g.title}</summary>
-            <ul class="toc-items">
-              {g.items.map((it, i) => (
-                <li>
-                  <a href={`#${it.slug}`}>
-                    <span class="toc-num">{i + 1}</span>
-                    <span>{it.text}</span>
-                    {it.context ? <small class="toc-context">{it.context}</small> : null}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        ))}
-      </section>
-    )}
+  <nav class="memo-toc" aria-label="目录">
+    {groups.map((g) => (
+      <details open>
+        <summary>{g.title}</summary>
+        <ul class="toc-items">
+          {g.items.map((it, i) => (
+            <li>
+              <a href={`#${it.slug}`}>
+                <span class="toc-num">{i + 1}</span>
+                <span>{it.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    ))}
   </nav>
 
   <div class="memo-content prose">
