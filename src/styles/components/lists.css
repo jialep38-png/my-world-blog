@@ -207,12 +207,13 @@
 .list-item__title {
   margin: 0;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 520;
+  letter-spacing: 0.01em;
   transition: color 0.2s ease;
 }
 
 .list-item__title:hover {
-  color: #b88f8f;
+  color: color-mix(in srgb, var(--accent) 72%, var(--muted) 28%);
 }
 
 .list-item__meta {
@@ -383,8 +384,9 @@
 .meta-line {
   margin-top: 10px;
   margin-bottom: 12px;
-  font-size: 13px;
-  color: var(--faint);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--faint) 88%, var(--muted) 12%);
 }
 
 .list-item .meta-line {

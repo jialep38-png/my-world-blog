@@ -311,6 +311,8 @@ hr {
 .section-title {
   font-size: 20px;
   margin: 28px 0 2px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
   position: relative;
 }
 

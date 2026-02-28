@@ -14,7 +14,7 @@
 }
 
 .divider {
-  background: var(--border);
+  background: color-mix(in srgb, var(--border) 84%, var(--bg) 16%);
   margin: 50px 0;
 }
 
