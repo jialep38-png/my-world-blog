@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroImage from '../components/HeroImage.astro';
 import EntryListItem from '../components/EntryListItem.astro';
-import { getPublished, isReservedSlug } from '../lib/content';
+import { getPublished, getSortedProjects, getProjectSlug, isReservedSlug } from '../lib/content';
 import { getListExcerpt } from '../utils/excerpt';
 import { createWithBase } from '../utils/format';
 
@@ -12,9 +12,28 @@ const withBase = createWithBase(base);
 const essays = await getPublished('essay', {
   orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 });
+const projects = await getSortedProjects();
 
 const visibleEssays = essays.filter((entry) => !isReservedSlug(entry.data.slug ?? entry.id));
-const latest = visibleEssays.slice(0, 12);
+
+const latest = [
+  ...visibleEssays.map((entry) => ({
+    href: withBase(`/archive/${entry.data.slug ?? entry.id}/`),
+    title: entry.data.title,
+    date: entry.data.date,
+    tag: entry.data.tags?.[0] ?? '随笔',
+    excerpt: getListExcerpt(entry)
+  })),
+  ...projects.map((entry) => ({
+    href: withBase(`/projects/${getProjectSlug(entry)}/`),
+    title: entry.data.title,
+    date: entry.data.date,
+    tag: entry.data.tags?.[0] ?? '项目',
+    excerpt: entry.data.description
+  }))
+]
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .slice(0, 12);
 ---
 
 <BaseLayout bodyClass="home">
@@ -28,22 +47,17 @@ const latest = visibleEssays.slice(0, 12);
     <span class="intro__more">更多内容请访问 <a href={withBase('/archive/')}>归档</a> 或 <a href={withBase('/projects/')}>项目</a>。</span>
   </div>
 
-  <h2 class="section-title section-title--index">索引</h2>
+  <h2 class="section-title section-title--index">最近更新</h2>
 
   <div class="list">
-    {latest.map((entry) => {
-      const slug = entry.data.slug ?? entry.id;
-      const href = withBase(`/archive/${slug}/`);
-      const tag = entry.data.tags?.[0];
-      return (
-        <EntryListItem
-          href={href}
-          title={entry.data.title}
-          date={entry.data.date}
-          tag={tag}
-          excerpt={getListExcerpt(entry)}
-        />
-      );
-    })}
+    {latest.map((entry) => (
+      <EntryListItem
+        href={entry.href}
+        title={entry.title}
+        date={entry.date}
+        tag={entry.tag}
+        excerpt={entry.excerpt}
+      />
+    ))}
   </div>
 </BaseLayout>
