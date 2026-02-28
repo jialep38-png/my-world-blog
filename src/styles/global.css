@@ -577,6 +577,17 @@ hr {
   margin: 18px 0 46px;
 }
 
+.memo-toc-folders {
+  margin-bottom: 16px;
+}
+
+.memo-toc-folder-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}
+
 .memo-page .memo-toc {
   margin: var(--memo-toc-mt) 0 var(--memo-toc-mb);
 }
@@ -623,8 +634,8 @@ hr {
 
 .memo-toc .toc-items {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   padding: 12px 0 0 18px;
   margin: 0;
   list-style: none;
@@ -780,7 +791,7 @@ hr {
   }
 
   .memo-toc .toc-items {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 
 

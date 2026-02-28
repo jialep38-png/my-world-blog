@@ -16,24 +16,36 @@ if (prod && entry.data.draft) {
 
 const { Content, headings } = await render(entry);
 
-// Build a grouped TOC: H2 as section titles, H3 as items.
+// Build TOC by date (newest first) and optional folders.
 type TocItem = { text: string; slug: string };
 type TocGroup = { title: string; items: TocItem[] };
 
-const groups: TocGroup[] = [];
+const rawGroups: TocGroup[] = [];
 let current: TocGroup | null = null;
 for (const h of headings) {
   if (h.depth === 2) {
     current = { title: h.text, items: [] };
-    groups.push(current);
+    rawGroups.push(current);
   } else if (h.depth === 3) {
     if (!current) {
       current = { title: '目录', items: [] };
-      groups.push(current);
+      rawGroups.push(current);
     }
     current.items.push({ text: h.text, slug: h.slug });
   }
 }
+
+const groups = rawGroups
+  .filter((g) => g.items.length > 0)
+  .reverse()
+  .map((g) => ({ ...g, items: [...g.items].reverse() }));
+
+const folders = [
+  {
+    title: '减肥记录',
+    items: groups.flatMap((g) => g.items).filter((it) => it.text.includes('减肥'))
+  }
+].filter((folder) => folder.items.length > 0);
 ---
 
 <BaseLayout
@@ -65,6 +77,27 @@ for (const h of headings) {
   </div>
 
   <nav class="memo-toc" aria-label="目录">
+    {folders.length > 0 && (
+      <section class="memo-toc-folders" aria-labelledby="memo-folders-title">
+        <h2 id="memo-folders-title" class="memo-toc-folder-title">文件夹</h2>
+        {folders.map((folder) => (
+          <details open>
+            <summary>{folder.title}</summary>
+            <ul class="toc-items">
+              {folder.items.map((it, i) => (
+                <li>
+                  <a href={`#${it.slug}`}>
+                    <span class="toc-num">{i + 1}</span>
+                    <span>{it.text}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </section>
+    )}
+
     {groups.map((g) => (
       <details open>
         <summary>{g.title}</summary>
