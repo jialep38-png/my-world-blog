@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroImage from '../components/HeroImage.astro';
+import EntryListItem from '../components/EntryListItem.astro';
+import { getPublished, isReservedSlug } from '../lib/content';
+import { getListExcerpt } from '../utils/excerpt';
+import { createWithBase } from '../utils/format';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+
+const essays = await getPublished('essay', {
+  orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+});
+
+const visibleEssays = essays.filter((entry) => !isReservedSlug(entry.data.slug ?? entry.id));
+const latest = visibleEssays.slice(0, 12);
+---
+
+<BaseLayout bodyClass="home">
+  <h1 class="sr-only">Astro Themes by Whono</h1>
+  <div class="hero">
+    <HeroImage isLCP />
+  </div>
+
+  <div class="intro intro--serif">
+    <span class="intro__lead">这是一个开源写作主题与示例内容库:包含 随笔/essay、小记/memo、归档/archive 与 絮语/bits，使用与配置请见 README 。</span>
+    <span class="intro__more">更多文章请访问 <a href={withBase('/archive/')}>归档</a> 或 <a href={withBase('/essay/')}>随笔</a>。</span>
+  </div>
+
+  <h2 class="section-title section-title--index">索引</h2>
+
+  <div class="list">
+    {latest.map((entry) => {
+      const slug = entry.data.slug ?? entry.id;
+      const href = withBase(`/archive/${slug}/`);
+      const tag = entry.data.tags?.[0];
+      return (
+        <EntryListItem
+          href={href}
+          title={entry.data.title}
+          date={entry.data.date}
+          tag={tag}
+          excerpt={getListExcerpt(entry)}
+        />
+      );
+    })}
+  </div>
+</BaseLayout>

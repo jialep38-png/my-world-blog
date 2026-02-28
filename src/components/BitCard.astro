@@ -1,0 +1,139 @@
+---
+import { createWithBase, formatDateTime } from '../utils/format';
+import { site } from '../../site.config.mjs';
+
+const {
+  bit,
+  excerpt = '',
+  Content = null
+} = Astro.props;
+
+const tags = bit.data.tags ?? [];
+const placeTag = tags.find((t: string) => t.toLowerCase().startsWith('loc:')) ?? '';
+const placeText = placeTag ? placeTag.slice(4).trim() : '';
+const normalTags = tags.filter((t: string) => !t.toLowerCase().startsWith('loc:'));
+const normalTagItems: string[] = normalTags.map((t: string) => `#${t}`);
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+const defaultAuthorName = (site.author ?? 'Whono').trim() || 'Whono';
+const authorName = (bit.data.author?.name ?? defaultAuthorName).trim() || defaultAuthorName;
+const authorAvatarRaw = (bit.data.author?.avatar ?? site.authorAvatar ?? '').trim();
+const authorAvatar = authorAvatarRaw ? withBase(authorAvatarRaw) : '';
+const avatarLetter = Array.from(authorName)[0] ?? 'W';
+type BitImage = { src: string; width: number; height: number; alt?: string };
+const images = (bit.data.images ?? []) as BitImage[];
+const imageItems = images.map((image) => ({
+  ...image,
+  src: withBase(image.src)
+}));
+const maxVisible = 4;
+const firstImage = imageItems.length === 1 ? imageItems[0] : null;
+const totalImages = imageItems.length;
+const wideIndex = totalImages > 1 && totalImages <= maxVisible && totalImages % 2 === 1 ? 0 : -1;
+const hasTags = Boolean(placeText || normalTagItems.length);
+---
+
+<article class="bit-card" data-bit data-slug={bit.data.slug ?? bit.id}>
+  <div class="bit-author">
+    <div class={`avatar${authorAvatar ? ' avatar--image' : ' is-fallback'}`} aria-hidden="true">
+      {authorAvatar ? (
+        <img
+          src={authorAvatar}
+          alt=""
+          width="32"
+          height="32"
+          loading="lazy"
+          decoding="async"
+          onerror="this.parentElement?.classList.add('is-fallback'); this.remove();"
+        />
+      ) : null}
+      <span class="avatar-fallback">{avatarLetter}</span>
+    </div>
+    <div class="name">{authorName}</div>
+  </div>
+
+  {Content ? (
+    <div class="bit-body">
+      <Content />
+    </div>
+  ) : excerpt ? (
+    <div class="bit-body">
+      <p>{excerpt}</p>
+    </div>
+  ) : null}
+
+  {firstImage ? (
+    <div class="bit-media">
+      <img
+        src={firstImage.src}
+        alt={firstImage.alt ?? ''}
+        width={firstImage.width}
+        height={firstImage.height}
+        loading="lazy"
+      />
+    </div>
+  ) : imageItems.length > 1 ? (
+    <div class="bit-media bit-media--grid">
+      <div class="bit-media-grid">
+        {imageItems.slice(0, maxVisible).map((image, index) => {
+          const isMore = index === maxVisible - 1 && imageItems.length > maxVisible;
+          return (
+            <button
+              type="button"
+              class={`bit-media-item${index === wideIndex ? ' bit-media-item--wide' : ''}${isMore ? ' bit-media-item--more' : ''}`}
+              data-bit-image-button
+              data-bit-image-index={index}
+              aria-label={isMore ? `查看全部图片（共 ${imageItems.length} 张）` : `图片 ${index + 1}`}
+            >
+              <img
+                src={image.src}
+                alt={image.alt ?? ''}
+                width={image.width}
+                height={image.height}
+                loading="lazy"
+              />
+              {isMore ? (
+                <>
+                  <span class="bit-media-more" aria-hidden="true" data-bit-image-open-hidden={maxVisible}>
+                    <span class="bit-media-more-short">+ {imageItems.length - maxVisible}</span>
+                    <span class="bit-media-more-full">查看其余{imageItems.length - maxVisible}张</span>
+                  </span>
+                </>
+              ) : null}
+            </button>
+          );
+        })}
+      </div>
+      <script
+        type="application/json"
+        data-bit-images
+        is:inline
+        set:html={JSON.stringify(imageItems)}
+      ></script>
+    </div>
+  ) : null}
+
+  <div class="bit-meta">
+    {hasTags ? (
+      <div class="bit-tags">
+        {placeText ? (
+          <span class="bit-tag bit-tag--place">
+            <span class="bit-tag-icon" aria-hidden="true">📍</span>
+            <span class="bit-tag-text">{placeText}</span>
+          </span>
+        ) : null}
+        {normalTagItems.length ? (
+          <span class="bit-tag bit-tag--normal">
+            <span class="bit-tag-icon" aria-hidden="true">❤</span>
+            <span class="bit-tag-list">
+              {normalTagItems.map((tag) => (
+                <span class="bit-tag-token">{tag}</span>
+              ))}
+            </span>
+          </span>
+        ) : null}
+      </div>
+    ) : null}
+    <div>{formatDateTime(bit.data.date)}</div>
+  </div>
+</article>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import EssayCard from '../../../components/EssayCard.astro';
+import {
+  buildPaginatedPaths,
+  createWithBase,
+  getEssaySlug,
+  getPageSlice,
+  getTotalPages,
+  getVisibleEssays
+} from '../../../lib/content';
+import { getListExcerpt } from '../../../utils/excerpt';
+import { PAGE_SIZE_ESSAY } from '../../../../site.config.mjs';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+
+export async function getStaticPaths() {
+  const visibleEssays = await getVisibleEssays();
+  const totalPages = getTotalPages(visibleEssays.length, PAGE_SIZE_ESSAY);
+  return buildPaginatedPaths(totalPages);
+}
+
+const currentPage = Number(Astro.params.page);
+const visibleEssays = await getVisibleEssays();
+const totalPages = getTotalPages(visibleEssays.length, PAGE_SIZE_ESSAY);
+const pageEssays = getPageSlice(visibleEssays, currentPage, PAGE_SIZE_ESSAY);
+
+const showPagination = totalPages > 1;
+const prevHref = currentPage === 2
+  ? withBase('/essay/')
+  : withBase(`/essay/page/${currentPage - 1}/`);
+const nextHref = currentPage < totalPages ? withBase(`/essay/page/${currentPage + 1}/`) : null;
+const pageTitle = `随笔 · 第 ${currentPage} 页`;
+---
+
+<BaseLayout title={pageTitle} bodyClass="essay-page">
+  <div class="page-header page-header--essay page-header--with-search">
+    <div class="page-heading">
+      <h1 class="page-title">随笔</h1>
+      <span class="page-subtitle">随笔与杂记，共 {visibleEssays.length} 篇 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/essay/rss.xml')}>RSS</a></span>
+    </div>
+    <div class="page-actions">
+      <div class="entry-search" data-entry-search data-index-url={withBase('/essay/index.json')}>
+        <div class="entry-search-panel" data-entry-search-panel aria-hidden="true">
+          <input
+            data-entry-search-input
+            type="search"
+            placeholder="搜索：标题 / 摘要 / 标签"
+            autocomplete="off"
+            aria-label="搜索随笔"
+          />
+        </div>
+        <button
+          class="entry-search-toggle"
+          data-entry-search-toggle
+          type="button"
+          aria-label="搜索随笔"
+          title="搜索"
+          aria-expanded="false"
+        >
+          <Icon name="search" class="icon" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
+
+  <div class="list">
+    {pageEssays.map((e) => (
+      <EssayCard
+        href={withBase(`/archive/${getEssaySlug(e)}/`)}
+        slug={getEssaySlug(e)}
+        title={e.data.title}
+        excerpt={getListExcerpt(e)}
+        date={e.data.date}
+        tag={e.data.tags?.[0]}
+        badge={e.data.badge}
+      />
+    ))}
+  </div>
+
+  {showPagination && (
+    <nav class="pagination" aria-label="随笔分页">
+      <div class="pagination__inner">
+        <a class="pagination__link" rel="prev" href={prevHref}>上一页</a>
+        {nextHref ? (
+          <a class="pagination__link pagination__link--next" rel="next" href={nextHref}>下一页</a>
+        ) : null}
+      </div>
+    </nav>
+  )}
+
+  <script>
+    import '../../../scripts/entry-search.ts';
+  </script>
+</BaseLayout>

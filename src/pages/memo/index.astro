@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { getEntry, render } from 'astro:content';
+
+const prod = import.meta.env.PROD;
+
+const entry = await getEntry('memo', 'index');
+if (!entry) {
+  throw new Error('Missing memo page entry: src/content/memo/index.md');
+}
+if (prod && entry.data.draft) {
+  throw new Error('Memo entry is marked draft...');
+}
+
+const { Content, headings } = await render(entry);
+
+// Build a grouped TOC: H2 as section titles, H3 as items.
+type TocItem = { text: string; slug: string };
+type TocGroup = { title: string; items: TocItem[] };
+
+const groups: TocGroup[] = [];
+let current: TocGroup | null = null;
+for (const h of headings) {
+  if (h.depth === 2) {
+    current = { title: h.text, items: [] };
+    groups.push(current);
+  } else if (h.depth === 3) {
+    if (!current) {
+      current = { title: '目录', items: [] };
+      groups.push(current);
+    }
+    current.items.push({ text: h.text, slug: h.slug });
+  }
+}
+---
+
+<BaseLayout
+  title="生活小记"
+  description="整理一些值得留存的片刻与回忆。"
+  bodyClass="memo-page immersive-page"
+>
+  <div class="page-header reader-exit-anchor">
+    <h1 class="page-title">{entry.data.title}</h1>
+    {entry.data.subtitle ? <span class="page-subtitle">{entry.data.subtitle}</span> : null}
+    <button
+      id="reader-exit"
+      class="icon-button reader-exit"
+      type="button"
+      aria-label="退出阅读"
+      title="退出阅读"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <Icon name="reader-exit" class="icon" />
+    </button>
+  </div>
+
+  <div class="intro">
+    时间流经我们，如同风穿过回廊。
+    <br />总有一些瞬间，携带着特别的气息或光亮，短暂停留后便消散。
+    <br />有些感受，无法被镜头承载，有些记忆难以被影像收藏。
+    <br />也许，为瞬间的感受留下一份文字备份，正是抵抗遗忘最温柔却最有效的方式。
+  </div>
+
+  <nav class="memo-toc" aria-label="目录">
+    {groups.map((g) => (
+      <details open>
+        <summary>{g.title}</summary>
+        <ul class="toc-items">
+          {g.items.map((it, i) => (
+            <li>
+              <a href={`#${it.slug}`}>
+                <span class="toc-num">{i + 1}</span>
+                <span>{it.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    ))}
+  </nav>
+
+  <div class="memo-content prose">
+    <Content />
+  </div>
+
+  <script is:inline>
+    (() => {
+      const mq = window.matchMedia('(max-width: 640px)');
+      const sync = () => {
+        if (mq.matches) {
+          document.querySelectorAll('.memo-toc details[open]').forEach((el) => {
+            el.removeAttribute('open');
+          });
+        } else {
+          document.querySelectorAll('.memo-toc details:not([open])').forEach((el) => {
+            el.setAttribute('open', '');
+          });
+        }
+      };
+      sync();
+      mq.addEventListener('change', sync);
+
+      const content = document.querySelector('.memo-content');
+      if (content) {
+        const nodes = content.querySelectorAll('h2, h3');
+        let count = 0;
+        nodes.forEach((node) => {
+          if (node.tagName === 'H2') {
+            count = 0;
+            return;
+          }
+          if (node.tagName === 'H3') {
+            count += 1;
+            node.setAttribute('data-num', String(count));
+          }
+        });
+      }
+    })();
+  </script>
+
+  <Lightbox
+    id="lightbox"
+    label="图片预览"
+    enableZoom={false}
+    enablePan={false}
+    enableSwipeDownClose={false}
+  />
+
+  <script>
+    import { initArticleLightbox } from '../../scripts/lightbox';
+
+    initArticleLightbox({
+      dialogId: 'lightbox',
+      containerSelector: '.memo-content.prose',
+      enableZoom: false,
+      enablePan: false,
+      enableSwipeDownClose: false
+    });
+  </script>
+</BaseLayout>

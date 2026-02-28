@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BitCard from '../../components/BitCard.astro';
+import BitsDraftDialog from '../../components/BitsDraftDialog.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { render } from 'astro:content';
+import { getPublished } from '../../lib/content';
+import { cleanMarkdownToText, getBitsExcerpt } from '../../utils/excerpt';
+
+const bits = await getPublished('bits', {
+  orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+});
+
+const FULL_RENDER_LIMIT = 180;
+
+const cards = await Promise.all(
+  bits.map(async (bit) => {
+    const plain = cleanMarkdownToText(bit.body ?? '');
+    if (plain.length <= FULL_RENDER_LIMIT) {
+      const { Content } = await render(bit);
+      return { bit, excerpt: '', Content };
+    }
+    return { bit, excerpt: getBitsExcerpt(bit), Content: null };
+  })
+);
+---
+
+<BaseLayout title="絮语">
+  <div class="page-header page-header--bits">
+    <h1 class="page-title">絮语</h1>
+    <span class="page-subtitle">生活不只是长篇</span>
+  </div>
+
+  <div class="bits-toolbar">
+    <div class="bits-controls">
+      <div class="bits-search">
+        <label class="sr-only" for="bits-search">搜索絮语</label>
+        <input id="bits-search" type="search" placeholder="搜索：关键词 / 标签" autocomplete="off" />
+        <button class="bits-search-btn" id="bits-search-btn" type="button">搜索</button>
+      </div>
+      <button
+        class="new"
+        id="bits-new-btn"
+        type="button"
+        data-new-bit
+        aria-label="碎碎念"
+        aria-haspopup="dialog"
+        aria-controls="bits-draft-dialog"
+      >
+        <span class="new-icon" aria-hidden="true">✍</span>
+        <span class="new-label">碎碎念</span>
+      </button>
+    </div>
+    <div class="bits-status" id="bits-search-status" role="status" aria-live="polite"></div>
+  </div>
+
+  <div id="bits-list">
+    {cards.map(({ bit, excerpt, Content }) => (
+      <BitCard bit={bit} excerpt={excerpt} Content={Content} />
+    ))}
+  </div>
+
+  <BitsDraftDialog />
+  <Lightbox
+    id="lightbox"
+    label="图片预览"
+    enableZoom={true}
+    enablePan={true}
+    enableSwipeDownClose={true}
+    mobileNav="hidden"
+    mobileCount="hidden"
+  />
+
+  <script>
+    import '../../scripts/bits-search.ts';
+    import '../../scripts/bits-draft.ts';
+    import '../../scripts/bits-lightbox.ts';
+  </script>
+</BaseLayout>

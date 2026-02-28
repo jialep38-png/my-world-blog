@@ -1,0 +1,17 @@
+---
+import { Picture } from 'astro:assets';
+import hero from '@/assets/hero.png';
+
+const { isLCP = false } = Astro.props;
+---
+
+<Picture
+  src={hero}
+  alt="Whono theme preview"
+  widths={[360, 480, 640, 768, 900, 1200]}
+  sizes="(max-width: 768px) 92vw, 900px"
+  formats={['avif', 'webp']}
+  loading={isLCP ? 'eager' : 'lazy'}
+  decoding="async"
+  fetchpriority={isLCP ? 'high' : undefined}
+/>

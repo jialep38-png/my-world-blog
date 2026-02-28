@@ -1,0 +1,22 @@
+---
+import { formatISODate } from '../utils/format';
+
+const {
+  href,
+  title,
+  excerpt,
+  date,
+  tag
+} = Astro.props;
+---
+
+<a class="list-item list-item--link" href={href}>
+  <div class="list-item__row">
+    <h3 class="list-item__title">{title}</h3>
+  </div>
+  {excerpt ? <p class="list-item__excerpt">{excerpt}</p> : null}
+  <div class="meta-line">
+    {formatISODate(date)}
+    {tag ? <> · <span class="tag">#{tag}</span></> : null}
+  </div>
+</a>

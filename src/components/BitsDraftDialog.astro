@@ -1,0 +1,234 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../../site.config.mjs';
+---
+<dialog
+  class="bits-draft-dialog"
+  id="bits-draft-dialog"
+  aria-labelledby="bits-draft-title"
+  data-default-author-name={site.author ?? ''}
+  data-default-author-avatar={site.authorAvatar ?? ''}
+>
+  <form class="bits-draft-form" data-bits-draft-form>
+    <div class="bits-draft-head">
+      <h2 id="bits-draft-title">
+        <span class="bits-draft-title-icon" aria-hidden="true">
+          <Icon name="pen" />
+        </span>
+        碎碎念
+      </h2>
+      <button class="bits-draft-close" type="button" data-bits-draft-close aria-label="关闭">×</button>
+    </div>
+
+    <div class="bits-draft-field">
+      <div class="bits-draft-field-head">
+        <label for="bits-draft-content">正文内容</label>
+        <div class="bits-draft-toolbar" data-bits-draft-toolbar role="toolbar" aria-label="常用格式">
+          <button type="button" class="bits-draft-tool" data-action="bold" data-tip="加粗" aria-label="加粗">
+            <Icon name="bold" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="italic" data-tip="斜体" aria-label="斜体">
+            <Icon name="italic" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="code" data-tip="行内代码" aria-label="行内代码">
+            <Icon name="code" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="quote" data-tip="引用" aria-label="引用">
+            <Icon name="quote" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="list" data-tip="列表" aria-label="列表">
+            <Icon name="list" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="link" data-tip="链接" aria-label="链接">
+            <Icon name="link" />
+          </button>
+          <button type="button" class="bits-draft-tool" data-action="paragraph" data-tip="段落" aria-label="段落">
+            <Icon name="paragraph" />
+          </button>
+        </div>
+      </div>
+      <textarea
+        id="bits-draft-content"
+        name="content"
+        rows="6"
+        required
+        placeholder="写点什么…"
+      ></textarea>
+    </div>
+
+    <div class="bits-draft-row">
+      <div class="bits-draft-field bits-draft-half">
+        <label for="bits-draft-tags" class="bits-draft-label">
+          <span class="bits-draft-label-icon" aria-hidden="true">#</span>
+          标签
+        </label>
+        <input id="bits-draft-tags" name="tags" type="text" inputmode="text" placeholder="逗号或空格分隔" />
+        <div class="bits-draft-help">例：生活 阅读 / life reading</div>
+      </div>
+      <div class="bits-draft-field bits-draft-half">
+        <label for="bits-draft-place" class="bits-draft-label">
+          <span class="bits-draft-label-icon" aria-hidden="true">
+            <Icon name="map-pin" />
+          </span>
+          地点（可选）
+        </label>
+        <input id="bits-draft-place" name="place" type="text" inputmode="text" placeholder="例如:上海" />
+        <div class="bits-draft-help">生成 tags 里的 loc:&lt;地点&gt;</div>
+      </div>
+    </div>
+
+    <div class="bits-draft-stack">
+      <div class="bits-draft-field">
+        <div class="bits-draft-field-head bits-draft-image-head">
+          <div class="bits-draft-field-title">
+            <label>插入图片（可选）</label>
+            <button class="bits-draft-image-add" type="button" data-bits-image-add>+ 添加</button>
+          </div>
+          <div class="bits-draft-help">自动读取图片尺寸</div>
+        </div>
+        <div class="bits-draft-images" data-bits-images>
+          <div class="bits-draft-image-row" data-bits-image-row>
+            <div class="bits-draft-image-src-wrap">
+              <input
+                class="bits-draft-image-src"
+                data-bits-image-src
+                type="text"
+                inputmode="url"
+                placeholder="bits/xxx.jpg 或 https://..."
+              />
+              <button class="bits-draft-image-clear" type="button" data-bits-image-remove aria-label="移除图片">x</button>
+            </div>
+            <input
+              class="bits-draft-image-dim"
+              data-bits-image-width
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="宽度"
+            />
+            <input
+              class="bits-draft-image-dim"
+              data-bits-image-height
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="高度"
+            />
+          </div>
+        </div>
+        <template data-bits-image-template>
+          <div class="bits-draft-image-row" data-bits-image-row>
+            <div class="bits-draft-image-src-wrap">
+              <input
+                class="bits-draft-image-src"
+                data-bits-image-src
+                type="text"
+                inputmode="url"
+                placeholder="bits/xxx.jpg 或 https://..."
+              />
+              <button class="bits-draft-image-clear" type="button" data-bits-image-remove aria-label="移除图片">x</button>
+            </div>
+            <input
+              class="bits-draft-image-dim"
+              data-bits-image-width
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="宽度"
+            />
+            <input
+              class="bits-draft-image-dim"
+              data-bits-image-height
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="高度"
+            />
+          </div>
+        </template>
+      </div>
+
+      <div class="bits-draft-status" data-bits-draft-status role="status" aria-live="polite"></div>
+      <div class="bits-draft-link-row">
+        <button class="bits-draft-link" type="button" data-bits-manual-open hidden>
+          <span class="bits-draft-link-icon" aria-hidden="true">
+            <Icon name="eye" />
+          </span>
+          <span>预览草稿</span>
+          <span class="bits-draft-link-caret" aria-hidden="true">
+            <Icon name="chevron-down" />
+          </span>
+        </button>
+      </div>
+
+      <div class="bits-draft-manual" data-bits-manual hidden>
+        <div class="bits-draft-manual-title">草稿内容（只读）</div>
+        <textarea class="bits-draft-manual-textarea" data-bits-manual-textarea rows="6" readonly></textarea>
+        <div class="bits-draft-manual-actions">
+          <div class="bits-draft-manual-note" data-bits-manual-note></div>
+          <button class="bits-draft-secondary" type="button" data-bits-manual-copy>手动复制</button>
+        </div>
+      </div>
+
+      <div class="bits-identity-bar" data-identity-bar>
+        <div class="bits-identity-caption">
+          <span class="bits-identity-label-icon" aria-hidden="true">
+            <Icon name="user-circle" />
+          </span>
+          <span>作者（可选）</span>
+        </div>
+        <div class="bits-identity-row">
+          <div class="bits-identity-controls">
+            <button class="bits-identity-pill" type="button" data-identity-pill>
+              <span class="bits-identity-avatar" data-identity-avatar aria-hidden="true"></span>
+              <span class="bits-identity-name" data-identity-name></span>
+            </button>
+          </div>
+          <button class="bits-identity-new" type="button" data-identity-new>自定义作者</button>
+        </div>
+      </div>
+
+      <details class="bits-identity-advanced" data-identity-details>
+        <summary class="bits-identity-summary" aria-hidden="true">
+          身份设置
+          <span class="bits-identity-hint">留空使用默认</span>
+        </summary>
+        <div class="bits-identity-fields">
+          <label class="bits-identity-label">
+            <span class="bits-identity-label-title">作者名</span>
+            <input type="text" name="authorName" inputmode="text" data-author-name />
+        </label>
+        <label class="bits-identity-label">
+          <span class="bits-identity-label-row">
+            <span class="bits-identity-label-title">头像路径（URL）</span>
+            <span class="bits-identity-label-hint">留空用默认头像；加载失败则显示首字符</span>
+          </span>
+          <input type="text" name="authorAvatar" inputmode="url" data-author-avatar />
+        </label>
+        </div>
+        <div class="bits-identity-meta">
+          <p class="bits-identity-note">
+            留空即用当前作者，本条不会写入 author
+          </p>
+          <button type="button" class="bits-identity-reset" data-author-reset>恢复默认</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="bits-draft-footer">
+      <div class="bits-draft-check">
+        <input id="bits-draft-draft" name="draft" type="checkbox" />
+        <label for="bits-draft-draft">标记为草稿</label>
+        <span class="bits-draft-check-help">草稿:线上/预览默认不显示</span>
+      </div>
+      <div class="bits-draft-actions">
+        <button class="bits-draft-primary" type="button" data-bits-draft-generate>生成并复制</button>
+        <button class="bits-draft-secondary" type="button" data-bits-draft-download>下载 .md</button>
+      </div>
+    </div>
+  </form>
+</dialog>

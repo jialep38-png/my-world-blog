@@ -1,0 +1,151 @@
+---
+import Sidebar from '../components/Sidebar.astro';
+import Icon from '../components/Icon.astro';
+import '../styles/global.css';
+import { site, hasSiteUrl } from '../../site.config.mjs';
+import { createWithBase } from '../utils/format';
+
+const {
+  title,
+  description,
+  image,
+  ogType = 'website',
+  bodyClass,
+} = Astro.props;
+
+const siteTitle = site.title;
+const brandTitle = site.brandTitle ?? siteTitle;
+const metaDescription = description ?? site.description;
+const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+const canonical = (hasSiteUrl && Astro.site)
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : null;
+const ogImage = image
+  ? ((hasSiteUrl && Astro.site) ? new URL(image, Astro.site).toString() : image)
+  : null;
+const startYear = 2025;
+const currentYear = new Date().getFullYear();
+const yearRange = currentYear > startYear ? `${startYear}-${currentYear}` : `${startYear}`;
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script is:inline>
+      (() => {
+        const key = 'theme';
+        let stored = null;
+        try { stored = localStorage.getItem(key); } catch (_) {}
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored === 'dark' || stored === 'light' ? stored : (prefersDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href={withBase('favicon.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32x32.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('apple-touch-icon.png')} />
+    <title>{fullTitle}</title>
+    {metaDescription && <meta name="description" content={metaDescription} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:title" content={fullTitle} />
+    {metaDescription && <meta property="og:description" content={metaDescription} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:type" content={ogType} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={fullTitle} />
+    {metaDescription && <meta name="twitter:description" content={metaDescription} />}
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#content">跳到内容</a>
+    <div class="shell">
+      <Sidebar siteTitle={brandTitle} />
+      <div class="divider" aria-hidden="true"></div>
+      <main id="content" class="content" tabindex="-1">
+        <div class="content__inner">
+          <slot />
+          <footer class="site-footer">© {yearRange} Whono · Theme Demo · by cxro</footer>
+        </div>
+      </main>
+    </div>
+    <template id="scroll-top-template">
+      <button
+        type="button"
+        class="icon-button float-action scroll-top"
+        aria-label="回到顶部"
+        title="回到顶部"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <Icon name="chevron-up" class="icon" />
+      </button>
+    </template>
+    <script is:inline>
+      (() => {
+        const buttons = document.querySelectorAll('.code-copy');
+        if (!buttons.length) return;
+
+        buttons.forEach((button) => {
+          button.disabled = false;
+        });
+
+        document.addEventListener('click', async (event) => {
+          const button = event.target.closest('.code-copy');
+          if (!button) return;
+
+          const code = button.closest('.code-block')?.querySelector('pre code');
+          const text = code?.textContent ?? '';
+          if (!text) return;
+
+          const canClipboard = !!(navigator.clipboard && typeof navigator.clipboard.writeText === 'function' && window.isSecureContext);
+          const legacyCopy = (value) => {
+            const helper = document.createElement('textarea');
+            helper.value = value;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.opacity = '0';
+            document.body.appendChild(helper);
+            helper.select();
+            const docAny = /** @type {any} */ (document);
+            const ok = typeof docAny.execCommand === 'function' ? docAny.execCommand('copy') : false;
+            helper.remove();
+            return ok;
+          };
+
+          let copied = false;
+          if (canClipboard) {
+            try {
+              await navigator.clipboard.writeText(text);
+              copied = true;
+            } catch (_) {
+              copied = false;
+            }
+          } else {
+            copied = legacyCopy(text);
+          }
+
+          if (!copied) return;
+
+          button.dataset.state = 'copied';
+          button.setAttribute('aria-label', '已复制');
+          button.setAttribute('title', '已复制');
+          window.setTimeout(() => {
+            button.dataset.state = 'idle';
+            button.setAttribute('aria-label', '复制代码');
+            button.setAttribute('title', '复制代码');
+          }, 1200);
+        });
+      })();
+    </script>
+    <script>
+      import '../scripts/sidebar-theme.ts';
+    </script>
+  </body>
+</html>

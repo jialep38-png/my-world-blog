@@ -1,0 +1,245 @@
+/* ===============================
+   Code Styling
+   - Astro 常输出 <pre class="astro-code">（带行内背景/颜色）
+   - 部分环境会输出 <pre class="shiki">
+   - 覆盖背景，并在深色模式下映射 token 颜色
+================================ */
+
+/* 覆盖行内背景 */
+pre:is(.astro-code, .shiki) {
+  background-color: var(--code-content-bg) !important;
+}
+
+/* 可选：移除 token 背景，避免条纹感 */
+pre:is(.astro-code, .shiki) span {
+  background-color: transparent !important;
+}
+
+/* token 颜色映射（仅在存在 Shiki 变量时启用） */
+pre:is(.astro-code, .shiki) span[style*="--shiki-light"] {
+  color: var(--shiki-light) !important;
+}
+
+:root[data-theme="dark"] pre:is(.astro-code, .shiki) span[style*="--shiki-dark"] {
+  color: var(--shiki-dark) !important;
+}
+
+/* 暗色模式兜底：纯文本代码块可能无 token span，需强制基础文字色 */
+:root[data-theme="dark"] pre:is(.astro-code, .shiki) {
+  color: var(--shiki-dark, var(--text)) !important;
+}
+
+/* 代码块容器 */
+.prose .code-block {
+  position: relative;
+  margin: 1.5em 0;
+  border: 1px solid var(--code-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-content-bg);
+}
+
+.prose .code-block pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--code-content-bg);
+}
+
+/* 行号（仅正文 .prose，默认开启，可通过 data-line-numbers="off" 关闭） */
+.prose pre:is(.astro-code, .shiki):not([data-line-numbers="off"]) {
+  counter-reset: line;
+  --ln-width: 2.5ch;
+  --ln-gap: 3ch;
+  --code-pad-x: 16px;
+}
+
+.prose pre:is(.astro-code, .shiki):has(.line):not([data-line-numbers="off"]) {
+  padding-left: 0;
+}
+
+.prose pre:is(.astro-code, .shiki):not([data-line-numbers="off"]) .line {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  position: relative;
+  padding-left: var(--code-pad-x);
+}
+
+.prose pre:is(.astro-code, .shiki):not([data-line-numbers="off"]) .line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: static;
+  display: inline-block;
+  width: var(--ln-width);
+  min-width: var(--ln-width);
+  text-align: right;
+  margin-right: var(--ln-gap);
+  box-sizing: border-box;
+  line-height: inherit;
+  color: var(--muted);
+  opacity: 0.7;
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  pointer-events: none;
+}
+
+.prose pre:is(.astro-code, .shiki)[data-line-numbers="off"] .line::before {
+  content: none;
+}
+
+.prose pre:is(.astro-code, .shiki)[data-line-numbers="off"] .line {
+  padding-left: 0;
+}
+
+@supports (color: color-mix(in oklab, black, white)) {
+  .prose pre:is(.astro-code, .shiki):not([data-line-numbers="off"]) .line::before {
+    color: color-mix(in oklab, var(--muted) 70%, var(--code-content-bg));
+    opacity: 1;
+  }
+}
+
+/* 代码块工具栏（仅正文 .prose，构建时注入） */
+.code-block .code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 38px;
+  background: var(--code-header-bg);
+  border-bottom: 1px solid var(--code-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.code-block .code-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--code-text);
+}
+
+.code-block .code-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-block .code-info {
+  color: var(--faint);
+}
+
+.code-block .code-separator {
+  color: var(--faint);
+  user-select: none;
+}
+
+.code-block .code-copy {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.code-block .code-copy:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.code-block .code-copy:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--code-action-hover-bg);
+}
+
+.code-block .code-copy:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.code-block .code-copy svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.code-block .code-copy .icon-check {
+  display: none;
+}
+
+.code-block .code-copy[data-state="copied"] .icon-copy {
+  display: none;
+}
+
+.code-block .code-copy[data-state="copied"] .icon-check {
+  display: block;
+}
+
+/* 语言图标基础样式 */
+.code-block .code-lang-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  display: inline-block;
+  color: var(--muted);
+  opacity: 0.8;
+  transition: color 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+/* 彩色图标：默认灰度化，hover 恢复 */
+.code-block .code-lang-icon.is-colored {
+  color: inherit;
+  filter: grayscale(100%);
+  opacity: 0.65;
+}
+
+/* hover 触发范围：仅 toolbar（避免滑过长代码块时频繁变色） */
+.code-block .code-toolbar:hover .code-lang-icon:not(.is-colored) {
+  color: var(--code-text);
+  opacity: 1;
+}
+
+.code-block .code-toolbar:hover .code-lang-icon.is-colored {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .code-block .code-toolbar {
+    height: auto;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .code-block .code-lang {
+    font-size: 12px;
+  }
+
+  .code-block .code-meta {
+    margin-left: auto;
+  }
+
+  .code-block .code-info,
+  .code-block .code-separator {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-block .code-lang-icon {
+    transition: none;
+  }
+}

@@ -1,0 +1,265 @@
+---
+import Icon from './Icon.astro';
+import { formatISODate } from '../utils/format';
+import { PROJECT_STATUS_LABELS, type ProjectStatus } from '../lib/content';
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  status: ProjectStatus;
+  stack?: string[];
+  links?: { github?: string | undefined; demo?: string | undefined } | undefined;
+  cover?: string | undefined;
+}
+
+const { href, title, description, date, status, stack = [], links, cover } = Astro.props;
+const statusLabel = PROJECT_STATUS_LABELS[status];
+---
+
+<article class="project-card">
+  {cover && (
+    <div class="project-card__cover">
+      <img src={cover} alt={title} loading="lazy" />
+    </div>
+  )}
+  <div class="project-card__body">
+    <div class="project-card__header">
+      <span class={`project-card__status project-card__status--${status}`}>{statusLabel}</span>
+      <h3 class="project-card__title">
+        <a href={href} class="project-card__main-link">{title}</a>
+      </h3>
+    </div>
+    <p class="project-card__desc">{description}</p>
+    {stack.length > 0 && (
+      <div class="project-card__stack">
+        {stack.map((tech) => (
+          <span class="project-card__tech">{tech}</span>
+        ))}
+      </div>
+    )}
+    <div class="project-card__footer">
+      <span class="project-card__date">{formatISODate(date)}</span>
+      {links && (
+        <div class="project-card__links">
+          {links.github && (
+            <a
+              href={links.github}
+              class="project-card__link"
+              title="GitHub"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="github" size={18} />
+            </a>
+          )}
+          {links.demo && (
+            <a
+              href={links.demo}
+              class="project-card__link"
+              title="Demo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="link" size={18} />
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--code-content-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .project-card:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .project-card__main-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .project-card__main-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .project-card__main-link:focus-visible {
+    outline: none;
+  }
+
+  .project-card__cover {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--code-header-bg);
+  }
+
+  .project-card__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-card__body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .project-card__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .project-card__status {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .project-card__status--planned {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .project-card__status--in-progress {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .project-card__status--shipped {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  .project-card__status--paused {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  .project-card__status--archived {
+    background: #f3f4f6;
+    color: #9ca3af;
+  }
+
+  :root[data-theme="dark"] .project-card__status--planned {
+    background: #374151;
+    color: #9ca3af;
+  }
+
+  :root[data-theme="dark"] .project-card__status--in-progress {
+    background: #1e3a5f;
+    color: #60a5fa;
+  }
+
+  :root[data-theme="dark"] .project-card__status--shipped {
+    background: #14532d;
+    color: #4ade80;
+  }
+
+  :root[data-theme="dark"] .project-card__status--paused {
+    background: #451a03;
+    color: #fbbf24;
+  }
+
+  :root[data-theme="dark"] .project-card__status--archived {
+    background: #374151;
+    color: #6b7280;
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .project-card__desc {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-card__tech {
+    padding: 2px 8px;
+    background: var(--code-header-bg);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .project-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .project-card__date {
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  .project-card__links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .project-card__link {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    color: var(--muted);
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .project-card__link:hover {
+    color: var(--text);
+    background: var(--code-header-bg);
+  }
+</style>

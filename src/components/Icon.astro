@@ -1,0 +1,580 @@
+---
+type IconName =
+  | 'book-open'
+  | 'book-closed'
+  | 'reader-exit'
+  | 'rss'
+  | 'moon'
+  | 'sun'
+  | 'search'
+  | 'pen'
+  | 'bold'
+  | 'italic'
+  | 'code'
+  | 'quote'
+  | 'list'
+  | 'link'
+  | 'paragraph'
+  | 'map-pin'
+  | 'eye'
+  | 'chevron-down'
+  | 'chevron-up'
+  | 'user-circle'
+  | 'github'
+  | 'x-twitter'
+  | 'mail';
+
+interface Props {
+  name: IconName;
+  size?: number | string;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  name,
+  size,
+  class: className = '',
+  ariaLabel
+} = Astro.props as Props;
+
+const iconSize = size ?? 24;
+const ariaHidden = ariaLabel ? undefined : 'true';
+const role = ariaLabel ? 'img' : undefined;
+---
+
+{name === 'book-open' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M12 6c-2-1.3-4.5-2-7-2v14c2.5 0 5 .7 7 2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12 6c2-1.3 4.5-2 7-2v14c-2.5 0-5 .7-7 2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12 6.5V17.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+)}
+
+{name === 'book-closed' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M7 4.5h9a2.5 2.5 0 0 1 2.5 2.5V19"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M7 19V4.5M7 19h9"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12 6.5V17.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+)}
+
+{name === 'reader-exit' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M6 4.5h9.5a2.5 2.5 0 0 1 2.5 2.5V19"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M6 19V4.5M6 19h9.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M14.2 12H10.6"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M10.6 12l2-2M10.6 12l2 2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+)}
+
+{name === 'rss' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <circle cx="6" cy="18" r="1.8" fill="currentColor" />
+    <path
+      d="M4 11a9 9 0 0 1 9 9"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+    />
+    <path
+      d="M4 5a15 15 0 0 1 15 15"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+    />
+  </svg>
+)}
+
+{name === 'moon' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+)}
+
+{name === 'sun' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="4.2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    />
+    <path
+      d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12h2.5M19 12h2.5M4.2 19.8l1.8-1.8M18 6l1.8-1.8"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+    />
+  </svg>
+)}
+
+{name === 'search' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+    <path d="M16 16L20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+  </svg>
+)}
+
+{name === 'pen' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M12 20h9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+)}
+
+{name === 'bold' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M6 4h8a4 4 0 0 1 0 8H6z" />
+    <path d="M6 12h9a4 4 0 0 1 0 8H6z" />
+  </svg>
+)}
+
+{name === 'italic' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <line x1="19" y1="4" x2="10" y2="4" />
+    <line x1="14" y1="20" x2="5" y2="20" />
+    <line x1="15" y1="4" x2="9" y2="20" />
+  </svg>
+)}
+
+{name === 'code' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+)}
+
+{name === 'quote' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M3 21c3 0 6-1 6-4v-6c0-3-3-4-6-4v4c1 0 2 1 2 2v4H3z" />
+    <path d="M15 21c3 0 6-1 6-4v-6c0-3-3-4-6-4v4c1 0 2 1 2 2v4h-2z" />
+  </svg>
+)}
+
+{name === 'list' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <line x1="8" y1="6" x2="21" y2="6" />
+    <line x1="8" y1="12" x2="21" y2="12" />
+    <line x1="8" y1="18" x2="21" y2="18" />
+    <line x1="3" y1="6" x2="3.01" y2="6" />
+    <line x1="3" y1="12" x2="3.01" y2="12" />
+    <line x1="3" y1="18" x2="3.01" y2="18" />
+  </svg>
+)}
+
+{name === 'link' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M10 13a5 5 0 0 1 7 0l1 1a5 5 0 0 1-7 7l-1-1" />
+    <path d="M14 11a5 5 0 0 1-7 0l-1-1a5 5 0 0 1 7-7l1 1" />
+  </svg>
+)}
+
+{name === 'paragraph' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M20 5v6a4 4 0 0 1-4 4H5" />
+    <path d="M9 9l-4 4 4 4" />
+  </svg>
+)}
+
+{name === 'map-pin' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+  </svg>
+)}
+
+{name === 'eye' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+)}
+
+{name === 'chevron-down' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+)}
+
+{name === 'chevron-up' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path d="M8 5l8 7-8 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-90 12 12)" />
+  </svg>
+)}
+
+{name === 'user-circle' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <circle cx="12" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6" />
+    <path d="M4.5 20c1.6-3 5-4.6 7.5-4.6s5.9 1.6 7.5 4.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+)}
+
+{name === 'github' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M12 2c-5.5 0-10 4.6-10 10.2 0 4.5 2.9 8.3 6.9 9.7.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.3-2.2-.3-4.5-1.1-4.5-5 0-1.1.4-2.1 1-2.8-.1-.3-.4-1.4.1-2.8 0 0 .8-.3 2.9 1.1a9.6 9.6 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.5 1.4.2 2.5.1 2.8.7.7 1 1.7 1 2.8 0 4-2.3 4.7-4.5 5 .4.4.8 1 .8 2.1v3.1c0 .3.2.6.7.5 4-1.4 6.9-5.2 6.9-9.7C22 6.6 17.5 2 12 2z"
+      fill="currentColor"
+    />
+  </svg>
+)}
+
+{name === 'x-twitter' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M4.5 4h4.4l3.4 4.7L16.7 4H20l-5.3 7.4L20.4 20h-4.4l-3.9-5.3L8.3 20H5l5.8-8.1L4.5 4z"
+      fill="currentColor"
+    />
+  </svg>
+)}
+
+{name === 'mail' && (
+  <svg
+    class={className}
+    width={iconSize}
+    height={iconSize}
+    viewBox="0 0 24 24"
+    aria-hidden={ariaHidden}
+    aria-label={ariaLabel}
+    role={role}
+    focusable="false"
+  >
+    <path
+      d="M4 6.5h16a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2z"
+      fill="currentColor"
+    />
+    <path
+      d="M4.8 8.6 12 13.2l7.2-4.6"
+      fill="none"
+      stroke="var(--panel)"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+)}

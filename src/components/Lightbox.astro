@@ -1,0 +1,45 @@
+---
+const {
+  id = 'lightbox',
+  className = '',
+  label = '图片预览',
+  enableZoom = false,
+  enablePan = false,
+  enableSwipeDownClose = false,
+  mobileNav = 'bottom',
+  mobileCount = 'visible'
+} = Astro.props;
+
+const classes = className ? `lightbox ${className}` : 'lightbox';
+---
+
+<dialog
+  class={classes}
+  id={id}
+  aria-label={label}
+  aria-hidden="true"
+  data-lightbox
+  data-enable-zoom={enableZoom ? 'true' : 'false'}
+  data-enable-pan={enablePan ? 'true' : 'false'}
+  data-enable-swipe-down={enableSwipeDownClose ? 'true' : 'false'}
+  data-mobile-nav={mobileNav}
+  data-mobile-count={mobileCount}
+  tabindex="-1"
+  hidden
+>
+  <button class="lightbox-close" type="button" data-lightbox-close aria-label="关闭">×</button>
+  <div class="lightbox-navs" aria-hidden="true">
+    <button class="lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="上一张">‹</button>
+    <button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="下一张">›</button>
+  </div>
+  <figure class="lightbox-figure">
+    <img data-lightbox-image alt="" />
+    <figcaption class="lightbox-meta">
+      <span class="lightbox-caption" data-lightbox-caption hidden></span>
+      <span class="lightbox-meta-row">
+        <span class="lightbox-count" data-lightbox-count aria-live="polite"></span>
+        <span class="lightbox-dots" data-lightbox-dots aria-hidden="true"></span>
+      </span>
+    </figcaption>
+  </figure>
+</dialog>

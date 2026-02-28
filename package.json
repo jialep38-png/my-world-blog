@@ -1,0 +1,54 @@
+{
+  "name": "astro-whono",
+  "version": "0.1.1",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cxro/astro-whono.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cxro/astro-whono/issues"
+  },
+  "homepage": "https://astro.whono.me",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "audit:prod": "npm audit --omit=dev --audit-level=high --registry=https://registry.npmjs.org",
+    "check:callout": "node ./scripts/check-callout.mjs",
+    "check:codeblock": "node ./scripts/check-codeblock.mjs",
+    "check:gallery": "node ./scripts/check-gallery.mjs",
+    "ci": "npm run check && npm run build && npm run check:callout && npm run check:codeblock && npm run check:gallery && npm run check:figure --if-present",
+    "font:charset": "node ./scripts/font-charset.mjs",
+    "font:subset": "node ./scripts/font-subset.mjs",
+    "font:build": "npm run font:charset && npm run font:subset",
+    "new:bit": "node ./scripts/new-bit.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.16.9"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@iconify-json/logos": "^1.2.0",
+    "@iconify-json/simple-icons": "^1.2.0",
+    "@types/node": "^22.0.0",
+    "rehype-raw": "^7.0.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-directive": "^4.0.0",
+    "ttf2woff2": "^8.0.0",
+    "typescript": "^5.9.3",
+    "unist-util-visit": "^5.0.0"
+  },
+  "overrides": {
+    "fast-xml-parser": "^5.3.4",
+    "tar": "^7.5.7"
+  }
+}

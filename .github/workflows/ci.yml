@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve Node version
+        id: node
+        shell: bash
+        run: |
+          if [ -f .nvmrc ]; then
+            version="$(cat .nvmrc)"
+          else
+            version="$(grep -E '"node"\s*:' package.json | head -n 1 | sed -E 's/.*"node"\s*:\s*"([^"]+)".*/\1/')"
+          fi
+          if [ -z "$version" ]; then
+            version="20"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node.outputs.version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security audit (prod dependencies)
+        run: npm run audit:prod
+
+      - name: Run CI
+        run: npm run ci

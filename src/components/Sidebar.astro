@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { createWithBase } from '../utils/format';
+
+const { siteTitle = 'Whono' } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+const homeHref = withBase('/');
+
+const nav = [
+  { label: '随笔', href: withBase('/essay/') },
+  { label: '项目', href: withBase('/projects/') },
+  { label: '絮语', href: withBase('/bits/') },
+  { label: '小记', href: withBase('/memo/') },
+  { label: '归档', href: withBase('/archive/') },
+  { label: '关于', href: withBase('/about/') }
+];
+
+const quote = 'A minimal Astro theme\nfor essays, notes, and docs.\nDesigned for reading,\nopen-source.';
+---
+
+<aside class="sidebar">
+  <a class="sidebar__title" href={homeHref} aria-label={`${siteTitle} 首页`}>{siteTitle}</a>
+
+  <div class="sidebar__quote">
+    {quote.split('\n').map((line) => (
+      <>
+        {line}<br />
+      </>
+    ))}
+  </div>
+
+  <ul class="nav">
+    {nav.map((item) => {
+      const isActive = pathname === item.href || (item.href !== homeHref && pathname.startsWith(item.href));
+      return (
+        <li>
+          <a href={item.href} aria-current={isActive ? 'page' : undefined}>
+            <span>{item.label}</span>
+            <span class="dot" aria-hidden="true"></span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+
+  <div class="sidebar-actions">
+    <button
+      id="reader-toggle"
+      class="icon-button reader-toggle"
+      type="button"
+      aria-label="阅读模式"
+      aria-pressed="false"
+      title="阅读模式"
+    >
+      <Icon name="book-open" class="icon icon-book-open" />
+      <Icon name="book-closed" class="icon icon-book-closed" />
+    </button>
+
+    <a class="icon-button rss-link" href={withBase('/archive/rss.xml')} aria-label="RSS 订阅" title="RSS 订阅">
+      <Icon name="rss" class="icon" />
+    </a>
+
+    <button
+      id="theme-toggle"
+      class="icon-button theme-toggle"
+      type="button"
+      aria-label="夜间模式"
+      aria-pressed="false"
+      title="夜间模式"
+    >
+      <Icon name="moon" class="icon icon-moon" />
+      <Icon name="sun" class="icon icon-sun" />
+    </button>
+  </div>
+</aside>
+

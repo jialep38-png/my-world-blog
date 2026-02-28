@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import {
+  buildPaginatedPaths,
+  createWithBase,
+  getArchiveEssays,
+  getEssaySlug,
+  getPageSlice,
+  getTotalPages
+} from '../../../lib/content';
+import { groupByYear, formatMonthDay, formatISODate } from '../../../utils/format';
+import { PAGE_SIZE_ARCHIVE } from '../../../../site.config.mjs';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+
+export async function getStaticPaths() {
+  const archiveItems = await getArchiveEssays();
+  const totalPages = getTotalPages(archiveItems.length, PAGE_SIZE_ARCHIVE);
+  return buildPaginatedPaths(totalPages);
+}
+
+const currentPage = Number(Astro.params.page);
+const archiveItems = await getArchiveEssays();
+const totalPages = getTotalPages(archiveItems.length, PAGE_SIZE_ARCHIVE);
+const pageItems = getPageSlice(archiveItems, currentPage, PAGE_SIZE_ARCHIVE);
+const groups = groupByYear(pageItems, (entry) => entry.data.date);
+
+const showPagination = totalPages > 1;
+const prevHref = currentPage === 2
+  ? withBase('/archive/')
+  : withBase(`/archive/page/${currentPage - 1}/`);
+const nextHref = currentPage < totalPages ? withBase(`/archive/page/${currentPage + 1}/`) : null;
+const pageTitle = `归档 · 第 ${currentPage} 页`;
+---
+
+<BaseLayout title={pageTitle}>
+  <div class="page-header page-header--with-search">
+    <div class="page-heading">
+      <h1 class="page-title">归档</h1>
+      <span class="page-subtitle">共 {archiveItems.length} 篇内容 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/archive/rss.xml')}>RSS</a></span>
+    </div>
+    <div class="page-actions">
+      <div
+        class="entry-search"
+        data-entry-search
+        data-index-url={withBase('/archive/index.json')}
+        data-section-selector="[data-entry-section]"
+      >
+        <div class="entry-search-panel" data-entry-search-panel aria-hidden="true">
+          <input
+            data-entry-search-input
+            type="search"
+            placeholder="搜索：标题 / 摘要 / 标签"
+            autocomplete="off"
+            aria-label="搜索归档"
+          />
+        </div>
+        <button
+          class="entry-search-toggle"
+          data-entry-search-toggle
+          type="button"
+          aria-label="搜索归档"
+          title="搜索"
+          aria-expanded="false"
+        >
+          <Icon name="search" class="icon" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
+
+  {groups.map((g) => (
+    <section data-entry-section>
+      <h2 class="archive-year">{g.year}</h2>
+      <div class="archive-list">
+        {g.list.map((entry) => {
+          const slug = getEssaySlug(entry);
+          const href = withBase(`/archive/${slug}/`);
+          const tag = entry.data.tags?.[0];
+          return (
+          <div class="archive-row" data-entry-item data-slug={slug}>
+            <div class="archive-title">
+              <a href={href}>{entry.data.title}</a>
+            </div>
+            <div class="archive-meta">
+              <div class="archive-date">
+                <span class="archive-date-md">{formatMonthDay(entry.data.date)}</span>
+                <span class="archive-date-full">{formatISODate(entry.data.date)}</span>
+              </div>
+              {tag ? (
+                <div class="archive-tag">#{tag}</div>
+              ) : null}
+            </div>
+          </div>
+        );
+        })}
+      </div>
+    </section>
+  ))}
+
+  {showPagination && (
+    <nav class="pagination" aria-label="归档分页">
+      <div class="pagination__inner">
+        <a class="pagination__link" rel="prev" href={prevHref}>上一页</a>
+        {nextHref ? (
+          <a class="pagination__link pagination__link--next" rel="next" href={nextHref}>下一页</a>
+        ) : null}
+      </div>
+    </nav>
+  )}
+
+  <script>
+    import '../../../scripts/entry-search.ts';
+  </script>
+</BaseLayout>

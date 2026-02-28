@@ -1,0 +1,29 @@
+---
+import { formatISODate } from '../utils/format';
+
+const {
+  href,
+  title,
+  excerpt,
+  date,
+  tag,
+  badge = '随笔',
+  slug = ''
+} = Astro.props;
+
+const displayBadge = badge?.trim() ? badge : '随笔';
+---
+
+<a class="list-item list-item--link" href={href} data-entry-item data-slug={slug || undefined}>
+  <div class="list-item__row">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="badge">{displayBadge}</span>
+      <h3 class="list-item__title" style="margin:0;">{title}</h3>
+    </div>
+  </div>
+  {excerpt ? <p class="list-item__excerpt">{excerpt}</p> : null}
+  <div class="meta-line">
+    发布于：{formatISODate(date)}
+    {tag ? <> · <span class="tag">#{tag}</span></> : null}
+  </div>
+</a>

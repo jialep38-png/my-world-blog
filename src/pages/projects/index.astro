@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getSortedProjects, getProjectSlug } from '../../lib/content';
+import { createWithBase } from '../../utils/format';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+const projects = await getSortedProjects();
+---
+
+<BaseLayout title="项目" bodyClass="projects-page">
+  <div class="page-header">
+    <div class="page-heading">
+      <h1 class="page-title">项目</h1>
+      <span class="page-subtitle">做过的项目与玩过的东西，共 {projects.length} 个</span>
+    </div>
+  </div>
+
+  <div class="projects-grid">
+    {projects.map((p) => (
+      <ProjectCard
+        href={withBase(`/projects/${getProjectSlug(p)}/`)}
+        title={p.data.title}
+        description={p.data.description}
+        date={p.data.date}
+        status={p.data.status}
+        stack={p.data.stack}
+        links={p.data.links}
+        cover={p.data.cover}
+      />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>
