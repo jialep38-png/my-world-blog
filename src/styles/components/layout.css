@@ -770,3 +770,17 @@ body.memo-page[data-reading="immersive"] .prose {
 body.memo-page[data-reading="immersive"] .prose p {
   margin: 14px 0;
 }
+
+/* ===============================
+   评论区
+================================ */
+.comments {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.comments__title {
+  font-size: 18px;
+  margin: 0 0 16px;
+}
