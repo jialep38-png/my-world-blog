@@ -11,7 +11,7 @@ if (!hasSiteUrl && process.env.NODE_ENV === 'production') {
 
 export const site = {
   url: hasSiteUrl ? siteUrl : fallbackSiteUrl,
-  title: '霁月',
+  title: '霁风的小圈',
   brandTitle: 'Ji_Feng',
   author: '霁风',
   authorAvatar: 'author/avatar.jpg',
