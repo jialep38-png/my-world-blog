@@ -84,10 +84,23 @@ npm run preview  # 预览构建结果
 
 ## 自定义命令 (Skills)
 
-- `/write-blog <项目路径>` - 从项目自动生成博客内容
+- `/write-blog <项目路径>` - 生成草稿内容（默认 `draft: true`，不负责发布）
   - `--mode=project` 只生成项目介绍
   - `--mode=essay` 只生成复盘文章
-  - `--mode=both` 同时生成（默认）
+  - `--mode=both` 先生成 project，再生成 essay，并确保 `essay.project` 指向 project slug
+- `/publish-blog <file...>` - 上线闸门命令（负责校验 + draft 翻转 + 构建 + 推送）
+  - 支持 1~N 个目标文件：`src/content/projects/*.md` / `src/content/essay/*.md`
+  - 发布前执行 frontmatter 合规校验（含 status 枚举、URL 协议、slug、essay-project 关联）
+  - 仅变更目标文件：`draft: true -> false`
+  - 执行 `npm run check && npm run build`
+  - 发布到 `main` 并触发 GitHub Actions 自动部署
+
+## 发布标准（最小清单）
+
+1. schema 合规（以 `src/content.config.ts` 为准）
+2. `npm run check && npm run build` 通过
+3. 仅目标内容文件被发布
+4. 推送 `main` 后由 GitHub Actions 自动部署
 
 ## 配置文件
 
