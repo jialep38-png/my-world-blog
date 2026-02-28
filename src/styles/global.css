@@ -123,7 +123,7 @@
   --panel: var(--code-header-bg);
   --font-mono: "Sarasa Mono SC", "Noto Sans Mono CJK SC", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --max: 900px;
-  --sidebar: 320px;
+  --sidebar: 280px;
   --tap-min-h: 44px;
   --pad-x: 48px;
   --card-pad: 12px 14px;
