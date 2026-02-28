@@ -81,7 +81,7 @@ const folders = [
       <section class="memo-toc-folders" aria-labelledby="memo-folders-title">
         <h2 id="memo-folders-title" class="memo-toc-folder-title">文件夹</h2>
         {folders.map((folder) => (
-          <details open>
+          <details>
             <summary>{folder.title}</summary>
             <ul class="toc-items">
               {folder.items.map((it, i) => (
