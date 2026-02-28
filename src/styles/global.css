@@ -827,9 +827,18 @@ hr {
   .memo-toc .toc-items {
     grid-template-columns: 1fr;
     gap: 6px;
+    padding-top: 10px;
     padding-left: 12px;
   }
 
+  .memo-toc details {
+    margin: 16px 0;
+  }
+
+  .memo-toc summary,
+  .memo-toc .toc-items a {
+    padding: 9px 0;
+  }
 
   .intro {
     margin: 12px 0 18px;
@@ -837,5 +846,40 @@ hr {
 
   .hero {
     margin: 0px 0 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  .memo-toc summary {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .memo-toc .toc-items {
+    gap: 5px;
+    padding-left: 10px;
+  }
+
+  .memo-toc .toc-items a {
+    gap: 7px;
+    font-size: 12.5px;
+    padding: 8px 0;
+  }
+
+  .toc-num {
+    width: 17px;
+    height: 17px;
+    flex-basis: 17px;
+    margin-top: 1px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --pad-x: 16px;
+  }
+
+  .memo-toc .toc-items {
+    padding-left: 8px;
   }
 }
