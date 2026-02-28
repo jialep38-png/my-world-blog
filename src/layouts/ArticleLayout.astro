@@ -16,6 +16,7 @@ const {
 } = Astro.props;
 
 const tags = entry?.data?.tags ?? [];
+const hasToc = headings.some((item: { depth: number }) => item.depth === 2 || item.depth === 3);
 const firstTag = tags[0];
 const defaultImage = '/og.svg';
 const coverImage = entry?.data?.cover ?? null;
@@ -57,7 +58,7 @@ const description = getMetaDescription(entry);
     </div>
   </div>
 
-  <div class="article-with-toc">
+  <div class:list={["article-with-toc", hasToc && "article-with-toc--active"]}>
     <div class="article-main">
       <div class="prose">
         <Content />

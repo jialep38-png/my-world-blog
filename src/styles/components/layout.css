@@ -313,6 +313,10 @@
 }
 
 .article-with-toc {
+  display: block;
+}
+
+.article-with-toc--active {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 28px;
@@ -368,7 +372,7 @@
 }
 
 @media (max-width: 900px) {
-  .article-with-toc {
+  .article-with-toc--active {
     grid-template-columns: 1fr;
   }
 

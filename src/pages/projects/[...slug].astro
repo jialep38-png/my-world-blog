@@ -49,6 +49,7 @@ export async function getStaticPaths() {
 
 const { entry, relatedEssays } = Astro.props;
 const { Content, headings } = await render(entry);
+const hasToc = headings.some((item: { depth: number }) => item.depth === 2 || item.depth === 3);
 
 const base = import.meta.env.BASE_URL ?? '/';
 const withBase = createWithBase(base);
@@ -93,7 +94,7 @@ const description = getMetaDescription(entry);
     </div>
   </div>
 
-  <div class="article-with-toc">
+  <div class:list={["article-with-toc", hasToc && "article-with-toc--active"]}>
     <div class="article-main">
       <div class="project-meta">
         {entry.data.stack.length > 0 && (
