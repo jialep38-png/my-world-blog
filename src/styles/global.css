@@ -594,15 +594,6 @@ hr {
   color: var(--faint);
 }
 
-.memo-folder-jump {
-  color: inherit;
-  border-bottom: 0;
-}
-
-.memo-folder-jump:hover {
-  border-bottom: 1px solid currentColor;
-}
-
 .memo-page .memo-toc {
   margin: var(--memo-toc-mt) 0 var(--memo-toc-mb);
 }
@@ -619,6 +610,15 @@ hr {
   gap: 8px;
   color: var(--text);
   font-size: 15px;
+  min-height: var(--tap-min-h);
+  padding: 10px 0;
+  line-height: 1.35;
+}
+
+.memo-toc summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .memo-toc summary::-webkit-details-marker {
@@ -626,12 +626,19 @@ hr {
 }
 
 
+.memo-toc summary .memo-folder-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding-right: 6px;
+}
+
 .memo-toc summary::after {
   content: "▶";
   font-size: 10px;
   color: var(--muted);
   transition: transform 0.2s ease;
-  margin-left: 4px;
+  margin-left: auto;
 }
 
 .memo-toc details[open] summary::after {
@@ -657,12 +664,22 @@ hr {
 }
 
 .memo-toc .toc-items a {
-  display: inline-flex;
+  display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: var(--tap-min-h);
+  padding: 10px 0;
   color: var(--muted);
   font-size: 13px;
   border-bottom: none;
+}
+
+.memo-toc .toc-items .toc-text {
+  min-width: 0;
+  flex: 1 1 auto;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .toc-num {
@@ -675,6 +692,8 @@ hr {
   justify-content: center;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
+  flex: 0 0 18px;
+  margin-top: 2px;
 }
 
 :root[data-theme="dark"] .toc-num {
@@ -807,6 +826,8 @@ hr {
 
   .memo-toc .toc-items {
     grid-template-columns: 1fr;
+    gap: 6px;
+    padding-left: 12px;
   }
 
 

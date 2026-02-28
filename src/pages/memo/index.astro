@@ -127,18 +127,14 @@ const folders = [
         {folders.map((folder) => (
           <details>
             <summary>
-              {folder.items[0] ? (
-                <a class="memo-folder-jump" href={`#${folder.items[0].slug}`}>{folder.title}</a>
-              ) : (
-                folder.title
-              )}
+              <span class="memo-folder-title">{folder.title}</span>
             </summary>
             <ul class="toc-items">
               {folder.items.map((it, i) => (
                 <li>
                   <a href={`#${it.slug}`}>
                     <span class="toc-num">{i + 1}</span>
-                    <span>{it.date} · {it.text}</span>
+                    <span class="toc-text">{it.date} · {it.text}</span>
                   </a>
                 </li>
               ))}
