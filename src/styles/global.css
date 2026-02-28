@@ -642,8 +642,8 @@ hr {
 
 .memo-toc .toc-items {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
   padding: 12px 0 0 18px;
   margin: 0;
   list-style: none;
@@ -811,7 +811,7 @@ hr {
   }
 
   .memo-toc .toc-items {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
 
