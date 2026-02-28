@@ -40,14 +40,56 @@ const groups = rawGroups
   .reverse()
   .map((g) => ({ ...g, items: [...g.items].reverse() }));
 
+const parseDate = (text: string) => {
+  const normalized = text.trim();
+  const iso = normalized.match(/(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
+  if (iso) {
+    const [, y, m, d] = iso;
+    const date = new Date(Number(y), Number(m) - 1, Number(d));
+    if (!Number.isNaN(date.getTime())) {
+      return {
+        key: date.getTime(),
+        label: `${y}年${String(Number(m)).padStart(2, '0')}月${String(Number(d)).padStart(2, '0')}日`
+      };
+    }
+  }
+
+  const cn = normalized.match(/(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
+  if (cn) {
+    const [, y, m, d] = cn;
+    const date = new Date(Number(y), Number(m) - 1, Number(d));
+    if (!Number.isNaN(date.getTime())) {
+      return {
+        key: date.getTime(),
+        label: `${y}年${String(Number(m)).padStart(2, '0')}月${String(Number(d)).padStart(2, '0')}日`
+      };
+    }
+  }
+
+  return null;
+};
+
+const allItems = groups.flatMap((g) =>
+  g.items.map((it) => {
+    const dateFromItem = parseDate(it.text);
+    const dateFromGroup = parseDate(g.title);
+    const parsed = dateFromItem ?? dateFromGroup;
+    return {
+      ...it,
+      date: parsed?.label ?? g.title,
+      sortKey: parsed?.key ?? -Infinity
+    };
+  })
+);
+
 const folders = [
   {
     title: '减肥记录',
-    items: groups.flatMap((g) => g.items).filter((it) => it.text.includes('减肥'))
+    items: allItems
+      .filter((it) => it.text.includes('减肥'))
+      .sort((a, b) => b.sortKey - a.sortKey)
   }
 ].filter((folder) => folder.items.length > 0);
-
-const dateItems = groups.flatMap((g) => g.items);
 ---
 
 <BaseLayout
@@ -96,7 +138,7 @@ const dateItems = groups.flatMap((g) => g.items);
                 <li>
                   <a href={`#${it.slug}`}>
                     <span class="toc-num">{i + 1}</span>
-                    <span>{it.text}</span>
+                    <span>{it.date} · {it.text}</span>
                   </a>
                 </li>
               ))}
@@ -106,16 +148,6 @@ const dateItems = groups.flatMap((g) => g.items);
       </section>
     )}
 
-    <ul class="toc-items memo-toc-days">
-      {dateItems.map((it, i) => (
-        <li>
-          <a href={`#${it.slug}`}>
-            <span class="toc-num">{i + 1}</span>
-            <span>{it.text}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
   </nav>
 
   <div class="memo-content prose">
@@ -129,10 +161,6 @@ const dateItems = groups.flatMap((g) => g.items);
         if (mq.matches) {
           document.querySelectorAll('.memo-toc details[open]').forEach((el) => {
             el.removeAttribute('open');
-          });
-        } else {
-          document.querySelectorAll('.memo-toc details:not([open])').forEach((el) => {
-            el.setAttribute('open', '');
           });
         }
       };
