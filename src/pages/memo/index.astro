@@ -98,21 +98,24 @@ const folders = [
       </section>
     )}
 
-    {groups.map((g) => (
-      <details open>
-        <summary>{g.title}</summary>
-        <ul class="toc-items">
-          {g.items.map((it, i) => (
-            <li>
-              <a href={`#${it.slug}`}>
-                <span class="toc-num">{i + 1}</span>
-                <span>{it.text}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </details>
-    ))}
+    <section class="memo-toc-dates" aria-labelledby="memo-dates-title">
+      <h2 id="memo-dates-title" class="memo-toc-folder-title">按日期</h2>
+      {groups.map((g) => (
+        <details open>
+          <summary>{g.title}</summary>
+          <ul class="toc-items">
+            {g.items.map((it, i) => (
+              <li>
+                <a href={`#${it.slug}`}>
+                  <span class="toc-num">{i + 1}</span>
+                  <span>{it.text}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </section>
   </nav>
 
   <div class="memo-content prose">
