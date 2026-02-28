@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import Lightbox from '../../components/Lightbox.astro';
+import ArticleToc from '../../components/ArticleToc.astro';
 import { getSortedProjects, getProjectSlug, getSortedEssays, getEssaySlug, PROJECT_STATUS_LABELS, type ProjectEntry } from '../../lib/content';
 import { createWithBase, formatISODate } from '../../utils/format';
 import { getMetaDescription } from '../../utils/excerpt';
@@ -47,7 +48,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, relatedEssays } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 
 const base = import.meta.env.BASE_URL ?? '/';
 const withBase = createWithBase(base);
@@ -92,56 +93,62 @@ const description = getMetaDescription(entry);
     </div>
   </div>
 
-  <div class="project-meta">
-    {entry.data.stack.length > 0 && (
-      <div class="project-stack">
-        <span class="project-meta-label">技术栈：</span>
-        {entry.data.stack.map((tech: string) => (
-          <span class="project-tech">{tech}</span>
-        ))}
-      </div>
-    )}
-    {entry.data.links && (
-      <div class="project-links">
-        {entry.data.links.github && (
-          <a href={entry.data.links.github} class="project-link" target="_blank" rel="noopener noreferrer">
-            <Icon name="github" size={16} /> GitHub
-          </a>
+  <div class="article-with-toc">
+    <div class="article-main">
+      <div class="project-meta">
+        {entry.data.stack.length > 0 && (
+          <div class="project-stack">
+            <span class="project-meta-label">技术栈：</span>
+            {entry.data.stack.map((tech: string) => (
+              <span class="project-tech">{tech}</span>
+            ))}
+          </div>
         )}
-        {entry.data.links.demo && (
-          <a href={entry.data.links.demo} class="project-link" target="_blank" rel="noopener noreferrer">
-            <Icon name="link" size={16} /> Demo
-          </a>
+        {entry.data.links && (
+          <div class="project-links">
+            {entry.data.links.github && (
+              <a href={entry.data.links.github} class="project-link" target="_blank" rel="noopener noreferrer">
+                <Icon name="github" size={16} /> GitHub
+              </a>
+            )}
+            {entry.data.links.demo && (
+              <a href={entry.data.links.demo} class="project-link" target="_blank" rel="noopener noreferrer">
+                <Icon name="link" size={16} /> Demo
+              </a>
+            )}
+          </div>
         )}
       </div>
-    )}
-  </div>
 
-  <div class="prose">
-    <Content />
-  </div>
+      <div class="prose">
+        <Content />
+      </div>
 
-  {relatedEssays.length > 0 && (
-    <div class="related-essays">
-      <h2 class="related-essays__title">相关文章</h2>
-      <ul class="related-essays__list">
-        {relatedEssays.map((essay) => (
-          <li>
-            <a href={essay.href}>{essay.title}</a>
-          </li>
-        ))}
-      </ul>
+      {relatedEssays.length > 0 && (
+        <div class="related-essays">
+          <h2 class="related-essays__title">相关文章</h2>
+          <ul class="related-essays__list">
+            {relatedEssays.map((essay) => (
+              <li>
+                <a href={essay.href}>{essay.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <nav class="prev-next" aria-label="返回列表">
+        <div class="prev-next__item">
+          <a class="prev-next__link prev-next__link--prev" href={withBase('/projects/')}>
+            <span class="prev-next__label">返回</span>
+            <span class="prev-next__title">项目列表</span>
+          </a>
+        </div>
+      </nav>
     </div>
-  )}
 
-  <nav class="prev-next" aria-label="返回列表">
-    <div class="prev-next__item">
-      <a class="prev-next__link prev-next__link--prev" href={withBase('/projects/')}>
-        <span class="prev-next__label">返回</span>
-        <span class="prev-next__title">项目列表</span>
-      </a>
-    </div>
-  </nav>
+    <ArticleToc headings={headings} />
+  </div>
 
   <Lightbox
     id="lightbox"

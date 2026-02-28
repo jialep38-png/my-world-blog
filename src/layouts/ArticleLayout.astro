@@ -2,12 +2,14 @@
 import BaseLayout from './BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import Lightbox from '../components/Lightbox.astro';
+import ArticleToc from '../components/ArticleToc.astro';
 import { formatISODate } from '../utils/format';
 import { getMetaDescription } from '../utils/excerpt';
 
 const {
   entry,
   Content,
+  headings = [],
   typeLabel,
   prev,
   next
@@ -55,53 +57,59 @@ const description = getMetaDescription(entry);
     </div>
   </div>
 
-  <div class="prose">
-    <Content />
-  </div>
-  {(prev || next) ? (
-    <nav class="prev-next" aria-label="上一篇/下一篇">
-      <div class="prev-next__item">
-        {prev ? (
-          <a class="prev-next__link prev-next__link--prev" href={prev.href} rel="prev">
-            <span class="prev-next__label">上一篇</span>
-            <span class="prev-next__title">{prev.title}</span>
-          </a>
-        ) : (
-          <span class="prev-next__placeholder" aria-hidden="true"></span>
-        )}
+  <div class="article-with-toc">
+    <div class="article-main">
+      <div class="prose">
+        <Content />
       </div>
-      <div class="prev-next__item">
-        {next ? (
-          <a class="prev-next__link prev-next__link--next" href={next.href} rel="next">
-            <span class="prev-next__label">下一篇</span>
-            <span class="prev-next__title">{next.title}</span>
-          </a>
-        ) : (
-          <span class="prev-next__placeholder" aria-hidden="true"></span>
-        )}
-      </div>
-    </nav>
-  ) : null}
+      {(prev || next) ? (
+        <nav class="prev-next" aria-label="上一篇/下一篇">
+          <div class="prev-next__item">
+            {prev ? (
+              <a class="prev-next__link prev-next__link--prev" href={prev.href} rel="prev">
+                <span class="prev-next__label">上一篇</span>
+                <span class="prev-next__title">{prev.title}</span>
+              </a>
+            ) : (
+              <span class="prev-next__placeholder" aria-hidden="true"></span>
+            )}
+          </div>
+          <div class="prev-next__item">
+            {next ? (
+              <a class="prev-next__link prev-next__link--next" href={next.href} rel="next">
+                <span class="prev-next__label">下一篇</span>
+                <span class="prev-next__title">{next.title}</span>
+              </a>
+            ) : (
+              <span class="prev-next__placeholder" aria-hidden="true"></span>
+            )}
+          </div>
+        </nav>
+      ) : null}
 
-  <section class="comments">
-    <h2 class="comments__title">留言</h2>
-    <script
-      src="https://giscus.app/client.js"
-      data-repo="jialep38-png/my-world-blog"
-      data-repo-id="R_kgDORa5XZA"
-      data-category="Announcements"
-      data-category-id="DIC_kwDORa5XZM4C3Yvw"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="bottom"
-      data-theme="preferred_color_scheme"
-      data-lang="zh-CN"
-      crossorigin="anonymous"
-      async
-    ></script>
-  </section>
+      <section class="comments">
+        <h2 class="comments__title">留言</h2>
+        <script
+          src="https://giscus.app/client.js"
+          data-repo="jialep38-png/my-world-blog"
+          data-repo-id="R_kgDORa5XZA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDORa5XZM4C3Yvw"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async
+        ></script>
+      </section>
+    </div>
+
+    <ArticleToc headings={headings} />
+  </div>
 
   <Lightbox
     id="lightbox"

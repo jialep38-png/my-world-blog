@@ -1,0 +1,29 @@
+---
+interface HeadingItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings?: HeadingItem[];
+}
+
+const { headings = [] } = Astro.props as Props;
+const tocItems = headings.filter((item) => item.depth === 2 || item.depth === 3);
+
+if (tocItems.length === 0) {
+  return null;
+}
+---
+
+<nav class="article-toc" aria-label="文章目录">
+  <p class="article-toc__title">目录</p>
+  <ol class="article-toc__list">
+    {tocItems.map((item) => (
+      <li class:list={["article-toc__item", item.depth === 3 && "article-toc__item--nested"]}>
+        <a href={`#${item.slug}`}>{item.text}</a>
+      </li>
+    ))}
+  </ol>
+</nav>
