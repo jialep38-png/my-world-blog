@@ -15,7 +15,7 @@ export const site = {
   brandTitle: 'Ji_Feng',
   author: '霁风',
   authorAvatar: 'author/avatar.webp',
-  description: '什么都发的小站'
+  description: '什么都发的小圈'
 };
 
 export const PAGE_SIZE_ARCHIVE = 12;
