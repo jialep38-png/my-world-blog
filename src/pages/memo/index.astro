@@ -46,6 +46,8 @@ const folders = [
     items: groups.flatMap((g) => g.items).filter((it) => it.text.includes('减肥'))
   }
 ].filter((folder) => folder.items.length > 0);
+
+const dateItems = groups.flatMap((g) => g.items);
 ---
 
 <BaseLayout
@@ -82,7 +84,13 @@ const folders = [
         <h2 id="memo-folders-title" class="memo-toc-folder-title">文件夹</h2>
         {folders.map((folder) => (
           <details>
-            <summary>{folder.title}</summary>
+            <summary>
+              {folder.items[0] ? (
+                <a class="memo-folder-jump" href={`#${folder.items[0].slug}`}>{folder.title}</a>
+              ) : (
+                folder.title
+              )}
+            </summary>
             <ul class="toc-items">
               {folder.items.map((it, i) => (
                 <li>
@@ -98,24 +106,16 @@ const folders = [
       </section>
     )}
 
-    <section class="memo-toc-dates" aria-labelledby="memo-dates-title">
-      <h2 id="memo-dates-title" class="memo-toc-folder-title">按日期</h2>
-      {groups.map((g) => (
-        <details open>
-          <summary>{g.title}</summary>
-          <ul class="toc-items">
-            {g.items.map((it, i) => (
-              <li>
-                <a href={`#${it.slug}`}>
-                  <span class="toc-num">{i + 1}</span>
-                  <span>{it.text}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </details>
+    <ul class="toc-items memo-toc-days">
+      {dateItems.map((it, i) => (
+        <li>
+          <a href={`#${it.slug}`}>
+            <span class="toc-num">{i + 1}</span>
+            <span>{it.text}</span>
+          </a>
+        </li>
       ))}
-    </section>
+    </ul>
   </nav>
 
   <div class="memo-content prose">
