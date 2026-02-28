@@ -271,6 +271,11 @@ hr {
   box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 5%, transparent), 0 10px 26px color-mix(in srgb, var(--text) 7%, transparent);
 }
 
+:root[data-theme="dark"] .home .hero {
+  border-color: color-mix(in srgb, var(--border) 82%, var(--muted) 18%);
+  box-shadow: 0 1px 2px color-mix(in srgb, #000000 38%, transparent), 0 10px 24px color-mix(in srgb, #000000 46%, transparent);
+}
+
 .hero img {
   display: block;
   width: 100%;
