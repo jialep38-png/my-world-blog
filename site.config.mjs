@@ -14,7 +14,7 @@ export const site = {
   title: '霁月',
   brandTitle: 'Ji_Feng',
   author: '霁风',
-  authorAvatar: 'author/avatar.webp',
+  authorAvatar: 'author/avatar.jpg',
   description: '什么都发的小圈'
 };
 
