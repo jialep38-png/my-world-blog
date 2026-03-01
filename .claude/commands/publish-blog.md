@@ -1,18 +1,20 @@
 # /publish-blog
 
-将目标博客内容从草稿发布到线上，作为唯一上线闸门。
+按“霁风的小圈”标准，将目标博客内容从草稿发布到线上（唯一上线闸门）。
 
 ## 参数
 
 - `$ARGUMENTS`：1~N 个目标文件路径（必填）
   - 允许：`src/content/projects/*.md`
   - 允许：`src/content/essay/*.md`
+- 可选 flag：`--quality=standard|launch`（默认 `standard`）
 
 ## 用法
 
 ```bash
 /publish-blog src/content/projects/my-cli-tool.md
 /publish-blog src/content/projects/my-cli-tool.md src/content/essay/my-cli-tool-review.md
+/publish-blog src/content/projects/my-blog.md --quality=launch
 ```
 
 ## 职责边界
@@ -46,13 +48,33 @@
 
 若任一文件校验失败：立即终止，不做发布动作。
 
-### 3) Draft 翻转（仅目标文件）
+### 3) 质量校验（仅 `quality=launch`）
+
+当参数中包含 `src/content/projects/*.md` 时，追加上线质量检查：
+
+- 项目文档正文字数目标：≥ 10,000（中文长文）
+- 章节覆盖：至少包含
+  - 前言
+  - 目标与边界
+  - 架构/模型
+  - 关键实现
+  - 移动端体验
+  - 发布闸门
+  - 踩坑与回滚
+  - 上线标准
+  - 后续路线
+  - 结语
+- 可读性检查：段落不过长、列表化信息、术语不过度堆叠
+
+若不满足，终止发布并给出未达标项。
+
+### 4) Draft 翻转（仅目标文件）
 
 - 仅将目标文件中的 `draft: true` 改为 `draft: false`
 - 若目标文件已是 `draft: false`，保持不变
 - 不得触碰非目标文件
 
-### 4) 构建闸门
+### 5) 构建闸门
 
 在仓库根目录执行：
 
@@ -62,18 +84,19 @@ npm run check && npm run build
 
 若失败：终止发布，保留失败输出供修复。
 
-### 5) Git 发布
+### 6) Git 发布
 
 - `git add` 仅添加目标文件
 - 创建发布提交（message 建议：`publish: release selected blog content`）
 - `git push origin main`
 
-### 6) 上线回执
+### 7) 上线回执
 
 输出发布结果：
 - commit hash
 - 推送分支（`main`）
 - 发布文件列表
+- 质量档位（`standard` 或 `launch`）
 - 待验收项：
   - project 页面可见
   - essay 页面可见
@@ -87,13 +110,12 @@ npm run check && npm run build
 
 commit: abcdef1
 branch: main
+quality: launch
 files:
-- src/content/projects/my-cli-tool.md
-- src/content/essay/my-cli-tool-review.md
+- src/content/projects/my-blog.md
 
 验收建议:
 - 检查项目卡片是否上线
-- 检查复盘文章是否上线
-- 检查 article -> project 关联跳转是否正确
+- 检查项目详情页结构与可读性
 - 检查 GitHub Actions 最近一次部署状态
 ```

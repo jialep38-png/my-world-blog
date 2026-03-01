@@ -88,9 +88,13 @@ npm run preview  # 预览构建结果
   - `--mode=project` 只生成项目介绍
   - `--mode=essay` 只生成复盘文章
   - `--mode=both` 先生成 project，再生成 essay，并确保 `essay.project` 指向 project slug
+  - `--quality=standard|launch`（默认 `standard`）
+    - `launch`：按“霁风的小圈”上线标准生成（含万字长文、章节覆盖、可读性与事实一致性要求）
 - `/publish-blog <file...>` - 上线闸门命令（负责校验 + draft 翻转 + 构建 + 推送）
   - 支持 1~N 个目标文件：`src/content/projects/*.md` / `src/content/essay/*.md`
   - 发布前执行 frontmatter 合规校验（含 status 枚举、URL 协议、slug、essay-project 关联）
+  - `--quality=standard|launch`（默认 `standard`）
+    - `launch`：追加上线质量校验（项目文档字数≥10000、章节覆盖、可读性）
   - 仅变更目标文件：`draft: true -> false`
   - 执行 `npm run check && npm run build`
   - 发布到 `main` 并触发 GitHub Actions 自动部署
