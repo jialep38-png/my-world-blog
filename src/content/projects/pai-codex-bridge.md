@@ -4,7 +4,8 @@ description: "我把 PAI 从 Claude 专属体系迁移到 Codex 可日常使用�
 date: 2026-03-02
 status: "shipped"
 stack: ["Python", "PowerShell", "Bash", "Codex CLI", "PAI"]
-links: {}
+links:
+  github: "https://github.com/jialep38-png/pai-codex-bridge"
 cover: ""
 tags: ["PAI", "Codex", "工程实践", "开源复盘", "AI基础设施"]
 draft: false
