@@ -14,6 +14,11 @@ slug: "hapi-astrbot-remote-coding-workflow"
 relatedEssays: ["hapi-astrbot-remote-coding-workflow-review"]
 ---
 
+## 项目链接
+
+- HAPI：<https://github.com/tiann/hapi>
+- AstrBot 插件：<https://github.com/LiJinHao999/astrbot_plugin_hapi_connector>
+
 ## 摘要
 
 这是一套远程 Vibe Coding 工作流的部署实践：本地机器跑 HAPI 管理 AI 编码会话，聊天侧通过 AstrBot 插件接入，实现在 QQ / 微信 / Telegram 等平台上远程查看进度、发送指令、审批权限。

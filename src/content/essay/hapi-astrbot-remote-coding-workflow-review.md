@@ -9,6 +9,11 @@ project: "hapi-astrbot-remote-coding-workflow"
 slug: "hapi-astrbot-remote-coding-workflow-review"
 ---
 
+## 项目链接
+
+- HAPI：<https://github.com/tiann/hapi>
+- AstrBot 插件：<https://github.com/LiJinHao999/astrbot_plugin_hapi_connector>
+
 ## 为什么要折腾这个
 
 天气冷不想一直坐电脑前，但 AI 还在跑任务。传统方案要么用 Happy（需要公网 + Telegram），要么就只能干等着。
