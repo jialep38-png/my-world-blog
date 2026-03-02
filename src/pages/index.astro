@@ -14,7 +14,9 @@ const essays = await getPublished('essay', {
 });
 const projects = await getSortedProjects();
 
-const visibleEssays = essays.filter((entry) => !isReservedSlug(entry.data.slug ?? entry.id));
+const visibleEssays = essays.filter((entry) =>
+  !isReservedSlug(entry.data.slug ?? entry.id) && !entry.data.project
+);
 
 const latest = [
   ...visibleEssays.map((entry) => ({
