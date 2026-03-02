@@ -17,6 +17,16 @@ slug: "hapi-astrbot-remote-coding-workflow-review"
 
 于是花了点时间部署了一套，记录一下体验。
 
+### 为什么不用 OpenClaw
+
+OpenClaw 是另一个远程控制方案，但对于**自己的电脑**来说，HAPI 这套更方便：
+
+- **本地优先**：HAPI 直接跑在本地，不需要额外的云服务中转
+- **部署更轻**：一个 npm 包 + 一个 AstrBot 插件，不用折腾服务端
+- **内网直连**：AstrBot 和 HAPI 在同一台机器时，直接 localhost 通信，延迟低、稳定
+
+OpenClaw 更适合需要管理多台远程机器的场景；如果只是控制自己手边的开发机，HAPI 这套开箱即用更省心。
+
 ## 部署过程
 
 ### HAPI 侧
