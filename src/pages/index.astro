@@ -22,17 +22,24 @@ const latest = [
     title: entry.data.title,
     date: entry.data.date,
     tag: entry.data.tags?.[0] ?? '随笔',
-    excerpt: getListExcerpt(entry)
+    excerpt: getListExcerpt(entry),
+    isProject: false
   })),
   ...projects.map((entry) => ({
     href: withBase(`/projects/${getProjectSlug(entry)}/`),
     title: entry.data.title,
     date: entry.data.date,
     tag: entry.data.tags?.[0] ?? '项目',
-    excerpt: entry.data.description
+    excerpt: entry.data.description,
+    isProject: true
   }))
 ]
-  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .sort((a, b) => {
+    const dateDiff = b.date.valueOf() - a.date.valueOf();
+    if (dateDiff !== 0) return dateDiff;
+    // 同一日期时，项目优先
+    return (b.isProject ? 1 : 0) - (a.isProject ? 1 : 0);
+  })
   .slice(0, 12);
 ---
 
