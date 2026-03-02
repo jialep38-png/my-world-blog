@@ -21,6 +21,41 @@ relatedEssays: ["pai-codex-bridge-review"]
 
 从维护、体验、复用三个维度看，这次改造把“平台耦合能力”转化成了“跨平台可运行资产”：维护上可追溯，体验上可日用，复用上可开源扩展。这也是我认为它能进入上线闸门的根本原因。
 
+## 这到底是什么项目
+
+先用一句话讲清楚：
+
+**`pai-codex-bridge` 是一个”兼容桥接层”，把原本主要面向 Claude 生态的 PAI（Personal AI Infrastructure）能力，迁移成能在 Codex 里直接使用的工程体系。**
+
+如果你之前没接触过 PAI，可以这样理解：
+
+### PAI 是什么
+
+[PAI（Personal AI Infrastructure）](https://github.com/danielmiessler/Personal_AI_Infrastructure) 是 Daniel Miessler 发起的一个开源项目，核心理念是”让 AI 从一次性问答工具，变成可持续执行、可学习、可复用的个人基础设施”。它不是一个聊天机器人，而是一套方法体系 + 工程资产：
+
+- **算法驱动**：用结构化流程（Observe → Think → Plan → Build → Execute → Verify → Learn）处理任务
+- **技能系统**：模块化能力，可按需加载
+- **记忆系统**：跨会话学习与上下文持久化
+- **Hook 机制**：在会话生命周期的关键节点（如 SessionStart、PreToolUse、Stop）自动执行逻辑
+
+### 它原本依赖什么
+
+PAI 原生运行在 [Claude Code](https://claude.ai/claude-code) 环境中，会大量依赖 Claude 的 Hook 生命周期、`settings.json` 配置路由、上下文注入等机制。这些机制在 Claude 生态里是”隐形基础设施”，开箱即用。
+
+### 问题出在哪
+
+当我想在 [Codex CLI](https://github.com/openai/codex) 工作流中使用 PAI 时，发现这些 Claude 专属机制并不能在 Codex 中原样工作。资产在、代码在、方法在，但直接用会断链——自动化断裂、流程失联、行为不一致。
+
+### 这个桥接项目做什么
+
+`pai-codex-bridge` 补上这层断链：
+
+1. **翻译层**：让 Codex 能读懂 PAI 结构（桥接生成）
+2. **执行层**：让关键生命周期行为在 Codex 下能跑（runtime）
+3. **启动层**：让人能每天顺手用（脚本与自动模式）
+
+所以，`pai-codex-bridge` 不是在”重写一个新的 PAI”，而是在做一件更工程化的事：保留原有方法论资产，用 runtime 补生命周期行为，把复杂流程收敛到可日用入口。
+
 ## 前言
 
 我做这个项目的起点很明确：不是为了再做一份“PAI 介绍文档”，而是要解决一个真实、具体、每天都会遇到的使用问题——当我在 Codex 工作流里开发时，怎么把 PAI 的方法体系与工程资产真正带过去，而不是停留在“概念兼容”。
