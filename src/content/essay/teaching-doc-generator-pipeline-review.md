@@ -8,6 +8,16 @@ archive: true
 project: "teaching-doc-generator-pipeline"
 ---
 
+## 开源入口
+
+- GitHub：<https://github.com/jialep38-png/longform-pdf-generator>
+
+## 本次发布补充
+
+- 完成开源安全治理：明文密钥改为环境变量、补齐 `.gitignore` 与 `.env.example`。
+- 新增开源审计与打包脚本，降低误提交隐私数据风险。
+- README 改为中英双版，便于外部读者快速理解项目用途与运行方式。
+
 ## 背景
 
 这个项目不是“写一篇文章”工具，而是“稳定交付文档产物”的流水线工具。需求来自实际场景：需要持续产出长文，并且要直接导出结构化 PDF，不能每次都手工整理目录、样式和版式。

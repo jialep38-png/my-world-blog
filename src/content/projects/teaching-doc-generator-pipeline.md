@@ -1,18 +1,38 @@
 ---
 
 title: "教学文档自动生成系统"
-description: "一个将主题素材自动编排为长篇 Markdown 与出版级 PDF 的通用生成流水线。"
+description: "一个面向开源发布的长文档生成流水线：输入主题与资料，自动产出可读性强的长篇 Markdown / DOCX / PDF。"
 date: 2026-03-01
 status: "shipped"
 stack: ["Python", "ReportLab", "OpenAI-Compatible API", "ChromaDB"]
-links: {}
+links:
+  github: "https://github.com/jialep38-png/longform-pdf-generator"
 cover: ""
-tags: ["内容生成", "自动化", "PDF渲染", "工作流"]
+tags: ["内容生成", "自动化", "PDF渲染", "工作流", "开源"]
 draft: false
 featured: false
 slug: "teaching-doc-generator-pipeline"
 relatedEssays: ["teaching-doc-generator-pipeline-review"]
 ---
+
+## 项目链接
+
+- GitHub：<https://github.com/jialep38-png/longform-pdf-generator>
+
+## 最新状态
+
+- 已完成开源合规封装：去除明文密钥、补齐 `.env.example`、新增开源审计与打包脚本。
+- 当前可直接用于长篇教学文档生产，并输出出版级 PDF。
+- 适合场景：团队知识库沉淀、课程讲义批量生成、技术专题长文交付。
+
+## 3 分钟上手
+
+```bash
+py -m pip install -r requirements.txt
+py main.py "你的主题" --template generic_ai_course.yaml --to-pdf
+```
+
+默认输出目录：`data/output/`。
 
 ## 摘要
 
