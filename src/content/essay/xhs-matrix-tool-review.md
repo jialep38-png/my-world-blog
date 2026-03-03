@@ -2,7 +2,7 @@
 title: "XHS Matrix Tool 开发复盘"
 description: "从能力拼接到统一网关：一次围绕账号矩阵运营场景的工程化落地复盘。"
 date: 2026-03-01
-tags: ["复盘", "Go", "MCP", "小红书"]
+tags: ["笔记", "项目复盘", "Go", "MCP", "小红书"]
 draft: false
 archive: true
 project: "xhs-matrix-tool"

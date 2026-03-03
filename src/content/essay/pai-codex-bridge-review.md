@@ -2,7 +2,7 @@
 title: "pai-codex-bridge 开发复盘"
 description: "从双层桥接策略、runtime 事件模型与工程落地三个维度复盘这次 PAI 到 Codex 的迁移工作。"
 date: 2026-03-02
-tags: ["复盘", "PAI", "Codex", "跨平台迁移", "工程方法"]
+tags: ["笔记", "项目复盘", "PAI", "Codex", "跨平台迁移", "工程方法"]
 draft: false
 archive: true
 project: "pai-codex-bridge"

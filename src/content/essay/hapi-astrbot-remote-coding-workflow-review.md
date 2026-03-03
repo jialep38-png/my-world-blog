@@ -2,7 +2,7 @@
 title: "HAPI + AstrBot 远程 Vibe Coding 部署复盘"
 description: "一次远程 AI 编码工作流的部署体验：如何让 Claude  Code 在手机端可控。"
 date: 2026-03-02
-tags: ["复盘", "远程开发", "AstrBot", "HAPI"]
+tags: ["笔记", "项目复盘", "远程开发", "AstrBot", "HAPI"]
 draft: false
 archive: true
 project: "hapi-astrbot-remote-coding-workflow"

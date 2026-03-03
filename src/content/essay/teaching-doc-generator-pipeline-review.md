@@ -2,7 +2,7 @@
 title: "教学文档自动生成系统 开发复盘"
 description: "从生成链路、降级策略与 PDF 渲染三个维度复盘该项目的关键实现与取舍。"
 date: 2026-03-01
-tags: ["复盘", "Python", "自动化", "LLM工程"]
+tags: ["笔记", "项目复盘", "Python", "自动化", "LLM工程"]
 draft: false
 archive: true
 project: "teaching-doc-generator-pipeline"
