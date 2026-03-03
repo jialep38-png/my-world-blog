@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Icon from '../../components/Icon.astro';
 import EssayCard from '../../components/EssayCard.astro';
 import { createWithBase, getEssaySlug, getLearningEssays } from '../../lib/content';
 import { getListExcerpt } from '../../utils/excerpt';
@@ -10,53 +9,49 @@ const withBase = createWithBase(base);
 const learningEssays = await getLearningEssays();
 ---
 
-<BaseLayout title="学习记录" bodyClass="essay-page">
-  <div class="page-header page-header--bits page-header--with-search">
-    <div class="page-heading">
-      <h1 class="page-title">学习记录</h1>
-      <span class="page-subtitle">项目复盘与实践记录，共 {learningEssays.length} 篇</span>
-    </div>
-    <div class="page-actions">
-      <div class="entry-search" data-entry-search data-index-url={withBase('/bits/index.json')}>
-        <div class="entry-search-panel" data-entry-search-panel aria-hidden="true">
-          <input
-            data-entry-search-input
-            type="search"
-            placeholder="搜索：标题 / 摘要 / 标签"
-            autocomplete="off"
-            aria-label="搜索学习记录"
-          />
-        </div>
-        <button
-          class="entry-search-toggle"
-          data-entry-search-toggle
-          type="button"
-          aria-label="搜索学习记录"
-          title="搜索"
-          aria-expanded="false"
-        >
-          <Icon name="search" class="icon" />
-        </button>
+<BaseLayout title="学习记录">
+  <div class="page-header page-header--bits">
+    <h1 class="page-title">学习记录</h1>
+    <span class="page-subtitle">项目复盘与实践记录，共 {learningEssays.length} 篇</span>
+  </div>
+
+  <div class="bits-toolbar">
+    <div class="bits-controls">
+      <div class="bits-search">
+        <label class="sr-only" for="bits-search">搜索学习记录</label>
+        <input
+          id="bits-search"
+          type="search"
+          placeholder="搜索：关键词 / 标签（例如 Python）"
+          autocomplete="off"
+        />
+        <button class="bits-search-btn" id="bits-search-btn" type="button">搜索</button>
       </div>
     </div>
+    <div class="bits-status" id="bits-search-status" role="status" aria-live="polite"></div>
   </div>
-  <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
 
-  <div class="list">
+  <div class="bits-toolbar bits-toolbar--compact">
+    <div class="bits-status">提示：学习记录文章支持在 Frontmatter 的 `tags` 中填写标签，搜索会命中全部标签。</div>
+  </div>
+
+  <div id="bits-list" class="list">
     {learningEssays.map((entry) => (
-      <EssayCard
-        href={withBase(`/archive/${getEssaySlug(entry)}/`)}
-        slug={getEssaySlug(entry)}
-        title={entry.data.title}
-        excerpt={getListExcerpt(entry)}
-        date={entry.data.date}
-        tag={entry.data.tags?.[0]}
-        badge="学习记录"
-      />
+      <div data-bit data-slug={getEssaySlug(entry)}>
+        <EssayCard
+          href={withBase(`/archive/${getEssaySlug(entry)}/`)}
+          slug={getEssaySlug(entry)}
+          title={entry.data.title}
+          excerpt={getListExcerpt(entry)}
+          date={entry.data.date}
+          tag={entry.data.tags?.[0]}
+          badge="学习记录"
+        />
+      </div>
     ))}
   </div>
 
   <script>
-    import '../../scripts/entry-search.ts';
+    import '../../scripts/bits-search.ts';
   </script>
 </BaseLayout>
