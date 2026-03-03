@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getPublished } from '../../lib/content';
+import { getEssaySlug, getLearningEssays } from '../../lib/content';
 import { cleanMarkdownToText } from '../../utils/excerpt';
 
 export const prerender = true;
@@ -7,20 +7,18 @@ export const prerender = true;
 const MAX_INDEX_TEXT = 600;
 
 export const GET: APIRoute = async () => {
-  const bits = await getPublished('bits', {
-    orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  });
+  const learningEssays = await getLearningEssays();
 
-  const index = bits.map((bit) => {
-    const plain = cleanMarkdownToText(bit.body ?? '');
+  const index = learningEssays.map((entry) => {
+    const plain = cleanMarkdownToText(entry.body ?? '');
     const text = plain.length > MAX_INDEX_TEXT ? plain.slice(0, MAX_INDEX_TEXT) : plain;
     return {
-      slug: bit.data.slug ?? bit.id,
-      title: bit.data.title ?? '',
-      description: bit.data.description ?? '',
-      tags: bit.data.tags ?? [],
+      slug: getEssaySlug(entry),
+      title: entry.data.title ?? '',
+      description: entry.data.description ?? '',
+      tags: entry.data.tags ?? [],
       text,
-      date: bit.data.date ? bit.data.date.toISOString() : null
+      date: entry.data.date ? entry.data.date.toISOString() : null
     };
   });
 

@@ -1,79 +1,62 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BitCard from '../../components/BitCard.astro';
-import BitsDraftDialog from '../../components/BitsDraftDialog.astro';
-import Lightbox from '../../components/Lightbox.astro';
-import { render } from 'astro:content';
-import { getPublished } from '../../lib/content';
-import { cleanMarkdownToText, getBitsExcerpt } from '../../utils/excerpt';
+import Icon from '../../components/Icon.astro';
+import EssayCard from '../../components/EssayCard.astro';
+import { createWithBase, getEssaySlug, getLearningEssays } from '../../lib/content';
+import { getListExcerpt } from '../../utils/excerpt';
 
-const bits = await getPublished('bits', {
-  orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-});
-
-const FULL_RENDER_LIMIT = 180;
-
-const cards = await Promise.all(
-  bits.map(async (bit) => {
-    const plain = cleanMarkdownToText(bit.body ?? '');
-    if (plain.length <= FULL_RENDER_LIMIT) {
-      const { Content } = await render(bit);
-      return { bit, excerpt: '', Content };
-    }
-    return { bit, excerpt: getBitsExcerpt(bit), Content: null };
-  })
-);
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
+const learningEssays = await getLearningEssays();
 ---
 
-<BaseLayout title="絮语">
-  <div class="page-header page-header--bits">
-    <h1 class="page-title">絮语</h1>
-    <span class="page-subtitle">生活不只是长篇</span>
-  </div>
-
-  <div class="bits-toolbar">
-    <div class="bits-controls">
-      <div class="bits-search">
-        <label class="sr-only" for="bits-search">搜索絮语</label>
-        <input id="bits-search" type="search" placeholder="搜索：关键词 / 标签" autocomplete="off" />
-        <button class="bits-search-btn" id="bits-search-btn" type="button">搜索</button>
-      </div>
-      <button
-        class="new"
-        id="bits-new-btn"
-        type="button"
-        data-new-bit
-        aria-label="碎碎念"
-        aria-haspopup="dialog"
-        aria-controls="bits-draft-dialog"
-      >
-        <span class="new-icon" aria-hidden="true">✍</span>
-        <span class="new-label">碎碎念</span>
-      </button>
+<BaseLayout title="学习记录" bodyClass="essay-page">
+  <div class="page-header page-header--bits page-header--with-search">
+    <div class="page-heading">
+      <h1 class="page-title">学习记录</h1>
+      <span class="page-subtitle">项目复盘与实践记录，共 {learningEssays.length} 篇</span>
     </div>
-    <div class="bits-status" id="bits-search-status" role="status" aria-live="polite"></div>
+    <div class="page-actions">
+      <div class="entry-search" data-entry-search data-index-url={withBase('/bits/index.json')}>
+        <div class="entry-search-panel" data-entry-search-panel aria-hidden="true">
+          <input
+            data-entry-search-input
+            type="search"
+            placeholder="搜索：标题 / 摘要 / 标签"
+            autocomplete="off"
+            aria-label="搜索学习记录"
+          />
+        </div>
+        <button
+          class="entry-search-toggle"
+          data-entry-search-toggle
+          type="button"
+          aria-label="搜索学习记录"
+          title="搜索"
+          aria-expanded="false"
+        >
+          <Icon name="search" class="icon" />
+        </button>
+      </div>
+    </div>
   </div>
+  <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
 
-  <div id="bits-list">
-    {cards.map(({ bit, excerpt, Content }) => (
-      <BitCard bit={bit} excerpt={excerpt} Content={Content} />
+  <div class="list">
+    {learningEssays.map((entry) => (
+      <EssayCard
+        href={withBase(`/archive/${getEssaySlug(entry)}/`)}
+        slug={getEssaySlug(entry)}
+        title={entry.data.title}
+        excerpt={getListExcerpt(entry)}
+        date={entry.data.date}
+        tag={entry.data.tags?.[0]}
+        badge="学习记录"
+      />
     ))}
   </div>
 
-  <BitsDraftDialog />
-  <Lightbox
-    id="lightbox"
-    label="图片预览"
-    enableZoom={true}
-    enablePan={true}
-    enableSwipeDownClose={true}
-    mobileNav="hidden"
-    mobileCount="hidden"
-  />
-
   <script>
-    import '../../scripts/bits-search.ts';
-    import '../../scripts/bits-draft.ts';
-    import '../../scripts/bits-lightbox.ts';
+    import '../../scripts/entry-search.ts';
   </script>
 </BaseLayout>

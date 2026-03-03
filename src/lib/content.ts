@@ -45,6 +45,7 @@ export async function getPublished<K extends CollectionKey>(
 export type EssayEntry = CollectionEntry<'essay'>;
 
 export const getEssaySlug = (entry: EssayEntry) => entry.data.slug ?? entry.id;
+export const isProjectReviewEssay = (entry: EssayEntry) => Boolean(entry.data.project?.trim());
 
 const orderByEssayDate = (a: EssayEntry, b: EssayEntry) => b.data.date.valueOf() - a.data.date.valueOf();
 
@@ -56,7 +57,12 @@ export async function getSortedEssays() {
 
 export async function getVisibleEssays() {
   const essays = await getSortedEssays();
-  return essays.filter((entry) => !isReservedSlug(getEssaySlug(entry)));
+  return essays.filter((entry) => !isReservedSlug(getEssaySlug(entry)) && !isProjectReviewEssay(entry));
+}
+
+export async function getLearningEssays() {
+  const essays = await getSortedEssays();
+  return essays.filter((entry) => !isReservedSlug(getEssaySlug(entry)) && isProjectReviewEssay(entry));
 }
 
 export async function getArchiveEssays() {

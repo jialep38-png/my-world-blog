@@ -1,5 +1,5 @@
 import rss from '@astrojs/rss';
-import { getPublished, isReservedSlug } from '../../lib/content';
+import { getVisibleEssays } from '../../lib/content';
 import { createWithBase } from '../../utils/format';
 import { site } from '../../../site.config.mjs';
 
@@ -7,11 +7,7 @@ const base = import.meta.env.BASE_URL ?? '/';
 const withBase = createWithBase(base);
 
 export async function GET(context) {
-  const essays = await getPublished('essay', {
-    includeDraft: false,
-    orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  });
-  const visibleEssays = essays.filter((entry) => !isReservedSlug(entry.data.slug ?? entry.id));
+  const visibleEssays = await getVisibleEssays();
 
   return rss({
     title: `${site.title} · 随笔`,
