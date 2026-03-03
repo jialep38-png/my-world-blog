@@ -407,6 +407,13 @@
   color: var(--accent);
 }
 
+.meta-line .meta-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  vertical-align: middle;
+}
+
 /* Pagination */
 .pagination {
   margin-top: 22px;

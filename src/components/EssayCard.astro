@@ -7,11 +7,13 @@ const {
   excerpt,
   date,
   tag,
+  tags = [],
   badge = '随笔',
   slug = ''
 } = Astro.props;
 
 const displayBadge = badge?.trim() ? badge : '随笔';
+const displayTags = Array.isArray(tags) && tags.length > 0 ? tags : (tag ? [tag] : []);
 ---
 
 <a class="list-item list-item--link" href={href} data-entry-item data-slug={slug || undefined}>
@@ -24,6 +26,15 @@ const displayBadge = badge?.trim() ? badge : '随笔';
   {excerpt ? <p class="list-item__excerpt">{excerpt}</p> : null}
   <div class="meta-line">
     发布于：{formatISODate(date)}
-    {tag ? <> · <span class="tag">#{tag}</span></> : null}
+    {displayTags.length > 0 ? (
+      <>
+        {' · '}
+        <span class="meta-tags">
+          {displayTags.map((item) => (
+            <span class="tag">#{item}</span>
+          ))}
+        </span>
+      </>
+    ) : null}
   </div>
 </a>

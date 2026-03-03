@@ -44,7 +44,7 @@ const learningEssays = await getLearningEssays();
           title={entry.data.title}
           excerpt={getListExcerpt(entry)}
           date={entry.data.date}
-          tag={entry.data.tags?.[0]}
+          tags={entry.data.tags ?? []}
           badge="笔记"
         />
       </div>
