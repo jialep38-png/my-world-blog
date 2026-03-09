@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
-import { hasSiteUrl, siteUrl } from '../../site.config.mjs';
+import { enableSitemap, siteUrl } from '../../site.config.mjs';
 
 export const GET: APIRoute = () => {
   const lines = ['User-agent: *', 'Allow: /'];
 
-  if (hasSiteUrl) {
+  if (enableSitemap && siteUrl) {
     const sitemap = new URL('sitemap-index.xml', `${siteUrl}/`).href;
     lines.push(`Sitemap: ${sitemap}`);
   }

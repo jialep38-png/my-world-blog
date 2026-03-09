@@ -6,7 +6,7 @@ import rehypeRaw from 'rehype-raw';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkCallout from './src/plugins/remark-callout.mjs';
 import shikiToolbar from './src/plugins/shiki-toolbar.mjs';
-import { site, hasSiteUrl } from './site.config.mjs';
+import { site, enableSitemap } from './site.config.mjs';
 
 const rawBase = (process.env.SITE_BASE ?? '').trim();
 const normalizedBase = rawBase.replace(/^\/+|\/+$/g, '');
@@ -106,7 +106,7 @@ const sanitizeSchema = {
 export default defineConfig({
   site: site.url,
   base: siteBase,
-  integrations: hasSiteUrl ? [sitemap()] : [],
+  integrations: enableSitemap ? [sitemap()] : [],
   trailingSlash: 'always',
   build: {
     inlineStylesheets: 'always'

@@ -1,0 +1,26 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatISODate } from '../utils/format';
+
+const { frontmatter } = Astro.props;
+const publishDate = new Date(frontmatter.date);
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bodyClass="article-page"
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="page-header">
+    <h1 class="page-title">{frontmatter.title}</h1>
+    <div class="page-meta">发布于：{formatISODate(publishDate)} · 仅用于 CI 校验</div>
+  </div>
+
+  <article class="prose">
+    <slot />
+  </article>
+</BaseLayout>

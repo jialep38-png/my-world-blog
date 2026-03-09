@@ -1,6 +1,7 @@
 const rawSiteUrl = (process.env.SITE_URL ?? '').trim();
 const siteUrl = rawSiteUrl ? rawSiteUrl.replace(/\/+$/, '') : '';
 const hasSiteUrl = siteUrl.length > 0;
+const enableSitemap = (process.env.ENABLE_SITEMAP ?? '').trim().toLowerCase() === 'true';
 const fallbackSiteUrl = 'https://example.invalid';
 
 if (!hasSiteUrl && process.env.NODE_ENV === 'production') {
@@ -21,4 +22,4 @@ export const site = {
 export const PAGE_SIZE_ARCHIVE = 12;
 export const PAGE_SIZE_ESSAY = 12;
 
-export { hasSiteUrl, siteUrl };
+export { enableSitemap, hasSiteUrl, siteUrl };
