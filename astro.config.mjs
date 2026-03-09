@@ -8,6 +8,10 @@ import remarkCallout from './src/plugins/remark-callout.mjs';
 import shikiToolbar from './src/plugins/shiki-toolbar.mjs';
 import { site, hasSiteUrl } from './site.config.mjs';
 
+const rawBase = (process.env.SITE_BASE ?? '').trim();
+const normalizedBase = rawBase.replace(/^\/+|\/+$/g, '');
+const siteBase = normalizedBase ? `/${normalizedBase}/` : '/';
+
 const getSchemaAttrs = (tagName) => {
   const attrs = defaultSchema.attributes?.[tagName];
   return Array.isArray(attrs) ? attrs : [];
@@ -100,8 +104,8 @@ const sanitizeSchema = {
 };
 
 export default defineConfig({
-  // Required for RSS generation. Prefer SITE_URL; fallback keeps build passing.
   site: site.url,
+  base: siteBase,
   integrations: hasSiteUrl ? [sitemap()] : [],
   trailingSlash: 'always',
   build: {
