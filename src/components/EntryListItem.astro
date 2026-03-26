@@ -6,7 +6,8 @@ const {
   title,
   excerpt,
   date,
-  tag
+  tag,
+  metaLabel
 } = Astro.props;
 ---
 
@@ -17,6 +18,7 @@ const {
   {excerpt ? <p class="list-item__excerpt">{excerpt}</p> : null}
   <div class="meta-line">
     {formatISODate(date)}
-    {tag ? <> · <span class="tag">#{tag}</span></> : null}
+    {metaLabel ? <> · <span class="tag">{metaLabel}</span></> : null}
+    {!metaLabel && tag ? <> · <span class="tag">#{tag}</span></> : null}
   </div>
 </a>

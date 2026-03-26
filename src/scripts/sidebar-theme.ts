@@ -6,12 +6,25 @@ const themeBtn = document.getElementById('theme-toggle');
 const readerBtn = document.getElementById('reader-toggle');
 const readerExit = document.getElementById('reader-exit');
 const mobileMq = window.matchMedia('(max-width: 900px)');
+const base = import.meta.env.BASE_URL ?? '/';
+const basePath = (() => {
+  if (!base || base === '/') return '';
+  return base.endsWith('/') ? base.slice(0, -1) : base;
+})();
 
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+const getRoutePath = () => {
+  const { pathname } = window.location;
+  if (!basePath) return pathname;
+  if (pathname !== basePath && !pathname.startsWith(`${basePath}/`)) return pathname;
+  const nextPath = pathname.slice(basePath.length);
+  return nextPath.startsWith('/') ? nextPath : `/${nextPath}`;
+};
+
 const isLongPage = () =>
-  /^(?:\/(?:archive|essay|memo)(?:\/|$))/.test(window.location.pathname);
+  /^(?:\/(?:archive|essay|memo)(?:\/|$))/.test(getRoutePath());
 
 let updateFloating = () => {};
 

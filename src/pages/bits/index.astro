@@ -9,11 +9,13 @@ const withBase = createWithBase(base);
 const learningEssays = await getLearningEssays();
 ---
 
-<BaseLayout title="笔记">
+<BaseLayout title="笔记" bodyClass="bits-page">
   <div class="page-header page-header--bits">
     <h1 class="page-title">笔记</h1>
-    <span class="page-subtitle">项目复盘与实践记录，共 {learningEssays.length} 篇</span>
+    <span class="page-subtitle">这里收录项目复盘、实践记录和带项目上下文的学习笔记，共 {learningEssays.length} 篇</span>
   </div>
+
+  <p class="section-note">如果你想看不直接挂靠项目的长文章，请去 <a href={withBase('/essay/')}>随笔</a>；如果想按时间查看全部公开内容，请去 <a href={withBase('/archive/')}>归档</a>。</p>
 
   <div class="bits-toolbar">
     <div class="bits-controls">

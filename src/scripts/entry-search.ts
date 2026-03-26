@@ -1,5 +1,3 @@
-import { createWithBase } from '../utils/format';
-
 type IndexItem = {
   slug: string;
   title: string;
@@ -20,9 +18,7 @@ if (!searchRoot) {
   const indexUrlRaw = (searchRoot.dataset.indexUrl ?? '').trim();
   const sectionSelector = (searchRoot.dataset.sectionSelector ?? '').trim();
 
-  const base = import.meta.env.BASE_URL ?? '/';
-  const withBase = createWithBase(base);
-  const indexUrl = indexUrlRaw ? withBase(indexUrlRaw) : '';
+  const indexUrl = indexUrlRaw;
 
   const items = Array.from(document.querySelectorAll<HTMLElement>('[data-entry-item]')).map((el) => ({
     el,

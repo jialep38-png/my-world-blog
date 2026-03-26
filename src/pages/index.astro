@@ -2,45 +2,53 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroImage from '../components/HeroImage.astro';
 import EntryListItem from '../components/EntryListItem.astro';
-import { getPublished, getSortedProjects, getProjectSlug, isReservedSlug } from '../lib/content';
+import { getEssaySlug, getLearningEssays, getSortedProjects, getVisibleEssays, getProjectSlug } from '../lib/content';
+import { siteSections } from '../lib/site-sections';
 import { getListExcerpt } from '../utils/excerpt';
 import { createWithBase } from '../utils/format';
 
 const base = import.meta.env.BASE_URL ?? '/';
 const withBase = createWithBase(base);
 
-const essays = await getPublished('essay', {
-  orderBy: (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-});
+const visibleEssays = await getVisibleEssays();
+const learningEssays = await getLearningEssays();
 const projects = await getSortedProjects();
 
-const visibleEssays = essays.filter((entry) =>
-  !isReservedSlug(entry.data.slug ?? entry.id) && !entry.data.project
-);
+const homeSections = siteSections.filter((section) => section.id !== 'about');
 
 const latest = [
   ...visibleEssays.map((entry) => ({
-    href: withBase(`/archive/${entry.data.slug ?? entry.id}/`),
+    href: withBase(`/archive/${getEssaySlug(entry)}/`),
     title: entry.data.title,
     date: entry.data.date,
-    tag: entry.data.tags?.[0] ?? '随笔',
+    typeLabel: '随笔',
+    tag: entry.data.tags?.[0] ?? null,
     excerpt: getListExcerpt(entry),
-    isProject: false
+    sortWeight: 0
+  })),
+  ...learningEssays.map((entry) => ({
+    href: withBase(`/archive/${getEssaySlug(entry)}/`),
+    title: entry.data.title,
+    date: entry.data.date,
+    typeLabel: '笔记',
+    tag: entry.data.tags?.[0] ?? null,
+    excerpt: getListExcerpt(entry),
+    sortWeight: 1
   })),
   ...projects.map((entry) => ({
     href: withBase(`/projects/${getProjectSlug(entry)}/`),
     title: entry.data.title,
     date: entry.data.date,
-    tag: entry.data.tags?.[0] ?? '项目',
+    typeLabel: '项目',
+    tag: entry.data.tags?.[0] ?? null,
     excerpt: entry.data.description,
-    isProject: true
+    sortWeight: 2
   }))
 ]
   .sort((a, b) => {
     const dateDiff = b.date.valueOf() - a.date.valueOf();
     if (dateDiff !== 0) return dateDiff;
-    // 同一日期时，项目优先
-    return (b.isProject ? 1 : 0) - (a.isProject ? 1 : 0);
+    return b.sortWeight - a.sortWeight;
   })
   .slice(0, 12);
 ---
@@ -52,21 +60,40 @@ const latest = [
   </div>
 
   <div class="intro intro--serif">
-    <span class="intro__lead">欢迎来到我的小圈，这里会发一些随缘做的项目和一点点感想。</span>
-    <span class="intro__more">更多内容请访问 <a href={withBase('/archive/')}>归档</a> 或 <a href={withBase('/projects/')}>项目</a>。</span>
+    <span class="intro__lead">欢迎来到我的小圈，这里记录随笔、项目、实践笔记，也留一点日常小记。</span>
+    <span class="intro__more">如果你第一次来，先看下面的栏目入口；如果想顺着时间看更新，就去 <a href={withBase('/archive/')}>归档</a>。</span>
   </div>
 
-  <h2 class="section-title section-title--index">最近更新</h2>
+  <section aria-labelledby="home-sections-title">
+    <h2 id="home-sections-title" class="section-title section-title--index">从这里开始</h2>
+    <div class="site-guide site-guide--home">
+      {homeSections.map((section) => (
+        <article class="site-guide-item">
+          <a class="site-guide-card-link" href={withBase(section.href)} aria-label={`前往${section.label}`}>
+            <div class="site-guide-head">
+              <h3 class="site-guide-title">{section.label}</h3>
+              <span class="site-guide-link">{section.href}</span>
+            </div>
+            <p class="site-guide-desc">{section.description}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
 
-  <div class="list">
-    {latest.map((entry) => (
-      <EntryListItem
-        href={entry.href}
-        title={entry.title}
-        date={entry.date}
-        tag={entry.tag}
-        excerpt={entry.excerpt}
-      />
-    ))}
-  </div>
+  <section aria-labelledby="home-latest-title">
+    <h2 id="home-latest-title" class="section-title section-title--index">最近更新</h2>
+    <p class="section-note">这里会混合展示随笔、笔记和项目，方便你快速看到最近新增了什么。</p>
+    <div class="list">
+      {latest.map((entry) => (
+        <EntryListItem
+          href={entry.href}
+          title={entry.title}
+          date={entry.date}
+          metaLabel={entry.tag ? `${entry.typeLabel} · #${entry.tag}` : entry.typeLabel}
+          excerpt={entry.excerpt}
+        />
+      ))}
+    </div>
+  </section>
 </BaseLayout>

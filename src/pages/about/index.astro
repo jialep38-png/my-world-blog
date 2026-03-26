@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import { quickLinkSections } from '../../lib/site-sections';
+import { createWithBase } from '../../utils/format';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = createWithBase(base);
 ---
 
 <BaseLayout title="关于" bodyClass="about-page">
@@ -30,45 +35,25 @@ import Icon from '../../components/Icon.astro';
     这里是我的个人小圈，什么都会发。
   </p>
 
-  <h2 class="section-title about-section-title">栏目指引</h2>
-  <div class="site-guide">
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/essay/" aria-label="前往随笔">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">随笔</h3>
-          <span class="site-guide-link">/essay/</span>
-        </div>
-        <p class="site-guide-desc">长文章，想法与思考。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/projects/" aria-label="前往项目">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">项目</h3>
-          <span class="site-guide-link">/projects/</span>
-        </div>
-        <p class="site-guide-desc">做过的项目与玩过的东西。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/bits/" aria-label="前往笔记">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">笔记</h3>
-          <span class="site-guide-link">/bits/</span>
-        </div>
-        <p class="site-guide-desc">项目复盘与实践沉淀。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/memo/" aria-label="前往小记">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">小记</h3>
-          <span class="site-guide-link">/memo/</span>
-        </div>
-        <p class="site-guide-desc">日常片刻与回忆。</p>
-      </a>
-    </article>
+  <h2 class="section-title about-section-title">快速入口</h2>
+  <div class="site-guide site-guide--compact">
+    {quickLinkSections.map((section) => {
+      const href = withBase(section.href);
+      return (
+        <article class="site-guide-item">
+          <a class="site-guide-card-link" href={href} aria-label={`前往${section.label}`}>
+            <div class="site-guide-head">
+              <h3 class="site-guide-title">{section.label}</h3>
+              <span class="site-guide-link">{section.href}</span>
+            </div>
+            <p class="site-guide-desc">{section.description}</p>
+          </a>
+        </article>
+      );
+    })}
   </div>
+
+
 
   <h2 class="section-title about-section-title">联系</h2>
   <section class="contact-block" aria-label="联系方式">

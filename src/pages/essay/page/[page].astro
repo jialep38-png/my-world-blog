@@ -39,7 +39,7 @@ const pageTitle = `随笔 · 第 ${currentPage} 页`;
   <div class="page-header page-header--essay page-header--with-search">
     <div class="page-heading">
       <h1 class="page-title">随笔</h1>
-      <span class="page-subtitle">随笔与杂记，共 {visibleEssays.length} 篇 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/essay/rss.xml')}>RSS</a></span>
+      <span class="page-subtitle">这里收录不直接挂靠项目的长文章与想法记录，共 {visibleEssays.length} 篇 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/essay/rss.xml')}>RSS</a></span>
     </div>
     <div class="page-actions">
       <div class="entry-search" data-entry-search data-index-url={withBase('/essay/index.json')}>
@@ -66,6 +66,8 @@ const pageTitle = `随笔 · 第 ${currentPage} 页`;
     </div>
   </div>
   <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
+
+  <p class="section-note">项目复盘与实践记录集中在 <a href={withBase('/bits/')}>笔记</a>；想按时间顺着看全部公开内容，可以去 <a href={withBase('/archive/')}>归档</a>。</p>
 
   <div class="list">
     {pageEssays.map((e) => (

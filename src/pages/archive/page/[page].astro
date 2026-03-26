@@ -35,11 +35,11 @@ const nextHref = currentPage < totalPages ? withBase(`/archive/page/${currentPag
 const pageTitle = `归档 · 第 ${currentPage} 页`;
 ---
 
-<BaseLayout title={pageTitle}>
+<BaseLayout title={pageTitle} bodyClass="archive-page">
   <div class="page-header page-header--with-search">
     <div class="page-heading">
       <h1 class="page-title">归档</h1>
-      <span class="page-subtitle">共 {archiveItems.length} 篇内容 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/archive/rss.xml')}>RSS</a></span>
+      <span class="page-subtitle">这里按时间整理全部公开内容，包含随笔与笔记，共 {archiveItems.length} 篇 · 第 {currentPage} / {totalPages} 页 · <a href={withBase('/archive/rss.xml')}>RSS</a></span>
     </div>
     <div class="page-actions">
       <div
@@ -71,6 +71,8 @@ const pageTitle = `归档 · 第 ${currentPage} 页`;
     </div>
   </div>
   <div class="entry-status" data-entry-search-status role="status" aria-live="polite"></div>
+
+  <p class="section-note">只想看非项目类长文，可以去 <a href={withBase('/essay/')}>随笔</a>；只想看项目复盘与实践记录，可以去 <a href={withBase('/bits/')}>笔记</a>。</p>
 
   {groups.map((g) => (
     <section data-entry-section>
