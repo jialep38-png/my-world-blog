@@ -26,5 +26,8 @@ Thumbs.db
 # Misc
 *.tsbuildinfo
 
+# Local worktrees
+.worktrees/
+
 # Font sources (local only)
 tools/fonts-src/
