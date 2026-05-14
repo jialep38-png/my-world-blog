@@ -8,7 +8,7 @@ tags: ["产品机会", "每日简报", "自动化", "个人系统"]
 draft: false
 featured: false
 slug: "daily-opportunity-radar"
-relatedEssays: ["daily-radar-thinking"]
+relatedEssays: ["daily-radar-thinking", "daily-opportunity-radar-2026-05-12"]
 ---
 
 ## 摘要
