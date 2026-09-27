@@ -1,6 +1,7 @@
 ---
 import Sidebar from '../components/Sidebar.astro';
 import Icon from '../components/Icon.astro';
+import SiteSearch from '../components/SiteSearch.astro';
 import '../styles/global.css';
 import { site, hasSiteUrl } from '../../site.config.mjs';
 import { createWithBase } from '../utils/format';
@@ -71,10 +72,11 @@ const withBase = createWithBase(base);
       <main id="content" class="content" tabindex="-1">
         <div class="content__inner">
           <slot />
-          <footer class="site-footer">© {yearRange} 霁风的小圈</footer>
+          <footer class="site-footer"><span>© {yearRange} 霁风的小圈</span><nav class="site-footer__links" aria-label="页脚导航"><a href={withBase('/about/')}>关于小圈</a><a href={withBase('/archive/rss.xml')}>RSS 订阅</a></nav></footer>
         </div>
       </main>
     </div>
+    <SiteSearch />
     <template id="scroll-top-template">
       <button
         type="button"

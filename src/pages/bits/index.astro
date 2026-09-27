@@ -31,10 +31,6 @@ const learningEssays = await getLearningEssays();
     <div class="bits-status" id="bits-search-status" role="status" aria-live="polite"></div>
   </div>
 
-  <div class="bits-toolbar bits-toolbar--compact">
-    <div class="bits-status">提示：笔记文章支持在 Frontmatter 的 `tags` 中填写标签，搜索会命中全部标签。</div>
-  </div>
-
   <div id="bits-list" class="list">
     {learningEssays.map((entry) => (
       <div data-bit data-slug={getEssaySlug(entry)}>

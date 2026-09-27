@@ -1,6 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import { createWithBase } from '../../utils/format';
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+const guides = [
+  { title: '随笔', href: '/essay/', description: '长文章，想法与思考。' },
+  { title: '项目', href: '/projects/', description: '做过的项目与玩过的东西。' },
+  { title: '小星球', href: '/planets/', description: '把歌和日常，收成五颗小小的星球。' },
+  { title: '笔记', href: '/bits/', description: '项目复盘与实践沉淀。' },
+  { title: '小记', href: '/memo/', description: '日常片刻与回忆。' },
+];
 ---
 
 <BaseLayout title="关于" bodyClass="about-page">
@@ -32,42 +41,17 @@ import Icon from '../../components/Icon.astro';
 
   <h2 class="section-title about-section-title">栏目指引</h2>
   <div class="site-guide">
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/essay/" aria-label="前往随笔">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">随笔</h3>
-          <span class="site-guide-link">/essay/</span>
-        </div>
-        <p class="site-guide-desc">长文章，想法与思考。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/projects/" aria-label="前往项目">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">项目</h3>
-          <span class="site-guide-link">/projects/</span>
-        </div>
-        <p class="site-guide-desc">做过的项目与玩过的东西。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/bits/" aria-label="前往笔记">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">笔记</h3>
-          <span class="site-guide-link">/bits/</span>
-        </div>
-        <p class="site-guide-desc">项目复盘与实践沉淀。</p>
-      </a>
-    </article>
-    <article class="site-guide-item">
-      <a class="site-guide-card-link" href="/memo/" aria-label="前往小记">
-        <div class="site-guide-head">
-          <h3 class="site-guide-title">小记</h3>
-          <span class="site-guide-link">/memo/</span>
-        </div>
-        <p class="site-guide-desc">日常片刻与回忆。</p>
-      </a>
-    </article>
+    {guides.map((guide) => (
+      <article class="site-guide-item">
+        <a class="site-guide-card-link" href={withBase(guide.href)} aria-label={`前往${guide.title}`}>
+          <div class="site-guide-head">
+            <h3 class="site-guide-title">{guide.title}</h3>
+            <span class="site-guide-link" aria-hidden="true">↗</span>
+          </div>
+          <p class="site-guide-desc">{guide.description}</p>
+        </a>
+      </article>
+    ))}
   </div>
 
   <h2 class="section-title about-section-title">联系</h2>

@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import Lightbox from '../components/Lightbox.astro';
 import ArticleToc from '../components/ArticleToc.astro';
-import { formatISODate } from '../utils/format';
+import { createWithBase, formatISODate } from '../utils/format';
 import { getMetaDescription } from '../utils/excerpt';
 
 const {
@@ -22,6 +22,23 @@ const defaultImage = '/og.svg';
 const coverImage = entry?.data?.cover ?? null;
 const ogImage = coverImage ?? defaultImage;
 const description = getMetaDescription(entry);
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+const archiveHref = withBase('archive/');
+
+const estimateReadingMinutes = (source: string) => {
+  const readable = source
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[#>*_~|=-]+/g, ' ');
+  const hanCount = readable.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g)?.length ?? 0;
+  const wordCount = readable.match(/[a-z0-9]+(?:['’-][a-z0-9]+)*/gi)?.length ?? 0;
+  return Math.max(1, Math.ceil((hanCount / 350) + (wordCount / 200)));
+};
+
+const readingMinutes = estimateReadingMinutes(entry?.body ?? '');
 
 ---
 
@@ -38,7 +55,31 @@ const description = getMetaDescription(entry);
       <meta property="article:tag" content={tag} />
     ))}
   </Fragment>
+  <div
+    class="article-progress"
+    data-article-progress
+    role="progressbar"
+    aria-label="文章阅读进度"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
+    <span class="article-progress__bar" aria-hidden="true"></span>
+  </div>
   <div class="article-header reader-exit-anchor">
+    <div class="article-header__tools">
+      <a class="article-back" href={archiveHref} aria-label="返回文章列表">
+        <span aria-hidden="true">←</span>
+        <span>返回文章</span>
+      </a>
+      <div class="article-utilities">
+        <span class="article-reading-time">约 {readingMinutes} 分钟</span>
+        <button class="article-share" type="button" data-copy-article-link data-state="idle">
+          <span data-copy-article-label>复制链接</span>
+        </button>
+        <span class="sr-only" data-copy-article-status aria-live="polite"></span>
+      </div>
+    </div>
     <h1 class="page-title">{entry.data.title}</h1>
     <button
       id="reader-exit"
@@ -59,8 +100,9 @@ const description = getMetaDescription(entry);
   </div>
 
   <div class:list={["article-with-toc", hasToc && "article-with-toc--active"]}>
+    <ArticleToc headings={headings} />
     <div class="article-main">
-      <div class="prose">
+      <div class="prose" data-article-body>
         <Content />
       </div>
       {(prev || next) ? (
@@ -108,8 +150,6 @@ const description = getMetaDescription(entry);
         ></script>
       </section>
     </div>
-
-    <ArticleToc headings={headings} />
   </div>
 
   <Lightbox
@@ -122,6 +162,7 @@ const description = getMetaDescription(entry);
 
   <script>
     import { initArticleLightbox } from '../scripts/lightbox';
+    import { initArticleReading } from '../scripts/article-reading';
 
     initArticleLightbox({
       dialogId: 'lightbox',
@@ -130,5 +171,6 @@ const description = getMetaDescription(entry);
       enablePan: false,
       enableSwipeDownClose: false
     });
+    initArticleReading();
   </script>
 </BaseLayout>
