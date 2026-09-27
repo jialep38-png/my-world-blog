@@ -1,0 +1,32 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { Planet } from '../data/planets';
+import { createWithBase } from '../utils/format';
+interface Props { planet: Planet }
+const { planet } = Astro.props;
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+const full = await getImage({ src: planet.cover, width: 1600, format: 'webp' });
+---
+
+<section class="planet-stage" data-planet-stage data-world={planet.id} data-title={planet.title} data-viewer={withBase('/orbit/viewer.html')} aria-label={`${planet.title}图版与三维观看`}>
+  <div class="planet-stage__toolbar">
+    <span>NO. {planet.number} <span aria-hidden="true">/</span> 留下的形状</span>
+    <div class="planet-stage__actions" hidden data-stage-actions>
+      <button type="button" data-still aria-pressed="true">图版</button>
+      <button type="button" data-live aria-pressed="false">转一转 <span aria-hidden="true">↗</span></button>
+    </div>
+  </div>
+  <div class:list={['planet-stage__surface', `planet-tone--${planet.tone}`]}>
+    <div class="planet-stage__frame" data-frame></div>
+    <a class="planet-stage__photograph" href={full.src} aria-label={`放大《${planet.title}》完整图版`}>
+      <Image src={planet.cover} alt={`${planet.title}，${planet.materials}共同构成的概念星球`} width={1200} widths={[480, 800, 1200, 1600]} sizes="(max-width: 900px) calc(100vw - 40px), 720px" loading="eager" format="webp" />
+      <span class="planet-stage__enlarge" aria-hidden="true">＋ 看大图</span>
+    </a>
+  </div>
+  <p class="planet-stage__status" role="status" data-stage-status>静静看一会儿，也可以转到另一面。</p>
+  <noscript><p class="planet-stage__status">点按图版可看大图；开启 JavaScript 后可转动观看。</p></noscript>
+</section>
+
+<script>
+  import '../scripts/planet-stage';
+</script>

@@ -1,0 +1,406 @@
+{
+  "version": 1,
+  "sourceWorkspace": "My Little Orbit web/ workspace; imported with user authorization.",
+  "three": {
+    "version": "0.180.0",
+    "upstream": "https://github.com/mrdoob/three.js/tree/r180",
+    "license": "MIT",
+    "licenseFile": "vendor/three/0.180.0/LICENSE"
+  },
+  "editions": {
+    "yesterday-today": "0.12.3",
+    "crossover": "0.12.3",
+    "poem": "0.22.0",
+    "rain-finale": "0.12.3",
+    "jielan": "0.24.0"
+  },
+  "exclusions": [
+    "legacy page HTML",
+    "concept/reference originals except the two textures required by the live jielan model",
+    "GLB exports",
+    "posters and downloads",
+    "private files"
+  ],
+  "totalBytes": 10473624,
+  "files": [
+    {
+      "path": "source/assets/crossover/title-glyphs.json",
+      "source": "assets/crossover/title-glyphs.json",
+      "kind": "runtime-asset",
+      "bytes": 8756,
+      "sha256": "7623fb18016aaf8115163e0aa31ec24285e1aaddbc8e7485f585fcf25f01d700"
+    },
+    {
+      "path": "source/assets/jielan/reference-material-atlas.png",
+      "source": "assets/jielan/reference-material-atlas.png",
+      "kind": "runtime-asset",
+      "bytes": 3652630,
+      "sha256": "34f55da82a3f549a1610201acde22e5e6e8adcd3f45cbb0ccdc38026a077138e"
+    },
+    {
+      "path": "source/assets/jielan/reference-object-atlas.png",
+      "source": "assets/jielan/reference-object-atlas.png",
+      "kind": "runtime-asset",
+      "bytes": 3402865,
+      "sha256": "99287c4532d082b0b2eaa7a8a679ced5c994ec818cbea94779a9af63d0bc52df"
+    },
+    {
+      "path": "source/assets/rain-finale/title-glyphs.json",
+      "source": "assets/rain-finale/title-glyphs.json",
+      "kind": "runtime-asset",
+      "bytes": 7376,
+      "sha256": "71087d87709a71e3bcf857022a22eece383dd0f1a05dfb8684ec97112f2ceb9d"
+    },
+    {
+      "path": "source/assets/textures/collage-atlas.webp",
+      "source": "assets/textures/collage-atlas.webp",
+      "kind": "runtime-asset",
+      "bytes": 694370,
+      "sha256": "764bc13d2ed485525fb48cce6bedb69d8d6f947fbeb9396184bc4f8e3e3842b4"
+    },
+    {
+      "path": "source/licenses/tiny-planets-MIT.txt",
+      "source": "licenses/tiny-planets-MIT.txt",
+      "kind": "license",
+      "bytes": 1094,
+      "sha256": "b09233959f60c72d173fbb078f300b86cbfb0614a37787a12af70d8319a3ee80"
+    },
+    {
+      "path": "source/src/art-models.js",
+      "source": "src/art-models.js",
+      "kind": "artwork-module",
+      "bytes": 22238,
+      "sha256": "0ccee8f074074ba567dec0062dffaf853ced85c85a8cc1d1be789a99119555ed"
+    },
+    {
+      "path": "source/src/assets.js",
+      "source": "src/assets.js",
+      "kind": "artwork-module",
+      "bytes": 5043,
+      "sha256": "a749a1934518b997e93e1ec87318d4f983f7f29ea62957e518ba2b1a29a27988"
+    },
+    {
+      "path": "source/src/collage-layers.js",
+      "source": "src/collage-layers.js",
+      "kind": "artwork-module",
+      "bytes": 8013,
+      "sha256": "311df819bd44e8b6c560121c0492e10be2cdc216287a92d2efb6996361d1cb51"
+    },
+    {
+      "path": "source/src/collage-light.js",
+      "source": "src/collage-light.js",
+      "kind": "artwork-module",
+      "bytes": 1157,
+      "sha256": "41b9591a31ee2cdb237c73c348fb6b54ce39af5e68b0cef086dd2b0b70c57b64"
+    },
+    {
+      "path": "source/src/crossover/model.js",
+      "source": "src/crossover/model.js",
+      "kind": "artwork-module",
+      "bytes": 18571,
+      "sha256": "179bce3eb647bf81baebe08c1851f09d41579c26703d7deb7421fad0b8592eaa"
+    },
+    {
+      "path": "source/src/crossover/textures.js",
+      "source": "src/crossover/textures.js",
+      "kind": "artwork-module",
+      "bytes": 11574,
+      "sha256": "162142eff270df4ac484ce2ab85158e0907b51234fc4349f0bca279c8cb07f38"
+    },
+    {
+      "path": "source/src/crossover/viewer.js",
+      "source": "src/crossover/viewer.js",
+      "kind": "artwork-module",
+      "bytes": 9195,
+      "sha256": "2d1d630f8e555a8954a776f109a3b1d40805a6615bbf5a247653defb4a94f48b"
+    },
+    {
+      "path": "source/src/data.js",
+      "source": "src/data.js",
+      "kind": "artwork-module",
+      "bytes": 2853,
+      "sha256": "926514e0595b1408f57823d8c3dfc1dc92d1dbf3e015dcdf92065b92ddd98ab8"
+    },
+    {
+      "path": "source/src/garden-models.js",
+      "source": "src/garden-models.js",
+      "kind": "artwork-module",
+      "bytes": 32003,
+      "sha256": "7f8e658d599c79b87d68616ab43bc34ae4ad1d746f3b6b900d9d7984210ac37b"
+    },
+    {
+      "path": "source/src/jielan/materials.js",
+      "source": "src/jielan/materials.js",
+      "kind": "artwork-module",
+      "bytes": 15442,
+      "sha256": "160ea9de32b230db8f37d360b36856b01cd359e66df2af36049dba3433e9067b"
+    },
+    {
+      "path": "source/src/jielan/model.js",
+      "source": "src/jielan/model.js",
+      "kind": "artwork-module",
+      "bytes": 34843,
+      "sha256": "590c4ae903c548eb79f41fa5ae09f12298b94f6883e3776f48dbede6fbc354e3"
+    },
+    {
+      "path": "source/src/jielan/viewer.js",
+      "source": "src/jielan/viewer.js",
+      "kind": "artwork-module",
+      "bytes": 14002,
+      "sha256": "d38088b429537cc1a381be775c3eb6415f8502fd5bf4cc8e67bad9572c456a62"
+    },
+    {
+      "path": "source/src/landscape.js",
+      "source": "src/landscape.js",
+      "kind": "artwork-module",
+      "bytes": 17141,
+      "sha256": "4a5fde38566276f2bde5c468826443e176a9b761c5bd672f29c6f18eb5d92a76"
+    },
+    {
+      "path": "source/src/math.js",
+      "source": "src/math.js",
+      "kind": "artwork-module",
+      "bytes": 1730,
+      "sha256": "36f854bf14ad15a8cfab77a4e489fd7ea245b8bdd332f08a7974366ab8cfb63b"
+    },
+    {
+      "path": "source/src/navigation.js",
+      "source": "src/navigation.js",
+      "kind": "artwork-module",
+      "bytes": 1525,
+      "sha256": "411a689a4c0a934f1f923d7997ba066fa35b45c385f4080b4a87e153e46fb07a"
+    },
+    {
+      "path": "source/src/poem-album.js",
+      "source": "src/poem-album.js",
+      "kind": "artwork-module",
+      "bytes": 4366,
+      "sha256": "d0763df2a3d0e2dd24efef1f33deb634404ebf26783c332e33d5bf7a45a1a618"
+    },
+    {
+      "path": "source/src/poem-assemblage.js",
+      "source": "src/poem-assemblage.js",
+      "kind": "artwork-module",
+      "bytes": 9033,
+      "sha256": "17f2b2eeec41c37fdd9b07e15a3b0a00f516852e4e1e83c35d6f540abb47cbdf"
+    },
+    {
+      "path": "source/src/poem-reliquary.js",
+      "source": "src/poem-reliquary.js",
+      "kind": "artwork-module",
+      "bytes": 17488,
+      "sha256": "0ca182b0516f71c0115ee74e2cf7d89a603a137c34177c025bfc1142795935a9"
+    },
+    {
+      "path": "source/src/rain-finale/model.js",
+      "source": "src/rain-finale/model.js",
+      "kind": "artwork-module",
+      "bytes": 21623,
+      "sha256": "d3470ee17958e14df5dfba794d33d51bffb2b0f838e3c2cb798bc000a21d3cea"
+    },
+    {
+      "path": "source/src/rain-finale/textures.js",
+      "source": "src/rain-finale/textures.js",
+      "kind": "artwork-module",
+      "bytes": 5414,
+      "sha256": "6a556a6a6790fdbd58f11337fae108d2b2fc35f1b59d0d09881bace1fa5bb911"
+    },
+    {
+      "path": "source/src/rain-finale/viewer.js",
+      "source": "src/rain-finale/viewer.js",
+      "kind": "artwork-module",
+      "bytes": 12989,
+      "sha256": "d919a23a1fcc55cff3935ae8dbb1fa32a0aadf88d3c902f594d687877982fc7e"
+    },
+    {
+      "path": "source/src/reference-art.js",
+      "source": "src/reference-art.js",
+      "kind": "artwork-module",
+      "bytes": 22152,
+      "sha256": "c174ea66589698908b77861dd70f2dbe06d8713ba490544dbb44a2f075dc2bae"
+    },
+    {
+      "path": "source/src/render-performance.js",
+      "source": "src/render-performance.js",
+      "kind": "artwork-module",
+      "bytes": 4718,
+      "sha256": "efcb230da5f9b1a333234f773a92e48dbfec0b417e613f769c30ebb4d3d27c0b"
+    },
+    {
+      "path": "source/src/runtime.js",
+      "source": "src/runtime.js",
+      "kind": "artwork-module",
+      "bytes": 892,
+      "sha256": "2a11e5bfa0269dea9e92a7bb41a1301204725f4b7ff654a501c31054840705ff"
+    },
+    {
+      "path": "source/src/song-surfaces.js",
+      "source": "src/song-surfaces.js",
+      "kind": "artwork-module",
+      "bytes": 5649,
+      "sha256": "28c55e2e55c4fb672d80058aa41ccf9c5c0b412826e05df21e5c16e2aba5224d"
+    },
+    {
+      "path": "source/src/vendor/stars.js",
+      "source": "src/vendor/stars.js",
+      "kind": "artwork-module",
+      "bytes": 1763,
+      "sha256": "617c3f543ea14b65338952963fc7a38e127e3706653441dabce24d25014f6803"
+    },
+    {
+      "path": "source/src/world.js",
+      "source": "src/world.js",
+      "kind": "artwork-module",
+      "bytes": 24217,
+      "sha256": "47690f8fc6f326634b43db08c9f127495daaeeb2844037776b38159c04275622",
+      "note": "Local orbit-only option disables walking and surface-click navigation in the embedded poem viewer."
+    },
+    {
+      "path": "source/src/yesterday-today/model.js",
+      "source": "src/yesterday-today/model.js",
+      "kind": "artwork-module",
+      "bytes": 25854,
+      "sha256": "74e71afa60aacba6bd216a3b727f081b02c5302dea18864a2febb29cb5e13a8f"
+    },
+    {
+      "path": "source/src/yesterday-today/textures.js",
+      "source": "src/yesterday-today/textures.js",
+      "kind": "artwork-module",
+      "bytes": 9298,
+      "sha256": "07c0d77f24883d1af3797f412dd0fde53fa5d9cdc206450b11d293220fd73eb2"
+    },
+    {
+      "path": "source/src/yesterday-today/viewer.js",
+      "source": "src/yesterday-today/viewer.js",
+      "kind": "artwork-module",
+      "bytes": 9207,
+      "sha256": "9898f1eca42b6c0ff72eb68a8b39ffb6f69abb19f523b20ab3c9110ee30ff5a8"
+    },
+    {
+      "path": "vendor/three/0.180.0/build/three.core.js",
+      "source": "vendor/three/0.180.0/build/three.core.js",
+      "kind": "three-module",
+      "bytes": 1403455,
+      "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
+    },
+    {
+      "path": "vendor/three/0.180.0/build/three.module.js",
+      "source": "vendor/three/0.180.0/build/three.module.js",
+      "kind": "three-module",
+      "bytes": 603113,
+      "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/controls/OrbitControls.js",
+      "source": "vendor/three/0.180.0/examples/jsm/controls/OrbitControls.js",
+      "kind": "three-module",
+      "bytes": 38703,
+      "sha256": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/exporters/GLTFExporter.js",
+      "source": "vendor/three/0.180.0/examples/jsm/exporters/GLTFExporter.js",
+      "kind": "three-module",
+      "bytes": 86392,
+      "sha256": "e7c29444454eb321b39e4c8b3062944f4fd5299a0e7483e9cb8c0594cdec829f"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/geometries/RoundedBoxGeometry.js",
+      "source": "vendor/three/0.180.0/examples/jsm/geometries/RoundedBoxGeometry.js",
+      "kind": "three-module",
+      "bytes": 6476,
+      "sha256": "c1b7c9bd2cddff2e3f3a0723f618a3d364a47450e3d25771d21faed88410bec8"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/loaders/GLTFLoader.js",
+      "source": "vendor/three/0.180.0/examples/jsm/loaders/GLTFLoader.js",
+      "kind": "three-module",
+      "bytes": 114739,
+      "sha256": "67ac5551fdafa6e349bd80c8f8e5e39c136d6b2fb1ad647db9abb21dc86f9e4a"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/EffectComposer.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/EffectComposer.js",
+      "kind": "three-module",
+      "bytes": 8477,
+      "sha256": "4b8c855f28eed2570bed898adc0ab89c585a8a281ecb6d905c09d00697f9f50a"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/MaskPass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/MaskPass.js",
+      "kind": "three-module",
+      "bytes": 4694,
+      "sha256": "7cd08eee9d5d6f5578beaddbdcbe9c384f6873810af27f22ab7db3ceeb127aa3"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/OutputPass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/OutputPass.js",
+      "kind": "three-module",
+      "bytes": 4029,
+      "sha256": "f5b81c96e76b6b28b4b3ba8c41c4aeb982b1e03f3d82883242d951b2ab082fa2"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/Pass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/Pass.js",
+      "kind": "three-module",
+      "bytes": 4218,
+      "sha256": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/RenderPass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/RenderPass.js",
+      "kind": "three-module",
+      "bytes": 4112,
+      "sha256": "fd91229aacc5830e3984b0f2bdefcf566163ea028f4c1f1ab233fa6665a133ac"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/ShaderPass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/ShaderPass.js",
+      "kind": "three-module",
+      "bytes": 3228,
+      "sha256": "e2500a5913b26bbf5148ceaae644c6edcff06a18b01494ee37bf856353d2ab9d"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/postprocessing/UnrealBloomPass.js",
+      "source": "vendor/three/0.180.0/examples/jsm/postprocessing/UnrealBloomPass.js",
+      "kind": "three-module",
+      "bytes": 14388,
+      "sha256": "d92742959879b461f25348b2abddc7ca0d48527e7718340bcfa29fa771e2799a"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/shaders/CopyShader.js",
+      "source": "vendor/three/0.180.0/examples/jsm/shaders/CopyShader.js",
+      "kind": "three-module",
+      "bytes": 729,
+      "sha256": "a33057d5ac91c43304c186ac0e8816e62bb2ed471d3a00ff3018dfd5c0389718"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/shaders/LuminosityHighPassShader.js",
+      "source": "vendor/three/0.180.0/examples/jsm/shaders/LuminosityHighPassShader.js",
+      "kind": "three-module",
+      "bytes": 1291,
+      "sha256": "5044f780b6e6cf863947f64c36fe1587132f7fbe395ada863cd1e5f0388dcf1e"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/shaders/OutputShader.js",
+      "source": "vendor/three/0.180.0/examples/jsm/shaders/OutputShader.js",
+      "kind": "three-module",
+      "bytes": 1876,
+      "sha256": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2"
+    },
+    {
+      "path": "vendor/three/0.180.0/examples/jsm/utils/BufferGeometryUtils.js",
+      "source": "vendor/three/0.180.0/examples/jsm/utils/BufferGeometryUtils.js",
+      "kind": "three-module",
+      "bytes": 35539,
+      "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
+    },
+    {
+      "path": "vendor/three/0.180.0/LICENSE",
+      "source": "vendor/three/0.180.0/LICENSE",
+      "kind": "license",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    }
+  ]
+}

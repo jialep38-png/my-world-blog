@@ -1,0 +1,132 @@
+{
+  "source": "My Little Orbit — original artwork photographs",
+  "sourceSite": "https://jialepang392-web.github.io/my-little-orbit/",
+  "importedAt": "2026-09-27",
+  "artworks": {
+    "yesterday-today": {
+      "sceneVersion": "0.12.3",
+      "files": {
+        "cover.webp": {
+          "sha256": "fa5bab34c548edd1130cd5652372802fb28802d757fc3e39006f9fa75315e49d",
+          "bytes": 189342
+        },
+        "detail-record.webp": {
+          "sha256": "e50d7bd676f84949bc9a29b00c6b37c3663a14575c86a42e08185ade6eb1b780",
+          "bytes": 181804
+        },
+        "detail-feather.webp": {
+          "sha256": "1a5d619e680955f1f35686d6153e0eb5118e74bc8a1fe548c3811278c223a149",
+          "bytes": 191474
+        },
+        "side.webp": {
+          "sha256": "ad383308d347dd56b7f297b435d5d4efe8bf3be19e6ec02c8e2ed3a36b487b66",
+          "bytes": 110382
+        },
+        "back.webp": {
+          "sha256": "851fd4e2164e3badedaeb9e29e1684cd275a346bce0f9d18631154b4dd2d4f2a",
+          "bytes": 124838
+        }
+      }
+    },
+    "crossover": {
+      "sceneVersion": "0.12.3",
+      "files": {
+        "cover.webp": {
+          "sha256": "2a281ae53e520d283568052310a1b53d3a793c7c08f95e19887f163487e973a9",
+          "bytes": 260388
+        },
+        "detail-disc.webp": {
+          "sha256": "bdb06fd84421adef497708643f76a2793fe280592122019d7736653aa7f66583",
+          "bytes": 244246
+        },
+        "detail-proof.webp": {
+          "sha256": "00268c3176988422e1115bec829b2de1fcfefb007a9437d702dc1d47635a9636",
+          "bytes": 223774
+        },
+        "side.webp": {
+          "sha256": "fdd5e3e2b2733d4695dd2734d2db560a818baabe4fcf2e3e7c7f2081aac98ca0",
+          "bytes": 190968
+        },
+        "back.webp": {
+          "sha256": "e670315f02992cb86636a15f480b168eb492ec2ba8a24927d5755b8bd5d753d2",
+          "bytes": 202568
+        }
+      }
+    },
+    "poem": {
+      "sceneVersion": "0.22.0",
+      "files": {
+        "cover.webp": {
+          "sha256": "79712e502fede4f3d8cd3fea345f0df304f928f86b4d73424219b59c24b8343f",
+          "bytes": 446688
+        },
+        "detail-inkstone.webp": {
+          "sha256": "48f6e1b1b12f052c07915951cbfb64384d80d6603b451f2d4b604db74ac9b1dc",
+          "bytes": 240290
+        },
+        "detail-flute.webp": {
+          "sha256": "1c382fab7d53f78d673f922c02114b0358c92120e8c3fe8e2656c5191d4734f3",
+          "bytes": 400516
+        },
+        "side.webp": {
+          "sha256": "30665fa9e814c6445c290d1553ac513ea5e3af6b4b293192be9eccf0020b070b",
+          "bytes": 242188
+        },
+        "back.webp": {
+          "sha256": "f8dda05d45828181fdeb2cc2d7422fad30f53684726138aa93a5a1c137a4452b",
+          "bytes": 232892
+        }
+      }
+    },
+    "rain-finale": {
+      "sceneVersion": "0.12.3",
+      "files": {
+        "cover.webp": {
+          "sha256": "db373482d67d27de1d55177c462617a657d01d882d51b5782c63f5fed46a2b4b",
+          "bytes": 465680
+        },
+        "detail-light.webp": {
+          "sha256": "ee3d8fb66cccb6af75fc367c5f17cd10a1f808452e45e6956c5ee1c543cf38c5",
+          "bytes": 472168
+        },
+        "detail-veil.webp": {
+          "sha256": "1a108b8b3676127e81b62f93d79ae2b4b504a6d256c94ac4a0d560df712690ce",
+          "bytes": 486274
+        },
+        "side.webp": {
+          "sha256": "369393a8ef048e6719e44085cf334ccfbba4532a5b94211685558998f46d0287",
+          "bytes": 231656
+        },
+        "back.webp": {
+          "sha256": "82be2e663b31bf5ef1ba92ddb63d2003d706a37d35eabe91f6ddd187949194f2",
+          "bytes": 197110
+        }
+      }
+    },
+    "jielan": {
+      "sceneVersion": "0.24.0",
+      "files": {
+        "cover.webp": {
+          "sha256": "42ad63bc7b4c893dc9e7037ddc495a83c8b3f67edf0a24e92e73920f5390bc48",
+          "bytes": 994468
+        },
+        "detail-leaves.webp": {
+          "sha256": "e90d5000a3eb8a5bfc04b571119c46562e55df78d93b07f4f95626de8ce4bd98",
+          "bytes": 1177182
+        },
+        "detail-linen.webp": {
+          "sha256": "2862cbd3202502fd2df1b181da4a9ccb94024ab91c313049be107891817626a1",
+          "bytes": 1419306
+        },
+        "side.webp": {
+          "sha256": "f5cad4e543c96b6de304a571446ffa535335a96f02ee455bef1fed82aa2803b2",
+          "bytes": 753596
+        },
+        "back.webp": {
+          "sha256": "862ef6742aafc9776c32f9d1472ad8607f0f79b72845b4bec3bd64e9e44a5a01",
+          "bytes": 938604
+        }
+      }
+    }
+  }
+}

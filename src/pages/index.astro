@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroImage from '../components/HeroImage.astro';
 import EntryListItem from '../components/EntryListItem.astro';
+import PlanetShelf from '../components/PlanetShelf.astro';
 import { getPublished, getSortedProjects, getProjectSlug, isReservedSlug } from '../lib/content';
 import { getListExcerpt } from '../utils/excerpt';
 import { createWithBase } from '../utils/format';
@@ -55,6 +56,8 @@ const latest = [
     <span class="intro__lead">欢迎来到我的小圈，这里会发一些随缘做的项目和一点点感想。</span>
     <span class="intro__more">更多内容请访问 <a href={withBase('/archive/')}>归档</a> 或 <a href={withBase('/projects/')}>项目</a>。</span>
   </div>
+
+  <PlanetShelf />
 
   <h2 class="section-title section-title--index">最近更新</h2>
 

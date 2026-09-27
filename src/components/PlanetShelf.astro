@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+import { planets } from '../data/planets';
+import { createWithBase } from '../utils/format';
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+---
+
+<section class="planet-shelf" aria-labelledby="shelf-title">
+  <div class="planet-shelf__heading">
+    <h2 id="shelf-title"><span class="orbit-mark" aria-hidden="true">◌</span> 小圈里的小星球</h2>
+    <a href={withBase('/planets/')}>慢慢逛 <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="planet-shelf__items">
+    {planets.map((planet) => (
+      <a class:list={['planet-shelf__item', `planet-tone--${planet.tone}`]} href={withBase(`/planets/${planet.id}/`)}>
+        <span class="planet-shelf__image">
+          <Image src={planet.cover} alt="" width={240} widths={[120, 240]} sizes="(max-width: 480px) 16vw, 100px" format="webp" loading="lazy" />
+        </span>
+        <span class="planet-shelf__title">{planet.title}</span>
+      </a>
+    ))}
+  </div>
+  <p class="planet-shelf__note">把听过的歌、经过的日常，收成五颗小小的星球。</p>
+</section>

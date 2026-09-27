@@ -1,0 +1,130 @@
+/* Small artworks live alongside the writing, in the blog's existing paper,
+   serif type and muted rose palette. All rules are scoped to this collection. */
+.planet-eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font: 10px/1.6 Georgia, serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.planet-handwriting {
+  font-family: "LXGW WenKai Lite", "Kaiti SC", serif;
+  color: var(--muted);
+}
+.planet-shelf {
+  margin: 4px 0 32px;
+  padding: 19px 0 15px;
+  border-block: 1px solid var(--border);
+}
+.planet-shelf__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.planet-shelf__heading h2 { margin: 0; font-size: 15px; font-weight: 400; }
+.planet-shelf__heading > a { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.orbit-mark { display: inline-block; color: var(--accent); font-size: 21px; line-height: 1; margin-right: 5px; vertical-align: -1px; }
+.planet-shelf__items { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.planet-shelf__item { min-width: 0; text-align: center; border: 0; display: flex; align-items: center; flex-direction: column; gap: 9px; }
+.planet-shelf__item:hover { border: 0; }
+.planet-shelf__image { display: block; width: min(100%, 104px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
+.planet-shelf__image img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .35s ease; }
+.planet-shelf__item:hover img { transform: scale(1.06) rotate(-3deg); }
+.planet-shelf__title { font-size: 11px; line-height: 1.7; }
+.planet-shelf__item:hover .planet-shelf__title { color: var(--accent); }
+.planet-shelf__note { margin: 14px 0 0; font-size: 12px; color: var(--muted); font-family: "LXGW WenKai Lite", "Kaiti SC", serif; }
+.planet-page-heading { padding: 0 0 34px; border-bottom: 1px solid var(--border); }
+.planet-page-heading h1 { font-size: 32px; font-weight: 400; margin: 12px 0 8px; letter-spacing: .08em; }
+.planet-page-heading .planet-handwriting { font-size: 20px; margin: 0 0 22px; }
+.planet-introduction { margin: 0; font-size: 14px; color: var(--muted); line-height: 2.1; }
+.planet-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; row-gap: 44px; margin-top: 32px; }
+.planet-index__art { display: block; position: relative; padding: 13px; border: 1px solid var(--border); background: var(--bg); box-shadow: 0 4px 13px #241f1710; }
+.planet-index__art:hover { border-color: var(--accent); }
+.planet-index__art img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+.planet-index__number { position: absolute; top: 22px; left: 22px; color: #625853; font: italic 12px Georgia, serif; z-index: 1; background: #fffaf0df; padding: 3px 5px; }
+.planet-index__open { display: block; text-align: right; margin: 10px 0 0; font-size: 11px; color: var(--muted); }
+.planet-index__caption { margin: 17px 0 0 3px; }
+.planet-index__caption h2 { margin: 6px 0; font-size: 20px; font-weight: 400; }
+.planet-index__caption > p:last-child { color: var(--muted); font-size: 13px; margin: 0; }
+.planet-index__aside { align-self: center; text-align: center; padding: 20px 8px; }
+.planet-orbit-drawing { width: 108px; stroke: var(--accent); stroke-width: .8; }
+.planet-index__aside > p { font: 21px/1.9 "LXGW WenKai Lite", "Kaiti SC", serif; margin: 14px 0; }
+.planet-index__aside small { display: block; color: var(--muted); font-size: 12px; }
+.planet-index__aside > a { display: inline-block; margin-top: 25px; font-size: 12px; color: var(--muted); }
+.planet-colophon { margin: 46px 0 8px; padding-top: 22px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 12px; line-height: 1.9; }
+.planet-colophon a { color: var(--muted); }
+.planet-breadcrumb { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+.planet-breadcrumb a { color: var(--muted); }
+.planet-detail-heading { margin: 36px 0 26px; }
+.planet-detail-heading h1 { font-size: clamp(26px, 3.5vw, 36px); margin: 9px 0 12px; font-weight: 400; line-height: 1.5; }
+.planet-detail-heading .planet-handwriting { font-size: 17px; margin: 0; }
+.planet-stage { border: 1px solid var(--border); padding: 12px; }
+.planet-stage__toolbar { display: flex; gap: 10px; justify-content: space-between; align-items: center; padding: 0 0 12px; }
+.planet-stage__toolbar > span { font: 10px/1.5 Georgia, "Noto Serif SC", serif; letter-spacing: .06em; color: var(--muted); }
+.planet-stage__actions { display: flex; gap: 3px; }
+.planet-stage__actions[hidden] { display: none; }
+.planet-stage__actions button { font-family: inherit; font-size: 12px; line-height: 1.5; border: 1px solid transparent; padding: 7px 10px; color: var(--muted); background: none; cursor: pointer; min-height: 40px; }
+.planet-stage__actions button[aria-pressed="true"] { border-color: var(--border); color: var(--text); background: var(--panel); }
+.planet-stage__actions button:hover { color: var(--text); border-color: var(--accent); }
+.planet-stage__actions button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.planet-stage__actions button[aria-disabled="true"] { cursor: progress; opacity: .65; }
+.planet-stage__surface { position: relative; aspect-ratio: 1; isolation: isolate; }
+.planet-stage__photograph { display: block; position: relative; z-index: 1; border: 0; }
+.planet-stage__photograph:hover { border: 0; }
+.planet-stage__photograph img { width: 100%; display: block; }
+.planet-stage__enlarge { position: absolute; right: 14px; bottom: 14px; padding: 6px 10px; font-size: 11px; background: #fdfcf9e8; color: #2f2b2a; border: 1px solid #d6d0c9; }
+.planet-stage__frame { position: absolute; inset: 0; }
+.planet-stage__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.planet-stage[data-mode="live"] .planet-stage__photograph { display: none; }
+.planet-stage[data-mode="loading"] .planet-stage__photograph { opacity: .65; pointer-events: none; }
+.planet-stage__status { margin: 10px 2px 0; font-size: 11px; color: var(--muted); min-height: 2em; line-height: 1.9; }
+.planet-story { margin: 32px 0 40px; }
+.planet-story h2 { font-size: 12px; font-weight: 400; color: var(--accent); margin: 0 0 15px; letter-spacing: .05em; }
+.planet-story > p { font-size: 14px; line-height: 2; margin: 0 0 12px; }
+.planet-story > p:last-child { color: var(--muted); }
+.planet-section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--border); padding-top: 24px; }
+.planet-section-heading h2 { margin: 0; font-size: 19px; font-weight: 400; }
+.planet-section-heading > span { color: var(--muted); font-size: 11px; }
+.planet-photograph-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 20px; margin-top: 22px; }
+.planet-photograph-grid figure { margin: 0; }
+.planet-photograph-grid a { display: block; border: 0; }
+.planet-photograph-grid img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+.planet-photograph-grid figcaption { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.planet-neighbours { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 42px; border-top: 1px solid var(--border); padding-top: 24px; }
+.planet-neighbours > a { display: flex; flex-direction: column; gap: 8px; border: 0; }
+.planet-neighbours > a:last-child { text-align: right; }
+.planet-neighbours small { font-size: 11px; color: var(--muted); }
+.planet-neighbours span { font-size: 14px; }
+.planet-neighbours a:hover span { color: var(--accent); }
+.planet-detail-page .planet-colophon { border: 0; margin-top: 32px; }
+@media (max-width: 640px) {
+  .planet-shelf { margin-top: 8px; margin-bottom: 26px; padding-top: 16px; }
+  .planet-shelf__items { gap: 7px; margin-top: 15px; }
+  .planet-shelf__title { font-size: 10px; }
+  .planet-shelf__note { font-size: 11px; }
+  .planet-index { gap: 30px 18px; }
+  .planet-index__art { padding: 8px; }
+  .planet-index__number { top: 13px; left: 13px; }
+  .planet-index__caption h2 { font-size: 17px; }
+  .planet-index__caption .planet-eyebrow { font-size: 8px; letter-spacing: .06em; }
+  .planet-index__caption > p:last-child { font-size: 12px; }
+  .planet-detail-heading { margin-top: 28px; }
+  .planet-stage { padding: 8px; }
+  .planet-stage__toolbar > span { font-size: 9px; letter-spacing: 0; }
+  .planet-stage__actions button { min-height: 44px; padding-inline: 10px; }
+  .planet-stage__surface:has(iframe) { width: 100%; height: 420px; aspect-ratio: auto; }
+  .planet-stage__surface:has(iframe) .planet-stage__photograph { position: absolute; inset: 0; display: grid; align-items: center; }
+  .planet-stage[data-mode="live"] .planet-stage__photograph { display: none; }
+  .planet-stage__status { font-size: 10px; }
+  .planet-section-heading > span { font-size: 10px; }
+  .planet-photograph-grid { gap: 22px 12px; }
+  .planet-photograph-grid figcaption { font-size: 11px; }
+}
+@media (max-width: 390px) {
+  .planet-shelf__heading h2 { font-size: 14px; }
+  .planet-shelf__title { font-size: 9px; }
+  .planet-index { column-gap: 13px; }
+  .planet-index__caption h2 { font-size: 15px; }
+  .planet-index__aside > p { font-size: 17px; }
+  .planet-desktop-break { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planet-shelf__image img { transition: none; }
+  .planet-shelf__item:hover img { transform: none; }
+}

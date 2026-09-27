@@ -11,6 +11,7 @@
 
 - **随笔** `/essay/` - 长文章，想法与思考
 - **项目** `/projects/` - 做过的项目与玩过的东西
+- **小星球** `/planets/` - 五件概念作品，图版、细节与按需三维观看
 - **笔记** `/bits/` - 项目复盘与实践沉淀
 - **小记** `/memo/` - 日常片刻与回忆
 
@@ -22,3 +23,5 @@
 ## 技术栈
 
 基于 [Astro](https://astro.build) 构建，主题来自 [astro-whono](https://github.com/cxro/astro-whono)。
+
+小星球沿用 My Little Orbit 的原作模型与真实场景图版，在本站内独立展示。首页保留花田插画和文章入口，星球作为小幅陈列；三维查看器仅在访客点击后载入。维护说明见 [星球集成](docs/planet-integration.md) 与 [三维运行时](docs/orbit-runtime.md)。
