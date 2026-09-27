@@ -1,0 +1,63 @@
+/* The journal landing page: a quiet illustration, small objects and readable cards. */
+.eyebrow { margin: 0 0 8px; font: 10px/1.6 var(--font-ui); letter-spacing: .15em; color: var(--muted); }
+.home-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.home-heading h1 { margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.5; font-weight: 500; letter-spacing: .045em; }
+.home-heading h1 > span { color: var(--accent); }
+.home-about { color: var(--muted); font-size: 12px; padding-bottom: 7px; white-space: nowrap; }
+.home-about > span { margin-left: 8px; }
+.home .hero { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-soft); }
+.home .hero img { display: block; width: 100%; border-radius: var(--radius-lg); }
+.home .intro { padding: 20px 2px 22px; margin: 0; font-size: 15px; line-height: 1.9; }
+.home .intro__more { margin-top: 5px; color: var(--muted); font-size: 13px; }
+.home-section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 22px; }
+.home-section-heading h2 { margin: 0; font-size: 23px; font-weight: 500; line-height: 1.5; }
+.home-section-heading .eyebrow { font-size: 9px; margin-bottom: 4px; }
+.home-filters { position: relative; isolation: isolate; display: flex; flex: 0 0 auto; padding: 3px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-family: var(--font-ui); }
+.home-filters[hidden] { display: none; }
+.home-filters button { position: relative; z-index: 1; border: 0; background: none; border-radius: 999px; color: var(--muted); padding: 0 15px; min-height: 36px; font: inherit; font-size: 12px; cursor: pointer; transition: color var(--duration-fast); }
+.home-filters button[aria-pressed="true"] { color: var(--text); }
+.home-filters__indicator { position: absolute; left: 0; top: 3px; height: calc(100% - 6px); border-radius: 999px; background: var(--surface-raised); box-shadow: 0 1px 4px #30261b12; transition: transform var(--duration-normal) var(--ease-out), width var(--duration-normal) var(--ease-out); }
+.home .home-entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 0; }
+.home .home-entries .list-item { display: flex; flex-direction: column; padding: 23px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-raised); box-shadow: var(--shadow-soft); }
+.home .home-entries .list-item[hidden] { display: none; }
+.home .home-entries .list-item__title { font-size: 17px; line-height: 1.7; font-weight: 500; overflow-wrap: anywhere; }
+.list-item__kind { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font: 10px/1.5 var(--font-ui); letter-spacing: .08em; margin-bottom: 15px; }
+.list-item__kind > span { font-size: 17px; opacity: .5; transition: transform var(--duration-normal) var(--ease-out), opacity var(--duration-normal); }
+.home .home-entries .list-item__excerpt { font-size: 13px; color: var(--muted); line-height: 1.85; -webkit-line-clamp: 2; line-clamp: 2; margin: 8px 0 20px; }
+.home .home-entries .meta-line { margin-top: auto; margin-bottom: 0; padding-top: 12px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); }
+.home-all-link { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; color: var(--muted); font: 12px var(--font-ui); margin-top: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); transition: background var(--duration-normal), color var(--duration-normal); }
+.home-all-link:hover { color: var(--text); background: var(--surface); border-color: var(--border); }
+.home-collections { margin-top: 54px; }
+.home-section-note { font-size: 11px; color: var(--muted); }
+.collection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.collection-card { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: 22px 19px 19px; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 0 var(--radius-md) var(--radius-md); box-shadow: var(--shadow-soft); transition: transform var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal); }
+.collection-card__tab { position: absolute; height: 10px; width: 38%; top: -10px; left: -1px; border: 1px solid var(--border); border-bottom: 0; border-radius: 8px 12px 0 0; background: var(--surface); }
+.collection-card__number { font: 29px/1.2 Georgia, serif; color: var(--accent); margin-bottom: 27px; display: flex; align-items: baseline; gap: 7px; }
+.collection-card__number small { font: 10px var(--font-ui); color: var(--muted); }
+.collection-card strong { font-weight: 500; font-size: 17px; display: flex; justify-content: space-between; gap: 4px; }
+.collection-card strong > span { font: 16px var(--font-ui); color: var(--muted); }
+.collection-card__note { color: var(--muted); font-size: 11px; margin-top: 7px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home .home-entries .list-item:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 32%, var(--border)); box-shadow: 0 8px 28px #3b302012; }
+  .list-item:hover .list-item__kind > span { transform: translate(2px, -2px); opacity: 1; }
+  .collection-card:hover { transform: translateY(-5px) rotate(-.5deg); box-shadow: 0 10px 24px #3b302016; border-color: var(--border); }
+}
+@media (max-width: 640px) {
+  .home-heading { margin: 14px 0 20px; }
+  .home-heading h1 { font-size: 28px; }
+  .home-about { font-size: 10px; }
+  .home .intro { padding-block: 17px 23px; font-size: 14px; }
+  .home .home-entries { grid-template-columns: 1fr; gap: 12px; }
+  .home .home-entries .list-item { padding: 20px; }
+  .home-section-heading { gap: 10px; margin-bottom: 18px; }
+  .home-section-heading h2 { font-size: 21px; }
+  .home-filters button { min-height: 40px; padding-inline: 12px; }
+  .home-section-note { display: none; }
+  .collection-grid { gap: 11px; }
+  .collection-card { padding: 17px 11px 15px; }
+  .collection-card__number { font-size: 25px; flex-wrap: wrap; gap: 4px; margin-bottom: 20px; }
+  .collection-card__number small { font-size: 9px; }
+  .collection-card strong { font-size: 15px; }
+  .collection-card__note { font-size: 10px; line-height: 1.8; }
+}
+@media (max-width: 360px) { .home-about { display: none; } .home-filters button { padding-inline: 10px; } }

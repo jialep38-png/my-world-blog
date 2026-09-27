@@ -1,0 +1,54 @@
+---
+import { createWithBase } from '../utils/format';
+
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+---
+
+<dialog
+  id="site-search"
+  class="site-search"
+  data-site-search-dialog
+  data-index-url={withBase('/search.json')}
+  aria-labelledby="site-search-title"
+  aria-describedby="site-search-help"
+>
+  <div class="site-search__panel">
+    <header class="site-search__header">
+      <div>
+        <h2 id="site-search-title">翻阅小圈</h2>
+        <p id="site-search-help">搜索文章、项目、笔记与小星球</p>
+      </div>
+      <button class="site-search__close" type="button" data-search-close aria-label="关闭搜索">关闭</button>
+    </header>
+
+    <label class="site-search__field">
+      <span class="sr-only">搜索全站</span>
+      <span class="site-search__magnifier" aria-hidden="true">⌕</span>
+      <input
+        type="search"
+        data-search-input
+        placeholder="输入标题、关键词或标签…"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+        aria-controls="site-search-results"
+      />
+      <kbd>Esc</kbd>
+    </label>
+
+    <div class="site-search__status" data-search-status role="status" aria-live="polite">
+      正在准备索引…
+    </div>
+    <div class="site-search__results" id="site-search-results" data-search-results></div>
+
+    <footer class="site-search__footer" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+      <span><kbd>Enter</kbd> 前往</span>
+      <span><kbd>⌘</kbd><kbd>K</kbd> 随时打开</span>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+  import '../scripts/site-search.ts';
+</script>

@@ -73,8 +73,9 @@ if (stage) {
     sendVisibility();
   }).observe(stage);
   document.addEventListener('visibilitychange', sendVisibility);
-  const lightbox = document.querySelector('#lightbox');
-  if (lightbox) new MutationObserver(sendVisibility).observe(lightbox, { attributes: true, attributeFilter: ['open'] });
+  for (const dialog of document.querySelectorAll('dialog')) {
+    new MutationObserver(sendVisibility).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+  }
   window.addEventListener('pagehide', () => showPhotograph());
   actions.hidden = false;
 }

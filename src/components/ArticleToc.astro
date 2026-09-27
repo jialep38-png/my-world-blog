@@ -17,12 +17,31 @@ if (tocItems.length === 0) {
 }
 ---
 
-<nav class="article-toc" aria-label="文章目录">
+<details class="article-toc-mobile">
+  <summary>
+    <span>本文目录</span>
+    <span class="article-toc-mobile__hint" aria-hidden="true">
+      <span class="article-toc-mobile__open-label">展开</span>
+      <span class="article-toc-mobile__close-label">收起</span>
+    </span>
+  </summary>
+  <nav aria-label="文章目录（移动端）">
+    <ol class="article-toc__list">
+      {tocItems.map((item) => (
+        <li class:list={["article-toc__item", item.depth === 3 && "article-toc__item--nested"]}>
+          <a href={`#${item.slug}`} data-toc-link data-toc-target={item.slug}>{item.text}</a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+</details>
+
+<nav class="article-toc article-toc--desktop" aria-label="文章目录">
   <p class="article-toc__title">目录</p>
   <ol class="article-toc__list">
     {tocItems.map((item) => (
       <li class:list={["article-toc__item", item.depth === 3 && "article-toc__item--nested"]}>
-        <a href={`#${item.slug}`}>{item.text}</a>
+        <a href={`#${item.slug}`} data-toc-link data-toc-target={item.slug}>{item.text}</a>
       </li>
     ))}
   </ol>

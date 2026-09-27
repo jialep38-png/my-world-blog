@@ -23,7 +23,10 @@ const quote = '这是我的小圈，欢迎你光临\n会发一些自己随缘做
 ---
 
 <aside class="sidebar">
-  <a class="sidebar__title" href={homeHref} aria-label={`${siteTitle} 首页`}>{siteTitle}</a>
+  <a class="sidebar__title" href={homeHref} aria-label={`${siteTitle} 首页`}>
+    <svg class="brand-orbit" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="9"/><ellipse cx="18" cy="18" rx="17" ry="6" transform="rotate(-35 18 18)"/><circle class="brand-orbit__dot" cx="29" cy="8" r="2"/></svg>
+    <span>{siteTitle}<small>MY WORLD</small></span>
+  </a>
 
   <div class="sidebar__quote">
     {quote.split('\n').map((line) => (
@@ -33,12 +36,18 @@ const quote = '这是我的小圈，欢迎你光临\n会发一些自己随缘做
     ))}
   </div>
 
+  <button type="button" class="sidebar-search" data-search-open hidden aria-label="搜索全站">
+    <Icon name="search" size={16} /><span>搜索小圈</span><kbd>⌘ K</kbd>
+  </button>
+
+  <nav class="sidebar-navigation" aria-label="主要导航">
   <ul class="nav">
-    {nav.map((item) => {
+    {nav.map((item, index) => {
       const isActive = pathname === item.href || (item.href !== homeHref && pathname.startsWith(item.href));
       return (
         <li>
           <a href={item.href} aria-current={isActive ? 'page' : undefined}>
+            <span class="nav__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <span>{item.label}</span>
             <span class="dot" aria-hidden="true"></span>
           </a>
@@ -46,6 +55,7 @@ const quote = '这是我的小圈，欢迎你光临\n会发一些自己随缘做
       );
     })}
   </ul>
+  </nav>
 
   <div class="sidebar-actions">
     <button

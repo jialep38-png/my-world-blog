@@ -1,3 +1,4 @@
+export {};
 const KEY = 'theme';
 const root = document.documentElement;
 const body = document.body;
@@ -10,8 +11,7 @@ const mobileMq = window.matchMedia('(max-width: 900px)');
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const isLongPage = () =>
-  /^(?:\/(?:archive|essay|memo)(?:\/|$))/.test(window.location.pathname);
+const isLongPage = () => Boolean(document.querySelector('.content__inner'));
 
 let updateFloating = () => {};
 
@@ -33,7 +33,11 @@ const initTheme = () => {
   applyTheme(current);
   themeBtn?.addEventListener('click', () => {
     const next = isDark() ? 'light' : 'dark';
-    applyTheme(next);
+    if (document.startViewTransition && !prefersReducedMotion()) {
+      document.startViewTransition(() => applyTheme(next));
+    } else {
+      applyTheme(next);
+    }
     try {
       localStorage.setItem(KEY, next);
     } catch (_) {}

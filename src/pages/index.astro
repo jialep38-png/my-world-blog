@@ -44,10 +44,18 @@ const latest = [
     return (b.isProject ? 1 : 0) - (a.isProject ? 1 : 0);
   })
   .slice(0, 12);
+const collections = [
+  { href: '/essay/', title: '随笔', subtitle: '一点想法，一些日常', number: String(visibleEssays.length).padStart(2, '0'), kind: 'writing' },
+  { href: '/projects/', title: '项目', subtitle: '把想法做成可用的东西', number: String(projects.length).padStart(2, '0'), kind: 'making' },
+  { href: '/planets/', title: '小星球', subtitle: '给文字之外的心情', number: '05', kind: 'orbit' },
+];
 ---
 
 <BaseLayout bodyClass="home">
-  <h1 class="sr-only">霁月</h1>
+  <header class="home-heading">
+    <div><p class="eyebrow">MY WORLD · 个人手记</p><h1>霁风的小圈<span aria-hidden="true">。</span></h1></div>
+    <a class="home-about" href={withBase('/about/')}>很高兴遇见你 <span aria-hidden="true">↗</span></a>
+  </header>
   <div class="hero">
     <HeroImage isLCP />
   </div>
@@ -59,9 +67,19 @@ const latest = [
 
   <PlanetShelf />
 
-  <h2 class="section-title section-title--index">最近更新</h2>
+  <section class="home-latest" aria-labelledby="latest-title" data-home-latest>
+  <div class="home-section-heading">
+    <div><p class="eyebrow">RECENTLY</p><h2 id="latest-title">最近更新</h2></div>
+    <div class="home-filters" role="group" aria-label="筛选最近更新" hidden>
+      <span class="home-filters__indicator" aria-hidden="true"></span>
+      <button type="button" data-filter="all" aria-pressed="true">全部</button>
+      <button type="button" data-filter="essay" aria-pressed="false">随笔</button>
+      <button type="button" data-filter="project" aria-pressed="false">项目</button>
+    </div>
+  </div>
+  <p class="sr-only" role="status" data-filter-status></p>
 
-  <div class="list">
+  <div class="list home-entries">
     {latest.map((entry) => (
       <EntryListItem
         href={entry.href}
@@ -69,7 +87,21 @@ const latest = [
         date={entry.date}
         tag={entry.tag}
         excerpt={entry.excerpt}
+        kind={entry.isProject ? 'project' : 'essay'}
       />
     ))}
   </div>
+  <a class="home-all-link" href={withBase('/archive/')}>翻翻全部内容 <span aria-hidden="true">↗</span></a>
+  </section>
+
+  <section class="home-collections" aria-labelledby="collections-title">
+    <div class="home-section-heading"><div><p class="eyebrow">EXPLORE</p><h2 id="collections-title">随处逛逛</h2></div><span class="home-section-note">每一页，都是小圈的一部分</span></div>
+    <div class="collection-grid">
+      {collections.map((item) => <a class={`collection-card collection-card--${item.kind}`} href={withBase(item.href)}>
+        <span class="collection-card__tab" aria-hidden="true"></span><span class="collection-card__number">{item.number}<small>{item.kind === 'orbit' ? '颗星球' : '篇记录'}</small></span>
+        <strong>{item.title}<span aria-hidden="true">↗</span></strong><span class="collection-card__note">{item.subtitle}</span>
+      </a>)}
+    </div>
+  </section>
+  <script>import '../scripts/home.ts';</script>
 </BaseLayout>
