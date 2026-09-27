@@ -1,0 +1,73 @@
+---
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PlanetStage from '../../components/PlanetStage.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { planets, type Planet } from '../../data/planets';
+import { createWithBase } from '../../utils/format';
+export function getStaticPaths() {
+  return planets.map((planet, index) => ({ params: { slug: planet.id }, props: { planet, index } }));
+}
+interface Props { planet: Planet; index: number }
+const { planet, index } = Astro.props;
+const withBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+const next = planets[(index + 1) % planets.length];
+const previous = planets[(index + planets.length - 1) % planets.length];
+if (!next || !previous) throw new Error('The planet collection must contain adjacent works.');
+const photographs = await Promise.all(planet.photographs.map(async photo => ({
+  ...photo, full: await getImage({ src: photo.image, width: 1600, format: 'webp' }),
+})));
+---
+
+<BaseLayout title={`${planet.title} · 小星球`} description={planet.description} bodyClass="planet-detail-page">
+  <nav class="planet-breadcrumb" aria-label="面包屑"><a href={withBase('/planets/')}>← 小星球</a><span>{planet.number} / 05</span></nav>
+  <header class="planet-detail-heading">
+    <p class="planet-eyebrow">{planet.english}</p>
+    <h1>{planet.title}</h1>
+    <p class="planet-handwriting">{planet.thought}</p>
+  </header>
+
+  <div class="planet-visuals">
+    <PlanetStage planet={planet} />
+    <section class="planet-story" aria-labelledby="planet-story-title">
+      <h2 id="planet-story-title">{planet.materials}</h2>
+      <p>{planet.description}</p>
+      <p>{planet.note}</p>
+    </section>
+    <section aria-labelledby="planet-detail-title" class="planet-photographs">
+      <div class="planet-section-heading"><h2 id="planet-detail-title">走近一点</h2><span>细节与另一面 · 点按放大</span></div>
+      <div class="planet-photograph-grid">
+        {photographs.map((photo) => (
+          <figure>
+            <a href={photo.full.src} aria-label={`放大：${photo.caption}`}>
+              <Image src={photo.image} alt={`${planet.title}：${photo.caption}`} width={720} widths={[360, 720]} sizes="(max-width: 900px) 44vw, 330px" format="webp" loading="lazy" />
+            </a>
+            <figcaption>{photo.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  </div>
+  <nav class="planet-neighbours" aria-label="相邻星球">
+    <a href={withBase(`/planets/${previous.id}/`)}><small>← 上一颗 · {previous.number}</small><span>{previous.title}</span></a>
+    <a href={withBase(`/planets/${next.id}/`)}><small>{index === 4 ? '回到第一颗' : '下一颗'} · {next.number} →</small><span>{next.title}</span></a>
+  </nav>
+  <p class="planet-colophon"><a href={withBase('/planets/')}>看看全部小星球</a><span aria-hidden="true"> · </span><a href={withBase('/')}>回到小圈</a></p>
+  <Lightbox enableZoom enablePan label={`${planet.title}图版`} />
+</BaseLayout>
+
+<script>
+  import { initArticleLightbox } from '../../scripts/lightbox';
+  import { createWithBase } from '../../utils/format';
+  const imageBase = createWithBase(import.meta.env.BASE_URL ?? '/');
+  initArticleLightbox({ containerSelector: '.planet-visuals', enableZoom: true, enablePan: true, imageLinkPrefixes: [imageBase('/_image/'), imageBase('/_astro/')] });
+  // A keyboard-activated photo link should open the same lightbox as a pointer.
+  document.querySelectorAll<HTMLAnchorElement>('.planet-visuals a[href]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.target === link && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+        const image = link.querySelector('img');
+        if (image) { event.preventDefault(); image.click(); }
+      }
+    });
+  });
+</script>

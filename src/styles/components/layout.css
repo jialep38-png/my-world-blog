@@ -533,12 +533,15 @@
   }
 
   .nav {
-    gap: 8px 10px;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0;
   }
 
   .nav a {
-    padding: 6px 8px;
-    font-size: 15px;
+    padding: 6px 0;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .page-title {
@@ -644,6 +647,22 @@
 .sidebar-actions .icon-button[title]:focus-visible::before {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+@media (max-width: 640px) {
+  /* Keep the last tooltip inside the phone viewport. */
+  .sidebar-actions .icon-button[title]::after {
+    left: auto;
+    right: 0;
+    transform: translateY(4px);
+  }
+  .sidebar-actions .icon-button[title]:hover::after,
+  .sidebar-actions .icon-button[title]:focus-visible::after {
+    transform: translateY(0);
+  }
+}
+@media (max-width: 360px) {
+  .nav a { font-size: 13px; }
 }
 
 .icon-button:hover {
